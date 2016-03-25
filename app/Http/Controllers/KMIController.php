@@ -12,7 +12,6 @@ class KMIController extends Controller{
         $kmi = $svoris/(($ugis/100)*($ugis/100));
 
         return view ('rezultatas', ['kmi'=>$kmi]);
-
     }
 
 }

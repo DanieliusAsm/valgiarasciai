@@ -18,7 +18,7 @@
 	</head>
 	<body>
 		<div class="header">
-
+            @yield('header')
         </div>
         <div class = "content">
             @yield('content')
