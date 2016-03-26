@@ -6,15 +6,15 @@
         <table width="900">
             <tr>
                 <th>Eil. Nr.</th>
-                <th class="clickable" ng-click="sortBy('name')">Vardas</th>
-                <th class="clickable" ng-click="sortBy('lastname')">Pavardė</th>
+                <th ng-click="sortBy('name')">Vardas</th>
+                <th ng-click="sortBy('lastname')">Pavardė</th>
                 <th>El. paštas</th>
                 <th>Telefono numeris</th>
                 <th>Priskirta dieta</th>
                 <th>Pastabos</th>
             </tr>
-            <tr ng-repeat="user in users | orderBy:sortType:reverseOrder">
-                <td>0</td>
+            <tr ng-repeat="user in users | orderBy:sortKey:reverseOrder">
+                <td ng-bind="$index+1"></td>
                 <td ng-bind="user.name"></td>
                 <td ng-bind="user.lastname"></td>
                 <td>N/A</td>
