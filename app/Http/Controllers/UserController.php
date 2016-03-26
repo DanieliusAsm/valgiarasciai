@@ -16,6 +16,8 @@ class UserController extends Controller{
         $vartotojas->age = $request->input("age");
         $vartotojas->phone = $request->input("phone");
         $vartotojas->email = $request->input("email");
+        $vartotojas->notes = $request->input("notes");
+        $vartotojas->diet = $request->input("diet");
         $vartotojas->save();
     }
 }
