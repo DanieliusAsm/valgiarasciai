@@ -21,6 +21,4 @@ userList.controller('UserlistCtrl', function($scope, $http) {
 
         $scope.sortType = sortType;
     }
-
-    console.log('asd');
 });
