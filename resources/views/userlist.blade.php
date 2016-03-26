@@ -22,7 +22,7 @@
                 <td>N/A</td>
                 <td>N/A</td>
                 <td><button type="submit">Redaguoti</button></td>
-                <td><button type="submit">Pašalinti</button></td>
+                <td><button type="submit" ng-click="removeUser($index)">Pašalinti</button></td>
             </tr>
         </table>
     </div>

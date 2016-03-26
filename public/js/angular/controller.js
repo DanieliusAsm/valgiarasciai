@@ -40,4 +40,12 @@ userList.controller('UserlistCtrl', function($scope, $http) {
 
         $scope.sortKey = requestSortType;
     }
+
+    /**
+     * Remove user from the array
+     * @param index
+     */
+    $scope.removeUser = function(index) {
+        $scope.users.splice(index, 1);
+    }
 });
