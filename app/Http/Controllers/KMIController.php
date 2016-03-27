@@ -6,9 +6,6 @@ use App\Http\Requests\KMIRequest;
 class KMIController extends Controller{
     
     public function calculateKMI(KMIRequest $request){
-
-        $ugis = $request->input('ugis');
-        $svoris = $request->input('svoris');
         $lytis = $request->input('gender');
         $kmi = round($svoris/(($ugis/100)*($ugis/100)));
         $salyga = '';
@@ -39,7 +36,6 @@ class KMIController extends Controller{
             $salyga="3 laipsnio mitybos nepakankamumas";
         }
         return view ('rezultatas', ['kmi'=>$kmi,1,'salyga'=>$salyga]);
-
     }
 
 }
