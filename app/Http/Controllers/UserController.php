@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\NewUserRequest;
 use App\User;
 
-class UserController extends Controller{
+class UserController extends Controller {
 
     public function createUser(NewUserRequest $request){
         $vartotojas = new User();
@@ -19,5 +19,11 @@ class UserController extends Controller{
         $vartotojas->notes = $request->input("notes");
         $vartotojas->diet = $request->input("diet");
         $vartotojas->save();
+    }
+
+    public function getUsers() {
+        $users = User::all();
+
+        return view('userlist', ['users'=>$users]);
     }
 }

@@ -4,17 +4,16 @@ Route::get('/', function() {
 	return View::make('index');
 });
 
-Route::get('userlist', function() {
-	return View::make('userlist');
-});
-
-Route::post('/rezultatas', 'KMIController@calculateKMI');
-
 Route::get('/user/new',function(){
 	return view('NewUser');
 });
 
+Route::get('/user', 'UserController@getUsers');
+
+Route::post('/rezultatas', 'KMIController@calculateKMI');
+
 Route::post('user/new/result', 'UserController@createUser');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
