@@ -1,0 +1,1 @@
+var userList = angular.module('UserlistApp', []);

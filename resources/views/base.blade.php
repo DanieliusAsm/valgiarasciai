@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 	<head>		
 		<meta charset="utf-8">
@@ -8,13 +9,28 @@
 		
 		<!-- Bootstrap -->
 		<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+
+		<!-- Own styles -->
+		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+		<!-- Angular.js -->
+		<script src="{{ asset('js/angular.min.js') }}"></script>
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		
 		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->		
+		<![endif]-->
 	</head>
 	<body>
 		<div class="header">
@@ -31,5 +47,11 @@
 
 			Footer
 		</div>
+
+		<!-- Import Angular.js models -->
+		<script src="{{ asset('js/angular/model.js') }}"></script>
+
+		<!-- Import Angular.js controllers -->
+		<script src="{{ asset('js/angular/controller.js') }}"></script>
 	</body>
 </html>
