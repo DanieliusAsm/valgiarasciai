@@ -19,5 +19,23 @@ class UserController extends Controller{
         $vartotojas->notes = $request->input("notes");
         $vartotojas->diet = $request->input("diet");
         $vartotojas->save();
+
+        return redirect('/user');
     }
+
+    public function editUser($id, RegisterRequest $request){
+        $user = User::find($id);
+        $user->first_name = $request->input("first_name");
+        $user->last_name = $request->input("last_name");
+        $user->gender = $request->input("gender");
+        $user->age = $request->input("age");
+        $user->phone = $request->input("phone");
+        $user->email = $request->input("email");
+        $user->notes = $request->input("notes");
+        $user->diet = $request->input("diet");
+        $user->save();
+
+        return redirect('/user');
+    }
+
 }
