@@ -1,4 +1,4 @@
-@extends('base',['meta_title'=>'Vartotojo kurimas'])
+@extends('parent',['meta_title'=>'Vartotojo kurimas'])
 
 @section('content')
     <form action="{{url('/user/new/result')}}" method ="post">

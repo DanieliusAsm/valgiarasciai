@@ -1,4 +1,5 @@
-@extends('base',['meta_title'=>'Rezultatas'])
+@extends('parent',['meta_title'=>'Rezultatas'])
+
 @section('content')
     {{$kmi}}
     {{$salyga}}

@@ -6,6 +6,8 @@ use App\Http\Requests\KMIRequest;
 class KMIController extends Controller{
     
     public function calculateKMI(KMIRequest $request){
+        $ugis = $request->input('ugis');
+        $svoris = $request->input('svoris');
         $lytis = $request->input('gender');
         $kmi = round($svoris/(($ugis/100)*($ugis/100)));
         $salyga = '';

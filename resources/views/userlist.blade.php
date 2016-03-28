@@ -1,4 +1,4 @@
-@extends('base',['meta_title'=>'Current user list'])
+@extends('parent',['meta_title'=>'Current user list'])
 
 @section('content')
     <div class="container" ng-app="UserlistApp" ng-controller="UserlistCtrl">
@@ -23,8 +23,9 @@
                 <td ng-bind="checkValue(user.phone)"></td>
                 <td ng-bind="checkValue(user.diet)"></td>
                 <td ng-bind="checkValue(user.notes)"></td>
-                <td><button type="submit">Redaguoti</button></td>
-                <td><button type="submit" ng-click="removeUser($index)">Pašalinti</button></td>
+
+                <td><button type="submit" ng-click="generateUrl('{{ url('') }}', user.id, 'edit')">Redaguoti</button></td>
+                <td><button type="submit" ng-click="generateUrl('{{ url('') }}', user.id, 'delete')">Pašalinti</button></td>
             </tr>
         </table>
     </div>

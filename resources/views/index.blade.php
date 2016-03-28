@@ -1,4 +1,4 @@
-@extends('base',['meta_title'=>'Index'] )
+@extends('parent',['meta_title'=>'Index'] )
 
 @section('content')
     <form action="{{ url('/rezultatas') }}" method="post">

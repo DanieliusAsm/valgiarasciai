@@ -1,4 +1,4 @@
-userList.controller('UserlistCtrl', function($scope) {
+userList.controller('UserlistCtrl', function($scope, $window) {
 
     /**
      * Variable store column with sort table
@@ -30,8 +30,12 @@ userList.controller('UserlistCtrl', function($scope) {
      * Remove user from the array
      * @param index
      */
-    $scope.removeUser = function(index) {
-        $scope.users.splice(index, 1);
+    $scope.generateUrl = function(url, id, action) {
+        if (action.localeCompare('delete')) {
+            $window.location.href = url + '/user/' + id + '/delete';
+        } else {
+            $window.location.href = url + '/user/' + id + '/edit';
+        }
     }
 
     /**

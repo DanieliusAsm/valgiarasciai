@@ -5,10 +5,12 @@ Route::get('/', function() {
 });
 
 Route::get('/user/new',function(){
-	return view('NewUser');
+	return View::make('register');
 });
 
 Route::get('/user', 'UserController@getUsers');
+
+Route::get('/user/{id}/delete', 'UserController@deleteUser');
 
 Route::post('/rezultatas', 'KMIController@calculateKMI');
 
@@ -26,5 +28,5 @@ Route::post('user/new/result', 'UserController@createUser');
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+	//
 });
