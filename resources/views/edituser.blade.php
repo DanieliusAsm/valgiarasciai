@@ -1,6 +1,7 @@
 @extends('parent',['meta_title'=>'Vartotojo redagavimas'])
 
 @section('content')
+    {{$id}}
     <form action="{{url('/user/$id/edit')}}" method ="post">
         Vardas <input type="text" name="first_name"/><br>
         Pavardė <input type="text" name="last_name"/><br>

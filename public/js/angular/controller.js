@@ -1,10 +1,4 @@
-userList.controller('UserlistCtrl', function($scope, $http) {
-
-    /**
-     * Array store all data from JSON.
-     * @type {Array}
-     */
-    $scope.users = [];
+userList.controller('UserlistCtrl', function($scope, $window) {
 
     /**
      * Variable store column with sort table
@@ -17,15 +11,6 @@ userList.controller('UserlistCtrl', function($scope, $http) {
      * @type {boolean}
      */
     $scope.reverseOrder = false;
-
-    /**
-     * Read data from JSON file to array.
-     */
-    $http.get('js/angular/temp.json').success(function(array) {
-        angular.forEach(array, function(obj) {
-            $scope.users.push(obj);
-        });
-    });
 
     /**
      * Method set sort column and order.
@@ -45,7 +30,19 @@ userList.controller('UserlistCtrl', function($scope, $http) {
      * Remove user from the array
      * @param index
      */
-    $scope.removeUser = function(index) {
-        $scope.users.splice(index, 1);
+    $scope.generateUrl = function(url, id, action) {
+        if (!action.localeCompare('delete')) {
+            $window.location.href = url + '/user/' + id + '/delete';
+        } else {
+            $window.location.href = url + '/user/' + id + '/edit';
+        }
+    }
+
+    /**
+     * @param $value
+     * @returns {if $value is empty retrun N/A else return $value}
+     */
+    $scope.checkValue = function(value) {
+        return (value) ? value : "N/A";
     }
 });

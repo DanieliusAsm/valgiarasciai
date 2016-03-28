@@ -6,12 +6,10 @@ Route::get('/', function() {
 
 Route::post('/rezultatas', 'KMIController@calculateKMI');
 
-Route::get('userlist', function() {
-	return View::make('userlist');
-});
+Route::get('/user', 'UserController@getUsers');
 
 Route::get('/user/new',function(){
-	return view('NewUser');
+	return View::make('register');
 });
 
 Route::post('user/new/result', 'UserController@createUser');
@@ -19,7 +17,11 @@ Route::post('user/new/result', 'UserController@createUser');
 Route::get('user/{id}/edit', function() {
 	return View::make('edituser');
 });
+
 Route::post('/user/{id}/edit', 'UserController@editUser');
+
+Route::get('/user/{id}/delete', 'UserController@deleteUser');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -32,5 +34,5 @@ Route::post('/user/{id}/edit', 'UserController@editUser');
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+	//
 });

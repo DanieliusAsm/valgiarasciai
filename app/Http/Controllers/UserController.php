@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\NewUserRequest;
+use App\Http\Requests\RegisterRequest;
 use App\User;
 
-class UserController extends Controller{
+class UserController extends Controller {
 
-    public function createUser(NewUserRequest $request){
+    public function createUser(RegisterRequest $request){
         $vartotojas = new User();
         $vartotojas->first_name = $request->input("first_name");
         $vartotojas->last_name = $request->input("last_name");
@@ -37,5 +37,20 @@ class UserController extends Controller{
 
         return redirect('/user');
     }
+	
+    public function getUsers() {
+        $users = User::all();
 
+        return view('userlist', ['users'=>$users]);
+    }
+
+    public function deleteUser($id) {
+        $user = User::find($id);
+
+        if (!empty($user)) {
+            $user->delete();
+        }
+
+        return redirect('/user');
+    }
 }
