@@ -1,10 +1,10 @@
 <?php
 
-Route::get('/', function() {
-	return View::make('index');
+Route::get('/calculator', function() {
+	return View::make('calculator');
 });
 
-Route::post('/rezultatas', 'KMIController@calculateKMI');
+Route::post('/calculator', 'CalculatorController@calculate');
 
 Route::get('/user', 'UserController@getUsers');
 
