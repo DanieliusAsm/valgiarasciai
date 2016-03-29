@@ -24,8 +24,8 @@
                 <td ng-bind="checkValue(user.diet)"></td>
                 <td ng-bind="checkValue(user.notes)"></td>
 
-                <td><button type="submit" ng-click="generateUrl('{{ url('') }}', user.id, 'edit')">Redaguoti</button></td>
-                <td><button type="submit" ng-click="generateUrl('{{ url('') }}', user.id, 'delete')">Pašalinti</button></td>
+                <td><button type="submit" ng-click="redirectTo('{{ url('') }}', user.id, '/edit')">Redaguoti</button></td>
+                <td><button type="submit" ng-click="redirectTo('{{ url('') }}', user.id, '/delete')">Pašalinti</button></td>
             </tr>
         </table>
     </div>

@@ -17,7 +17,7 @@ userList.controller('UserlistCtrl', function($scope, $window) {
      * @param sortType
      */
     $scope.sortBy = function(requestSortType) {
-        if (!$scope.sortKey.localeCompare(requestSortType) && !$scope.reverseOrder) {
+        if ($scope.sortKey == requestSortType && !$scope.reverseOrder) {
             $scope.reverseOrder = true;
         } else {
             $scope.reverseOrder = false;
@@ -27,15 +27,11 @@ userList.controller('UserlistCtrl', function($scope, $window) {
     }
 
     /**
-     * Remove user from the array
+     * Redirect user to specific url
      * @param index
      */
-    $scope.generateUrl = function(url, id, action) {
-        if (!action.localeCompare('delete')) {
-            $window.location.href = url + '/user/' + id + '/delete';
-        } else {
-            $window.location.href = url + '/user/' + id + '/edit';
-        }
+    $scope.redirectTo = function(url, id, action) {
+		$window.location.href = url + '/user/' + id + action;
     }
 
     /**
