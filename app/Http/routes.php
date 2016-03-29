@@ -14,9 +14,7 @@ Route::get('/user/new',function(){
 
 Route::post('user/new/result', 'UserController@createUser');
 
-Route::get('user/{id}/edit', function() {
-	return View::make('edituser');
-});
+Route::get('user/{id}/edit', 'UserController@getUser');
 
 Route::post('/user/{id}/edit', 'UserController@editUser');
 

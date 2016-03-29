@@ -44,6 +44,12 @@ class UserController extends Controller {
         return view('userlist', ['users'=>$users]);
     }
 
+    public function getUser($id) {
+        $user = User::find($id);
+
+        return view('edituser', ['user'=>$user,'id'=>$id]);
+    }
+
     public function deleteUser($id) {
         $user = User::find($id);
 
