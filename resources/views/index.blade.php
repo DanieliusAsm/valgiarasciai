@@ -1,7 +1,6 @@
-@extends('base',['meta_title'=>'Index'] )
+@extends('parent',['meta_title'=>'Index'] )
 
 @section('content')
-
     <form action="{{ url('/rezultatas') }}" method="post">
         Masė(kg): <input type="text" name="svoris"><br>
         Ūgis(cm): <input type="text" name="ugis"><br>
@@ -12,4 +11,4 @@
         <input type="radio" name="veiksnys1" value="prieaugis"> Svorio prieaugiui<br>
         <input type="submit" value="Skaičiuoti KMI">
     </form>
-   @stop
+@stop
