@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class KMIRequest extends Request
+class CalculatorRequest extends Request
 {
     public function authorize(){
         return true;
