@@ -14,7 +14,7 @@ userList.controller('UserlistCtrl', function($scope, $window) {
 
     /**
      * Method set sort column and order.
-     * @param sortType
+     * @param requestSortType
      */
     $scope.sortBy = function(requestSortType) {
         if ($scope.sortKey == requestSortType && !$scope.reverseOrder) {
@@ -27,16 +27,18 @@ userList.controller('UserlistCtrl', function($scope, $window) {
     }
 
     /**
-     * Redirect user to specific url
-     * @param index
+     * Redirect to user edit page or delete speficif user from list
+     * @param id
+     * @param action
      */
-    $scope.redirectTo = function(url, id, action) {
-		$window.location.href = url + '/user/' + id + action;
+    $scope.redirect = function(id, action) {
+		$window.location.href += '/' + id + '/' + action;
     }
 
     /**
-     * @param $value
-     * @returns {if $value is empty retrun N/A else return $value}
+     * if value is empty retrun N/A else return value
+     * @param value
+     * @returns {string}
      */
     $scope.checkValue = function(value) {
         return (value) ? value : "N/A";

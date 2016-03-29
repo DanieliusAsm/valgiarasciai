@@ -3,7 +3,7 @@
 @section('content')
     <div class="container" ng-app="UserlistApp" ng-controller="UserlistCtrl">
 
-        <button onclick="window.location='{{ url('/user/new') }}'">Pridėti vartotoją</button>
+        <a href="{{ url('/user/new') }}">Pridėti vartotoją</a>
 
         <table width="900" ng-init="users={{htmlspecialchars(json_encode($users))}}">
             <tr>
@@ -24,8 +24,8 @@
                 <td ng-bind="checkValue(user.diet)"></td>
                 <td ng-bind="checkValue(user.notes)"></td>
 
-                <td><button type="submit" ng-click="redirectTo('{{ url('') }}', user.id, '/edit')">Redaguoti</button></td>
-                <td><button type="submit" ng-click="redirectTo('{{ url('') }}', user.id, '/delete')">Pašalinti</button></td>
+                <td><a href="" ng-click="redirect(user.id, 'edit')">Redaguoti</a></td>
+                <td><a href="" ng-click="redirect(user.id, 'delete')">Pašalinti</a></td>
             </tr>
         </table>
     </div>
