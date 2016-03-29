@@ -34,5 +34,23 @@ Route::get('/user/{id}/delete', 'UserController@deleteUser');
 */
 
 Route::group(['middleware' => ['web']], function () {
-	//
+
+	Route::get('/login', function() {
+		return view('welcome');
+	});
+
+	Route::post('/signup', [
+		'uses' => 'LoginController@postSignUp',
+		'as' => 'signup'
+	]);
+
+	Route::post('/signin', [
+		'uses' => 'LoginController@postSignIn',
+		'as' => 'signin'
+	]);
+
+	Route:: get('/dashboard', [
+		'uses' => 'LoginController@getDashboard',
+		'as' => 'dashboard'
+	]);
 });
