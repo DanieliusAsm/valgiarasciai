@@ -10,8 +10,12 @@ class KMIController extends Controller{
         $ugis = $request->input('ugis');
         $svoris = $request->input('svoris');
         $lytis = $request->input('gender');
+        $amzius = $request->input('amzius');
+        $veiksnys = $request->input('veiksnys1');
         $kmi = round($svoris/(($ugis/100)*($ugis/100)));
         $salyga = '';
+        $pma = '';
+        $fag = '';
         if($lytis=='vyras'){
             if($kmi>=20&& $kmi<=25){
                 $salyga="optimalus KMI";
@@ -38,7 +42,17 @@ class KMIController extends Controller{
         }else if($kmi<=16){
             $salyga="3 laipsnio mitybos nepakankamumas";
         }
-        return view ('rezultatas', ['kmi'=>$kmi,1,'salyga'=>$salyga]);
+        if($lytis == 'vyras'){
+            $pma = 66+13.7*$svoris+5*$ugis-6.8*$amzius;
+        }else{
+            $pma = 655+9.6*$svoris+1.7*$ugis-4.7*$amzius;
+        }
+        if($veiksnys =='palaikymas'){
+            $fag = $pma*1.25;
+        }else if($veiksnys = 'prieaugis'){
+            $fag = $pma+1000;
+        }
+        return view ('rezultatas', ['kmi'=>$kmi,'salyga'=>$salyga, 'pma'=>$pma, 'fag'=>$fag]);
 
     }
 
