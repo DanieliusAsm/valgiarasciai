@@ -8,8 +8,9 @@ use App\User;
 
 class UserController extends Controller {
 
-    public function createUser(RegisterRequest $request){
+    public function createUser(RegisterRequest $request) {
         $vartotojas = new User();
+
         $vartotojas->first_name = $request->input("first_name");
         $vartotojas->last_name = $request->input("last_name");
         $vartotojas->gender = $request->input("gender");
@@ -18,13 +19,15 @@ class UserController extends Controller {
         $vartotojas->email = $request->input("email");
         $vartotojas->notes = $request->input("notes");
         $vartotojas->diet = $request->input("diet");
+
         $vartotojas->save();
 
         return redirect('/user');
     }
 
-    public function editUser($id, RegisterRequest $request){
+    public function editUser($id, RegisterRequest $request) {
         $user = User::find($id);
+
         $user->first_name = $request->input("first_name");
         $user->last_name = $request->input("last_name");
         $user->gender = $request->input("gender");
@@ -33,6 +36,7 @@ class UserController extends Controller {
         $user->email = $request->input("email");
         $user->notes = $request->input("notes");
         $user->diet = $request->input("diet");
+
         $user->save();
 
         return redirect('/user');
