@@ -1,8 +1,0 @@
-<?php
-namespace App\Http\Controllers;
-
-class LoginController extends Controllers
-
-public function postSignUp {
-	
-}
