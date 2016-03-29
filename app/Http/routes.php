@@ -36,7 +36,7 @@ Route::get('/user/{id}/delete', 'UserController@deleteUser');
 Route::group(['middleware' => ['web']], function () {
 
 	Route::get('/login', function() {
-		return view('welcome');
+		return view('login');
 	});
 
 	Route::post('/signup', [
