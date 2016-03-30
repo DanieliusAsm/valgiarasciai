@@ -37,7 +37,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('/login', function() {
 		return view('login');
-	});
+	})->name('home');
 
 	Route::post('/signup', [
 		'uses' => 'LoginController@postSignUp',
@@ -49,8 +49,14 @@ Route::group(['middleware' => ['web']], function () {
 		'as' => 'signin'
 	]);
 
+	Route::get('/logout', [
+		'uses' => 'LoginController@getLogout',
+		'as' => 'logout'
+	]);
+
 	Route:: get('/dashboard', [
 		'uses' => 'LoginController@getDashboard',
-		'as' => 'dashboard'
+		'as' => 'dashboard',
+		'middleware' => 'auth'
 	]);
 });
