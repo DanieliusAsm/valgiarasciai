@@ -10,28 +10,27 @@
             <div class="panel-heading">
                 <div class="panel-title">
                     <a class="collapsed" data-toggle="collapse" data-target="% setContentId($index) %" ng-bind="setHeading($index, user)"></a>
-                    <div class="pull-right">Vartotojas sukurtas: 2016-03-30 17:36:27</div>
+                    <div ng-bind="user.created" class="pull-right"></div>
                 </div>
             </div>
             <div id="% getContentId($index) %" class="panel-collapse collapse">
                 <div class="panel-body text-justify">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#1">Kontaktinė informacija</a></li>
-                        <li><a data-toggle="tab" href="#2">Kūno kompleksijos analizė</a></li>
-                        <li><a data-toggle="tab" href="#3">Kraujo tyrimai</a></li>
+                        <li class="active"><a data-toggle="tab" data-target="% setContentId($index, 'contacts') %">Kontaktinė informacija</a></li>
+                        <li><a data-toggle="tab" data-target="% setContentId($index, 'body') %">Kūno kompleksijos analizė</a></li>
+                        <li><a data-toggle="tab" data-target="% setContentId($index, 'blood') %">Kraujo tyrimai</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div id="1" class="tab-pane active">
-                            <p>El. paštas: noname.noname667@gmail.com</p>
-                            <p>Telefono numeris: 860135976</p>
-                            <p>Sudarytos dietos sąrašas:</p>
+                        <div id="% getContentId($index, 'contacts') %" class="tab-pane active">
+                            <p>El. paštas: % user.email %</p>
+                            <p>Telefono numeris: % user.phone %</p>
+                            <p>Sudarytas valgiaraštis:</p>
                         </div>
-                        <div id="2" class="tab-pane">
-                            <p>Kūno komplekcijos analizės informacija</p>
-                            <p>Kūno komplekcijos analizės informacija</p>
+                        <div id="% getContentId($index, 'body') %" class="tab-pane">
+                            <p></p>
                         </div>
-                        <div id="3" class="tab-pane">
-                            <p>Kraujo tyrimu informacija</p>
+                        <div id="% getContentId($index, 'blood') %" class="tab-pane">
+                            <p></p>
                         </div>
                     </div>
                     <h4>Priskirtos pastabos</h4>

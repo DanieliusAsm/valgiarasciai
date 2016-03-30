@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\RegisterRequest;
 use App\User;
+use App\Http\Requests\RegisterRequest;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class UserController extends Controller {
 
     public function createUser(RegisterRequest $request) {
         $vartotojas = new User();
 
-        $vartotojas->first_name = $request->input("first_name");
-        $vartotojas->last_name = $request->input("last_name");
+        $vartotojas->name = $request->input("first_name");
+        $vartotojas->lastname = $request->input("last_name");
         $vartotojas->gender = $request->input("gender");
         $vartotojas->age = $request->input("age");
         $vartotojas->phone = $request->input("phone");
         $vartotojas->email = $request->input("email");
         $vartotojas->notes = $request->input("notes");
         $vartotojas->diet = $request->input("diet");
+        $vartotojas->created = Carbon::now();
 
         $vartotojas->save();
 
@@ -28,8 +30,8 @@ class UserController extends Controller {
     public function editUser($id, RegisterRequest $request) {
         $user = User::find($id);
 
-        $user->first_name = $request->input("first_name");
-        $user->last_name = $request->input("last_name");
+        $user->name = $request->input("first_name");
+        $user->lastname = $request->input("last_name");
         $user->gender = $request->input("gender");
         $user->age = $request->input("age");
         $user->phone = $request->input("phone");
@@ -45,7 +47,7 @@ class UserController extends Controller {
     public function getUsers() {
         $users = User::all();
 
-        return view('userlist', ['users'=>$users]);
+        return view('userlist', ['users' => $users]);
     }
 
     public function deleteUser($id) {

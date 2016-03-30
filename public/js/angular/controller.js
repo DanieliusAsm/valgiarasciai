@@ -1,7 +1,7 @@
 userList.controller('UserlistCtrl', function($scope, $window) {
 
     /**
-     * Variable store column with sort table
+     * Variable store table sorting column name.
      * @type {string}
      */
     $scope.sortKey = "";
@@ -13,7 +13,7 @@ userList.controller('UserlistCtrl', function($scope, $window) {
     $scope.reverseOrder = false;
 
     /**
-     * Method set sort column and order.
+     * Method define how data will be sorted.
      * @param requestSortType
      */
     $scope.sortBy = function(requestSortType) {
@@ -22,35 +22,35 @@ userList.controller('UserlistCtrl', function($scope, $window) {
         } else {
             $scope.reverseOrder = false;
         }
-
         $scope.sortKey = requestSortType;
     }
 
     /**
-     * if value is empty retrun N/A else return value
      * @param value
      * @returns {string}
      */
-    $scope.checkValue = function(value) {
-        return (value) ? value : "N/A";
+    $scope.checkTextValue = function(textValue) {
+        return (textValue) ? value : "Informacijos nėra";
     }
 
     /**
-     * Set content location id.
      * @param index
+     * @param addition
      * @returns {string}
      */
-    $scope.setContentId = function(index) {
-        return '#' + index;
+    $scope.setContentId = function(index, addition) {
+
+        var idLink = '#' + index;
+        return (addition == undefined) ? idLink : idLink + addition;
     }
 
     /**
-     * Assign collapse content for each user panel.
      * @param index
+     * @param addition
      * @returns {*}
      */
-    $scope.getContentId = function(index) {
-        return index;
+    $scope.getContentId = function(index, addition) {
+        return (addition == undefined) ? index : index + addition;
     }
 
     /**
@@ -60,11 +60,11 @@ userList.controller('UserlistCtrl', function($scope, $window) {
      * @returns {string}
      */
     $scope.setHeading = function(index, user) {
-        return '#' + (index + 1) + ' ' + user.first_name + ' ' + user.last_name;
+        return '#' + (index + 1) + ' ' + user.name + ' ' + user.lastname;
     }
 
     /**
-     * Redirect to specific user edit page or delete from list.
+     * Redirect to user edit page or delete from users list.
      * @param user
      * @param action
      */

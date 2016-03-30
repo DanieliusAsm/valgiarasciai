@@ -10,18 +10,18 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('users', function(Blueprint $table){
+    public function up() {
+        Schema::create('users', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name',30);
-            $table->string('last_name',30);
+            $table->string('name', 30);
+            $table->string('lastname', 30);
             $table->string('gender');
             $table->integer('age');
             $table->string('email'); // ->unique() ?
             $table->string('phone');
             $table->string('notes');
             $table->string('diet');
+            $table->dateTime('created');
         });
     }
 
