@@ -6,9 +6,9 @@ Route::get('/', function() {
 
 Route::post('/rezultatas', 'KMIController@calculateKMI');
 
-Route::get('/user', 'UserController@getUsers');
+Route::get('user', 'UserController@getUsers');
 
-Route::get('/user/new',function(){
+Route::get('user/new',function() {
 	return View::make('register');
 });
 

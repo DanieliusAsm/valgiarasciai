@@ -1,0 +1,15 @@
+/*
+* Custom styles for user list.
+*/
+
+#userlist .panel-heading a:after {
+
+}
+
+#userlist .panel-heading .collapsed:after {
+
+}
+
+#userlist .panel a:hover {
+    cursor: pointer;
+}

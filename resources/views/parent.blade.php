@@ -31,7 +31,7 @@
 		<div class="header">
             @yield('header')
         </div>
-        <div class = "content">
+        <div class="container">
             @yield('content')
         </div>
         <div class="footer">
@@ -47,7 +47,7 @@
 		<script src="{{ asset('js/angular.min.js') }}"></script>
 
 		<!-- Import Angular.js models -->
-		<script src="{{ asset('js/angular/model.js') }}"></script>
+		<script src="{{ asset('js/angular/app.js') }}"></script>
 
 		<!-- Import Angular.js controllers -->
 		<script src="{{ asset('js/angular/controller.js') }}"></script>
