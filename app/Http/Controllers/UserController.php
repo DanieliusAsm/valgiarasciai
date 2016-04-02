@@ -11,7 +11,7 @@ class UserController extends Controller {
 
     public function createUser(RegisterRequest $request) {
         $vartotojas = new User();
-
+        
         $vartotojas->name = $request->input("first_name");
         $vartotojas->lastname = $request->input("last_name");
         $vartotojas->gender = $request->input("gender");

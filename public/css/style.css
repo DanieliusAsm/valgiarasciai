@@ -1,15 +1,33 @@
 /*
 * Custom styles for user list.
 */
+body {
+    margin: 1em 0;
+}
+
+#userlist {
+    margin: 1em 0;
+}
 
 #userlist .panel-heading a:after {
-
+    font-family: 'Glyphicons Halflings';
+    content: '\e114';
+    float: right;
+    color: gray;
 }
 
 #userlist .panel-heading .collapsed:after {
+    content: '\e080';
+}
 
+#userlist .panel-heading .panel-title div {
+    margin-right: 0.4em;
 }
 
 #userlist .panel a:hover {
     cursor: pointer;
+}
+
+#userlist .tab-content .tab-pane {
+    margin-top: 1em;
 }

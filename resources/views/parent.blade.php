@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<head>		
+	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,7 +8,7 @@
 		<title>{{ $meta_title or 'Pagrindinis' }}</title>
 		
 		<!-- Bootstrap styles -->
-		<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+		<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
 		<!-- Own styles -->
 		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -46,10 +46,10 @@
 		<!-- Angular.js -->
 		<script src="{{ asset('js/angular.min.js') }}"></script>
 
-		<!-- Import Angular.js models -->
-		<script src="{{ asset('js/angular/app.js') }}"></script>
+		<!-- Import Angular.js modules -->
+		<script src="{{ asset('js/angular/module.js') }}"></script>
 
 		<!-- Import Angular.js controllers -->
-		<script src="{{ asset('js/angular/controller.js') }}"></script>
+		<script src="{{ asset('js/angular/UserlistCtrl.js') }}"></script>
 	</body>
 </html>
