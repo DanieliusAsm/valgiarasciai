@@ -11,7 +11,7 @@
         El. pastas <input type="email" name="email"/><br>
         Ugis <input type="number" name="age"/><br>
         Svoris <input type="number" name="weight"/><br>
-        Rieso apimtis <input type="number" name="wrist"/><br>
+        Rieso apimtis <input type="number" name="wrist"/><br>z
         Liemuo <input type="number" name="waist"/><br>
         Pastabos <input type="text" name="notes"/><br>
         <input type="submit" value="Kurti vartotoja"/>

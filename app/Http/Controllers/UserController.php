@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\BloodRequest;
 use App\User;
+use App\Blood;
 
 class UserController extends Controller {
 
     public function createUser(RegisterRequest $request) {
         $user = new User();
-
         $user->first_name = $request->input("first_name");
         $user->last_name = $request->input("last_name");
         $user->gender = $request->input("gender");
@@ -29,7 +30,6 @@ class UserController extends Controller {
 
     public function editUser($id, RegisterRequest $request) {
         $user = User::find($id);
-
         $user->first_name = $request->input("first_name");
         $user->last_name = $request->input("last_name");
         $user->gender = $request->input("gender");
@@ -64,6 +64,24 @@ class UserController extends Controller {
         if (!empty($user)) {
             $user->delete();
         }
+
+        return redirect('/user');
+    }
+
+    public function addBlood($id, BloodRequest $request){
+        $blood = new Blood();
+
+        $blood->user_id = $id;
+        $blood->biological_age = $request->input("biological_age");
+        $blood->body_fluid = $request->input("body_fluid");
+        $blood->abdominal_fat = $request->input("abdominal_fat");
+        $blood->weight = $request->input("weight");
+        $blood->fat_expression = $request->input("fat_expression");
+        $blood->muscle_mass = $request->input("muscle_mass");
+        $blood->bone_mass = $request->input("bone_mass");
+        $blood->kmi = $request->input("kmi");
+        $blood->calorie_intake = $request->input("calorie_intake");
+        $blood->save();
 
         return redirect('/user');
     }

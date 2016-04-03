@@ -15,10 +15,14 @@ Route::get('/user/new',function(){
 Route::post('user/new/result', 'UserController@createUser');
 
 Route::get('user/{id}/edit', 'UserController@getUser');
-
 Route::post('/user/{id}/edit', 'UserController@editUser');
 
 Route::get('/user/{id}/delete', 'UserController@deleteUser');
+
+Route::get('/user/{id}/data/blood',function($id){
+	return View::make('blooddata', ['id'=>$id]);
+});
+Route::post('/user/{id}/data/blood','UserController@addBlood');
 
 /*
 |--------------------------------------------------------------------------
