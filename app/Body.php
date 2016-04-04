@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Blood extends Model
 {
     public $timestamps = false;
-    public $table = "blood_data";
+    public $table = "body_data";
 }

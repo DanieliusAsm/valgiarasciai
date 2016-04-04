@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBloodDataTable extends Migration
+class CreateBodyDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateBloodDataTable extends Migration
      */
     public function up()
     {
-        Schema::create("blood_data", function(Blueprint $table){
+        Schema::create("body_data", function(Blueprint $table){
             $table->increments("id");
             $table->integer("user_id");
             $table->integer("biological_age");
@@ -34,6 +34,6 @@ class CreateBloodDataTable extends Migration
      */
     public function down()
     {
-        Schema::drop("blood_data");
+        Schema::drop("body_data");
     }
 }

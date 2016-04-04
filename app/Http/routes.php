@@ -19,10 +19,10 @@ Route::post('/user/{id}/edit', 'UserController@editUser');
 
 Route::get('/user/{id}/delete', 'UserController@deleteUser');
 
-Route::get('/user/{id}/data/blood',function($id){
-	return View::make('blooddata', ['id'=>$id]);
+Route::get('/user/{id}/data/body',function($id){
+	return View::make('bodydata', ['id'=>$id]);
 });
-Route::post('/user/{id}/data/blood','UserController@addBlood');
+Route::post('/user/{id}/data/body','UserController@addBody');
 
 /*
 |--------------------------------------------------------------------------

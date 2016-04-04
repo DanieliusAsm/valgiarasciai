@@ -2,7 +2,7 @@
 
 @section('content')
     {{$id}}
-    <form action = "{{ url('/user/'.$id.'/data/blood') }}" method="post">
+    <form action = "{{ url('/user/'.$id.'/data/body') }}" method="post">
         Biologinis amžius <input type="number" name="biological_age"/><br>
         Procentinė kūno skysčių išraiška <input type="text" name="body_fluid"/><br>
         Pilvo riebalų lygis <input type="text" name="abdominal_fat"/><br>

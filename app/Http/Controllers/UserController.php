@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\BloodRequest;
+use App\Http\Requests\BodyRequest;
 use App\User;
-use App\Blood;
+use App\Body;
 
 class UserController extends Controller {
 
@@ -68,20 +68,20 @@ class UserController extends Controller {
         return redirect('/user');
     }
 
-    public function addBlood($id, BloodRequest $request){
-        $blood = new Blood();
+    public function addBody($id, BodyRequest $request){
+        $body = new Body();
 
-        $blood->user_id = $id;
-        $blood->biological_age = $request->input("biological_age");
-        $blood->body_fluid = $request->input("body_fluid");
-        $blood->abdominal_fat = $request->input("abdominal_fat");
-        $blood->weight = $request->input("weight");
-        $blood->fat_expression = $request->input("fat_expression");
-        $blood->muscle_mass = $request->input("muscle_mass");
-        $blood->bone_mass = $request->input("bone_mass");
-        $blood->kmi = $request->input("kmi");
-        $blood->calorie_intake = $request->input("calorie_intake");
-        $blood->save();
+        $body->user_id = $id;
+        $body->biological_age = $request->input("biological_age");
+        $body->body_fluid = $request->input("body_fluid");
+        $body->abdominal_fat = $request->input("abdominal_fat");
+        $body->weight = $request->input("weight");
+        $body->fat_expression = $request->input("fat_expression");
+        $body->muscle_mass = $request->input("muscle_mass");
+        $body->bone_mass = $request->input("bone_mass");
+        $body->kmi = $request->input("kmi");
+        $body->calorie_intake = $request->input("calorie_intake");
+        $body->save();
 
         return redirect('/user');
     }
