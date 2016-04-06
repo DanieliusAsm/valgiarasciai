@@ -21,7 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('email'); // ->unique() ?
             $table->string('phone');
             $table->string('notes');
-            $table->string('diet');
+            $table->integer('weight');
+            $table->integer('wrist');
+            $table->integer('waist');
         });
     }
 

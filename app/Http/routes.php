@@ -19,10 +19,15 @@ Route::post('/user/{id}/edit', 'UserController@editUser');
 
 Route::get('/user/{id}/delete', 'UserController@deleteUser');
 
+
 Route::get('/user/{id}/blood', function($id){
 	return View::make('blood', ['id'=>$id]);
 });
 Route::post('/user/{id}/blood', 'BloodController@addBlood');
+Route::get('/user/{id}/body',function($id){
+	return View::make('bodydata', ['id'=>$id]);
+});
+Route::post('/user/{id}/body','UserController@addBody');
 
 Route::get('/products', 'ProductController@getProducts');
 Route::get('/products/add', function(){
@@ -31,6 +36,7 @@ Route::get('/products/add', function(){
 
 Route::post('/products/add/submit', 'ProductController@addProduct');
 Route::get('/products/{id}/delete', 'ProductController@deleteProduct');
+
 
 /*
 |--------------------------------------------------------------------------
