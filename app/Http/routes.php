@@ -50,5 +50,29 @@ Route::get('/products/{id}/delete', 'ProductController@deleteProduct');
 */
 
 Route::group(['middleware' => ['web']], function () {
-	//
+
+	Route::get('/login', function() {
+		return view('login');
+	})->name('home');
+
+	Route::post('/signup', [
+		'uses' => 'LoginController@postSignUp',
+		'as' => 'signup'
+	]);
+
+	Route::post('/signin', [
+		'uses' => 'LoginController@postSignIn',
+		'as' => 'signin'
+	]);
+
+	Route::get('/logout', [
+		'uses' => 'LoginController@getLogout',
+		'as' => 'logout'
+	]);
+
+	Route:: get('/dashboard', [
+		'uses' => 'LoginController@getDashboard',
+		'as' => 'dashboard',
+		'middleware' => 'auth'
+	]);
 });

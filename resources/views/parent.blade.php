@@ -28,14 +28,12 @@
 		<![endif]-->
 	</head>
 	<body>
-		<div class="header">
-            @yield('header')
-        </div>
-        <div class="container">
-            @yield('content')
-        </div>
-        <div class="footer">
+
+		@include("includes.header")
+		<div class="container">
+			@yield('content')
 		</div>
+		@include("includes.footer")
 
 		<!-- jQuery library -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

@@ -40,7 +40,7 @@ userList.controller('UserlistCtrl', function($scope, $window) {
      * @returns {string}
      */
     $scope.setPanelHeading = function(index, user) {
-        return user.name + ' ' + user.lastname;
+        return user.first_name + ' ' + user.last_name;
     }
 
     /**
