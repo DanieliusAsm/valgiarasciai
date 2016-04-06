@@ -10,12 +10,11 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('users', function(Blueprint $table){
+    public function up() {
+        Schema::create('users', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name',30);
-            $table->string('last_name',30);
+            $table->string('first_name', 30);
+            $table->string('last_name', 30);
             $table->string('gender');
             $table->integer('age');
             $table->string('email'); // ->unique() ?
@@ -24,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->integer('weight');
             $table->integer('wrist');
             $table->integer('waist');
+            $table->dateTime('created');
         });
     }
 

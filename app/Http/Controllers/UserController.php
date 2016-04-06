@@ -6,10 +6,12 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\BodyRequest;
 use App\User;
 use App\Body;
+use Carbon\Carbon;
 
 class UserController extends Controller {
 
     public function createUser(RegisterRequest $request) {
+
         $user = new User();
         $user->first_name = $request->input("first_name");
         $user->last_name = $request->input("last_name");
@@ -21,6 +23,7 @@ class UserController extends Controller {
         $user->weight = $request->input("weight");
         $user->wrist = $request->input("wrist");
         $user-> waist = $request->input("waist");
+        $user->created = Carbon::now();
 
         $user->save();
 
@@ -29,6 +32,7 @@ class UserController extends Controller {
 
     public function editUser($id, RegisterRequest $request) {
         $user = User::find($id);
+
         $user->first_name = $request->input("first_name");
         $user->last_name = $request->input("last_name");
         $user->gender = $request->input("gender");
@@ -48,7 +52,7 @@ class UserController extends Controller {
     public function getUsers() {
         $users = User::all();
 
-        return view('userlist', ['users'=>$users]);
+        return view('userlist', ['users' => $users]);
     }
 
     public function getUser($id) {
