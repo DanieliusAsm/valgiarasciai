@@ -20,6 +20,11 @@ Route::post('/user/{id}/edit', 'UserController@editUser');
 
 Route::get('/user/{id}/delete', 'UserController@deleteUser');
 
+Route::get('/user/{id}/blood', function($id){
+	return View::make('blood', ['id'=>$id]);
+});
+
+Route::post('/user/{id}/blood', 'BloodController@addBlood');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
