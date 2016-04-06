@@ -15,19 +15,21 @@ Route::get('/user/new',function(){
 Route::post('user/new/result', 'UserController@createUser');
 
 Route::get('user/{id}/edit', 'UserController@getUser');
-
 Route::post('/user/{id}/edit', 'UserController@editUser');
 
 Route::get('/user/{id}/delete', 'UserController@deleteUser');
 
-Route::get('/products', 'ProductController@getProducts');
+Route::get('/user/{id}/blood', function($id){
+	return View::make('blood', ['id'=>$id]);
+});
+Route::post('/user/{id}/blood', 'BloodController@addBlood');
 
+Route::get('/products', 'ProductController@getProducts');
 Route::get('/products/add', function(){
 	return View::make('/addproduct');
 });
 
 Route::post('/products/add/submit', 'ProductController@addProduct');
-
 Route::get('/products/{id}/delete', 'ProductController@deleteProduct');
 
 /*
