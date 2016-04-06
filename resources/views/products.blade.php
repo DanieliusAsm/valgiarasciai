@@ -1,11 +1,10 @@
 @extends('parent', ['meta_title'=>'Produktų sąrašas'])
 
 @section('content')
-<div class="container" ng-app="UserlistApp" ng-controller="UserlistCtrl">
+<div ng-app="ProductApp" ng-controller="ProductCtrl">
 
     <a href="{{ url('/products/add') }}">Pridėti produktą</a>
-
-        <table width="900" ng-init="products={{htmlspecialchars(json_encode($products))}}">
+        <table width="900" ng-init="products={{ htmlspecialchars(json_encode($products)) }}">
             <tr>
                 <th>Eil. Nr</th>
                 <th>Pavadinimas</th>
@@ -18,16 +17,16 @@
             </tr>
             <tr ng-repeat="product in products">
                 <td ng-bind="$index+1"></td>
-                <td ng-bind="checkValue(product.pavadinimas)"></td>
-                <td ng-bind="checkValue(product.baltymai)"></td>
-                <td ng-bind="checkValue(product.riebalai)"></td>
-                <td ng-bind="checkValue(product.angliavandeniai)"></td>
-                <td ng-bind="checkValue(product.cholesterolis)"></td>
-                <td ng-bind="checkValue(product.eVerte)"></td>
-                <td ng-bind="checkValue(product.tipas)"></td>
+                <td ng-bind="product.pavadinimas"></td>
+                <td ng-bind="product.baltymai"></td>
+                <td ng-bind="product.riebalai"></td>
+                <td ng-bind="product.angliavandeniai"></td>
+                <td ng-bind="product.cholesterolis"></td>
+                <td ng-bind="product.eVerte"></td>
+                <td ng-bind="product.tipas"></td>
 
-                <td><a href="" ng-click="redirect(product.id, 'edit')">Redaguoti</a></td>
-                <td><a href="" ng-click="redirect(product.id, 'delete')">Pašalinti</a></td>
+                <!--<td><a href="" ng-click="redirect(product.id, 'edit')">Redaguoti</a></td>
+                <td><a href="" ng-click="redirect(product.id, 'delete')">Pašalinti</a></td>-->
             </tr>
           <!--@foreach($products as $product)
             <tr>
