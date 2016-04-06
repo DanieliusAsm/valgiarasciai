@@ -20,6 +20,16 @@ Route::post('/user/{id}/edit', 'UserController@editUser');
 
 Route::get('/user/{id}/delete', 'UserController@deleteUser');
 
+Route::get('/products', 'ProductController@getProducts');
+
+Route::get('/products/add', function(){
+	return View::make('/addproduct');
+});
+
+Route::post('/products/add/submit', 'ProductController@addProduct');
+
+Route::get('/products/{id}/delete', 'ProductController@deleteProduct');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
