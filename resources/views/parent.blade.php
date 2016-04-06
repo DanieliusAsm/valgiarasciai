@@ -32,8 +32,7 @@
 		<div class="container">
 			@yield('content')
 		</div>
-		<div class="footer">
-		</div>
+		@include("includes.footer")
 
 		<!-- jQuery library -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
