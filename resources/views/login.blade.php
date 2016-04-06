@@ -1,8 +1,4 @@
-@extends('layouts.master')
-
-@section('title')
-Login
-@endsection
+@extends('parent',['meta_title'=>'Login'])
 
 @section('content')
 <div class="row">

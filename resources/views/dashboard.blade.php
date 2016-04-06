@@ -1,8 +1,4 @@
-@extends('layouts.master')
-
-@section('title')
-Dashboard - Control Panel
-@endsection
+@extends('parent',['meta_title'=>'Dashboard'])
 
 @section('content')
 <h3>Dashboard</h3>

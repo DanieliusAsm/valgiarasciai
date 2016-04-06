@@ -28,13 +28,11 @@
 		<![endif]-->
 	</head>
 	<body>
-		<div class="header">
-            @yield('header')
-        </div>
-        <div class = "content">
-            @yield('content')
-        </div>
-        <div class="footer">
+		@include("includes.header")
+		<div class="container">
+			@yield('content')
+		</div>
+		<div class="footer">
 		</div>
 
 		<!-- jQuery library -->
