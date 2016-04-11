@@ -1,7 +1,7 @@
 @extends('parent', ['meta_title'=>'Produkto pridėjimas'])
 
 @section('content')
-
+    
     <form action="{{ url('/products/add/submit') }}" method="post" >
         Pavadinimas <input type="text" name="pavadinimas"/><br>
         Baltymai <input type="text" name="baltymai"/><br>
