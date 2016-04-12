@@ -26,6 +26,8 @@ class ProductController extends Controller
     public function getProducts()
     {
         $products = Product::all();
+        $tipas = Product::select('tipas')->distinct()->get();
+
 
         return view('products',['products'=>$products]);
     }

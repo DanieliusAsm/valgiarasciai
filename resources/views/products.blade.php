@@ -91,17 +91,15 @@
                 <th>Angliavandeniai</th>
                 <th>Cholesterolis</th>
                 <th>Energinė Verte</th>
-                <th>Tipas</th>
             </tr>
             <tr ng-repeat="product in products | orderBy:id:true | filter:search | filter:tipas">
-                <td ng-bind="product.id"></td>
+                <td ng-bind="$index+1"></td>
                 <td ng-bind="product.pavadinimas"></td>
                 <td ng-bind="product.baltymai"></td>
                 <td ng-bind="product.riebalai"></td>
                 <td ng-bind="product.angliavandeniai"></td>
                 <td ng-bind="product.cholesterolis"></td>
                 <td ng-bind="product.eVerte"></td>
-                <td ng-bind="product.tipas"></td>
 
                 <td><a href="" ng-click="setRoute(product, 'edit')">Redaguoti</a></td>
                 <td><a href="" ng-click="setRoute(product, 'delete')">Pašalinti</a></td>
