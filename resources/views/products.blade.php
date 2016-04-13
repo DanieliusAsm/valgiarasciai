@@ -6,7 +6,7 @@
 
 <div ng-app="ProductApp" ng-controller="ProductCtrl" >
     <!--Navigation bar-->
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default" role="navigation" >
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" >
                 <span class="sr-only">Toggle</span>
@@ -14,10 +14,23 @@
 
             </button>
             <a class="navbar-brand" href="#">Produktų grupės</a>
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav">
-                    <li><input type="radio" value="sriuba" ng-model="tipas"/>Sriuba</li>
-                </ul>
+            <div class="collapse navbar-collapse navbar-ex1-collapse" >
+                <div ng-init="tipai={{ htmlspecialchars(json_encode($tipas)) }}">
+
+                    <ul>
+                        <li ng-repeat="tipas in tipai" >
+                            <input type="radio" ng-bind="tipas.tipas" ng-model="tipas" value="gg" />
+                        </li>
+                    </ul>
+                </div>
+                <!--ul class="nav navbar-nav" ng-repeat="tipas in tipai" >
+
+
+
+
+                    <li ng-bind="tipas.tipas" ><input type="radio" value="@{{tipas.tipas}}" ng-model="tipas"/>@{{tipas.tipas}}</li>
+
+                </ul-->
             </div>
         </div>
     </nav>
@@ -43,9 +56,9 @@
 
     </ul>
 
-        @foreach ($tipas as $type)
+       <!-- @foreach ($tipas as $type)
                 {{$type}}
-        @endforeach
+        @endforeach-->
     <!--Product List-->
         <table width="900" ng-init="products={{ htmlspecialchars(json_encode($products)) }}">
             <tr>
