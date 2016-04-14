@@ -1,28 +1,38 @@
 @extends('parent', ['meta_title'=>'Produktų sąrašas'])
 
 @section('content')
-<div class="content">
+<div class="row">
     <div ng-app="ProductApp" ng-controller="ProductCtrl">
     <!--Navigation bar-->
-        <div id="product-navigation">
-
-            <label class="yellow"><input type="radio" name="toggle" value="" ng-model="product_type"><span>Rodyti viską</span></label>
-            @foreach($tipas as $type)
-            <label class="yellow"><input type="radio" name="toggle" value="{{$type->tipas}}" ng-model="product_type"><span>{{$type->tipas}}</span></label>
-            @endforeach
+        <div class="col-md-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Filtravimas</h3>
+                </div>
+                <div class="panel-body">
+                    <label class="yellow">
+                        <input type="radio" name="toggle" value="" ng-model="product_type">Rodyti viską
+                    </label><br>
+                    @foreach($tipas as $type)
+                    <label class="yellow">
+                        <input type="radio" name="toggle" value="{{$type->tipas}}" ng-model="product_type">{{$type->tipas}}
+                    </label><br>
+                    @endforeach
+                </div>
+            </div>
         </div>
     <!--Search-->
+        <div class ="col-md-9">
         <div id="usersearch" class="search-container">
-
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i class="glyphicon glyphicon-search"></i>
-            </span>
-                <input type="text" class="form-control"  ng-model="search"/></br>
-            <span class="input-group-btn">
-                <a href="{{ url('/products/add') }}" class="btn btn-primary">Pridėti produktą</a></br>
-            </span>
-        </div>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-search"></i>
+                </span>
+                    <input type="text" class="form-control"  ng-model="search"/></br>
+                <span class="input-group-btn">
+                    <a href="{{ url('/products/add') }}" class="btn btn-primary">Pridėti produktą</a></br>
+                </span>
+            </div>
         </div>
 
     <!--Product List-->
@@ -46,14 +56,20 @@
                 <td ng-bind="product.cholesterolis"></td>
                 <td ng-bind="product.eVerte"></td>
 
-                <td class="pull-right">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                    <a href="" ng-click="setRoute(product, 'edit')">Redaguoti</a>
-                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    <a href="" ng-click="setRoute(product, 'delete')">Pašalinti</a>
+                <td>
+                    <div class="text-center">
+                        <a href="" ng-click="setRoute(product, 'edit')">
+                            <i class="glyphicon glyphicon-edit" aria-hidden="true" aria-label="Redaguoti"></i>
+                        </a>
+                        <a href="" ng-click="setRoute(product, 'delete')">
+                            <i class="glyphicon glyphicon-trash" aria-hidden="true" aria-label="Pašalinti"></i>
+                        </a>
+                    </div>
                 </td>
             </tr>
         </table>
     </div>
-    @endsection
+    </div>
+</div>
+@stop
 
