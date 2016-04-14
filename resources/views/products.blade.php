@@ -1,66 +1,32 @@
 @extends('parent', ['meta_title'=>'Produktų sąrašas'])
 
 @section('content')
-
-
-
-<div ng-app="ProductApp" ng-controller="ProductCtrl" >
+<div class="content">
+    <div ng-app="ProductApp" ng-controller="ProductCtrl">
     <!--Navigation bar-->
-    <nav class="navbar navbar-default" role="navigation" >
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" >
-                <span class="sr-only">Toggle</span>
-                <span class="icon-bar"></span>
+        <div id="product-navigation">
 
-            </button>
-            <a class="navbar-brand" href="#">Produktų grupės</a>
-            <div class="collapse navbar-collapse navbar-ex1-collapse" >
-                <div ng-init="tipai={{ htmlspecialchars(json_encode($tipas)) }}">
-
-                    <ul>
-                        <li ng-repeat="tipas in tipai" >
-                            <input type="radio" ng-bind="tipas.tipas" ng-model="tipas" value="gg" />
-                        </li>
-                    </ul>
-                </div>
-                <!--ul class="nav navbar-nav" ng-repeat="tipas in tipai" >
-
-
-
-
-                    <li ng-bind="tipas.tipas" ><input type="radio" value="@{{tipas.tipas}}" ng-model="tipas"/>@{{tipas.tipas}}</li>
-
-                </ul-->
-            </div>
+            <label class="yellow"><input type="radio" name="toggle" value="" ng-model="product_type"><span>Rodyti viską</span></label>
+            @foreach($tipas as $type)
+            <label class="yellow"><input type="radio" name="toggle" value="{{$type->tipas}}" ng-model="product_type"><span>{{$type->tipas}}</span></label>
+            @endforeach
         </div>
-    </nav>
     <!--Search-->
-    <div id="usersearch" class="search-container">
+        <div id="usersearch" class="search-container">
+
         <div class="input-group">
             <span class="input-group-addon">
                 <i class="glyphicon glyphicon-search"></i>
             </span>
                 <input type="text" class="form-control"  ng-model="search"/></br>
-                    <span class="input-group-btn">
-                        <a href="{{ url('/products/add') }}" class="btn btn-primary">Pridėti produktą</a></br>
-                    </span>
+            <span class="input-group-btn">
+                <a href="{{ url('/products/add') }}" class="btn btn-primary">Pridėti produktą</a></br>
+            </span>
         </div>
-    </div>
-    <ul>
-        <li>
-            <input type="radio" value="" ng-model="tipas"/>Rodyti viską
-        </li>
-        <li>
-            <input type="radio" value="sriuba" ng-model="tipas"/>Sriuba
-        </li>
+        </div>
 
-    </ul>
-
-       <!-- @foreach ($tipas as $type)
-                {{$type}}
-        @endforeach-->
     <!--Product List-->
-        <table width="900" ng-init="products={{ htmlspecialchars(json_encode($products)) }}">
+        <table class="table" ng-init="products={{ htmlspecialchars(json_encode($products)) }}">
             <tr>
                 <th>Eil. Nr</th>
                 <th>Pavadinimas</th>
@@ -71,7 +37,7 @@
                 <th>Energinė Verte</th>
                 <th>Veiksmai</th>
             </tr>
-            <tr ng-repeat="product in products | orderBy:id:true | filter:search | filter:tipas">
+            <tr ng-repeat="product in products | orderBy:id:true | filter:search | filter:product_type">
                 <td ng-bind="$index+1"></td>
                 <td ng-bind="product.pavadinimas"></td>
                 <td ng-bind="product.baltymai"></td>
@@ -89,4 +55,5 @@
             </tr>
         </table>
     </div>
-@stop
+    @endsection
+

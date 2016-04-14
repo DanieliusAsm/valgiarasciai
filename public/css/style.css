@@ -31,3 +31,47 @@ body {
 #userlist .tab-content .tab-pane {
     margin-top: 1em;
 }
+
+#product-navigation {
+    margin:4px;
+    float:left;
+
+}
+
+#product-navigation label {
+    float:left;
+    width:15%;
+    margin:4px;
+    background-color:#EFEFEF;
+    border-radius:4px;
+    border:1px solid #D0D0D0;
+    overflow:hidden;
+    font-weight: 100;
+    cursor: pointer;
+}
+#product-navigation label:hover{
+    background-color:#2e6da4;
+}
+
+#product-navigation label span {
+    color:#F7F7F7;
+    text-align:center;
+    font-size: 15px;
+    padding:13px 0px;
+    display:block;
+}
+
+#product-navigation label input {
+    position:absolute;
+    top:-20px;
+}
+
+#product-navigation input:checked + span {
+    background-color:	#224d74;
+    color:#F7F7F7;
+}
+
+#product-navigation .yellow {
+    background-color:#337ab7;
+    color:#333;
+}
