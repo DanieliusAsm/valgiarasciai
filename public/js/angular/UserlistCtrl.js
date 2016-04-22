@@ -51,4 +51,17 @@ userList.controller('UserlistCtrl', function($scope, $window) {
     $scope.setRoute = function(user, route) {
         $window.location.href += '/' + user.id + '/' + route;
     }
+
+    /**
+     * Get Blood or Body object by ID
+     * */
+    $scope.getItemById = function(items, id){
+        for(var i=0;i<items.length;i++){
+            var item = items[i];
+            if(item.user_id == id){
+                return item;
+            }
+        }
+        return null;
+    }
 });

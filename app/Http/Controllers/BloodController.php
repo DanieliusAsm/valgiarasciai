@@ -18,7 +18,7 @@ class BloodController extends Controller
         $blood->mtl = $request->input('mtl');
         $blood->dtl = $request->input('dtl');
         $blood->trig = $request->input('trig');
-        $blood->gliukozė = $request->input('gliukozė');
+        $blood->gliukoze = $request->input('gliukozė');
         $blood->save();
        return redirect('/user');
     }

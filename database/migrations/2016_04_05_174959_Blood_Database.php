@@ -9,7 +9,6 @@ class BloodDatabase extends Migration
     public function up()
     {
         Schema::create("blood_database", function(Blueprint $table){
-
             $table->increments("id");
             $table->integer("user_id");
             $table->integer("arterija");
@@ -18,8 +17,7 @@ class BloodDatabase extends Migration
             $table->integer("mtl");
             $table->integer("dtl");
             $table->integer("trig");
-            $table->integer("gliukozė");
-
+            $table->integer("gliukoze");
         });
     }
 

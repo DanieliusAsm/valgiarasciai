@@ -6,6 +6,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\BodyRequest;
 use App\User;
 use App\Body;
+use App\Blood;
 use Carbon\Carbon;
 
 class UserController extends Controller {
@@ -19,6 +20,7 @@ class UserController extends Controller {
         $user->age = $request->input("age");
         $user->phone = $request->input("phone");
         $user->email = $request->input("email");
+        $user->height = $request->input("height");
         $user->notes = $request->input("notes");
         $user->weight = $request->input("weight");
         $user->wrist = $request->input("wrist");
@@ -39,6 +41,7 @@ class UserController extends Controller {
         $user->age = $request->input("age");
         $user->phone = $request->input("phone");
         $user->email = $request->input("email");
+        $user->height = $request->input("height");
         $user->notes = $request->input("notes");
         $user->weight = $request->input("weight");
         $user->wrist = $request->input("wrist");
@@ -51,14 +54,18 @@ class UserController extends Controller {
 	
     public function getUsers() {
         $users = User::all();
+        $blood = Blood::all();
+        $body = Body::all();
 
-        return view('userlist', ['users' => $users]);
+        return view('userlist', ['users' => $users,'blood'=>$blood,'body'=>$body]);
     }
 
     public function getUser($id) {
         $user = User::find($id);
+        $blood = Blood::find($id);
+        $body = Body::find($id);
 
-        return view('edituser', ['user'=>$user,'id'=>$id]);
+        return view('edituser', ['user'=>$user,'id'=>$id,'blood'=>$blood,'body'=>$body]);
     }
 
     public function deleteUser($id) {

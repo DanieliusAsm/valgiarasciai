@@ -1,7 +1,6 @@
 @extends('parent',['meta_title'=>'Kūno kompleksijos analizė'])
 
 @section('content')
-    {{$id}}
     <form action = "{{ url('/user/'.$id.'/body') }}" method="post">
         Biologinis amžius <input type="number" name="biological_age"/><br>
         Procentinė kūno skysčių išraiška <input type="text" name="body_fluid"/><br>

@@ -6,12 +6,12 @@
         Vardas <input type="text" name="first_name" value ="{{$user->first_name}}"/><br>
         Pavardė <input type="text" name="last_name" value ="{{$user->last_name}}"/><br>
         @if($user->gender == "male")
-            <input type="radio" name="gender" value="male" checked>Vyras</input>
-            <input type ="radio" name="gender" value="female">Moteris</input><br>
+            <input type="radio" name="gender" value="vyras" checked>Vyras</input>
+            <input type ="radio" name="gender" value="moteris">Moteris</input><br>
         @else
 
-            <input type="radio" name="gender" value="male">Vyras</input>
-            <input type ="radio" name="gender" value="female" checked>Moteris</input><br>
+            <input type="radio" name="gender" value="vyras">Vyras</input>
+            <input type ="radio" name="gender" value="moteris" checked>Moteris</input><br>
         @endif
         Amzius <input type="number" name="age" value ="{{$user->age}}"/><br>
         Telefono numeris <input type="text" name="phone" value ="{{$user->phone}}"/><br>
