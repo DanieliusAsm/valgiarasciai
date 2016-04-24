@@ -1,7 +1,7 @@
 @extends('parent', ['meta_title'=>'Produktų sąrašas'])
 
 @section('content')
-<div class="row">
+<div class="row" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     <div ng-app="ProductApp" ng-controller="ProductCtrl">
     <!--Navigation bar-->
         <div class="col-md-3">
@@ -10,11 +10,11 @@
                     <h3 class="panel-title">Filtravimas</h3>
                 </div>
                 <div class="panel-body">
-                    <label class="yellow">
+                    <label>
                         <input type="radio" name="toggle" value="" ng-model="product_type">Rodyti viską
                     </label><br>
-                    @foreach($tipas as $type)
-                    <label class="yellow">
+                    @foreach($productoTipas as $type)
+                    <label>
                         <input type="radio" name="toggle" value="{{$type->tipas}}" ng-model="product_type">{{$type->tipas}}
                     </label><br>
                     @endforeach
@@ -58,11 +58,11 @@
 
                 <td>
                     <div class="text-center">
-                        <a href="" ng-click="setRoute(product, 'edit')">
-                            <i class="glyphicon glyphicon-edit" aria-hidden="true" aria-label="Redaguoti"></i>
+                        <a href="" ng-click="setRoute(product, 'edit')" style="text-decoration: none">
+                            <i class="glyphicon glyphicon-edit" aria-label="Redaguoti"></i>
                         </a>
-                        <a href="" ng-click="setRoute(product, 'delete')">
-                            <i class="glyphicon glyphicon-trash" aria-hidden="true" aria-label="Pašalinti"></i>
+                        <a href="" ng-click="confirmAction(product)" style="text-decoration: none">
+                            <i class="glyphicon glyphicon-trash" aria-label="Pašalinti"></i>
                         </a>
                     </div>
                 </td>

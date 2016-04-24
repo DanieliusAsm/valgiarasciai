@@ -30,11 +30,11 @@ Route::get('/user/{id}/body',function($id){
 Route::post('/user/{id}/body','UserController@addBody');
 
 Route::get('/products', 'ProductController@getProducts');
-Route::get('/products/add', function(){
-	return View::make('/addproduct');
-});
-
+Route::get('/products/add', 'ProductController@addProductView');
 Route::post('/products/add/submit', 'ProductController@addProduct');
+
+Route::get('/products/{id}/edit', 'ProductController@getProduct');
+Route::post('/products/{id}/edit', 'ProductController@editProduct');
 Route::get('/products/{id}/delete', 'ProductController@deleteProduct');
 
 
