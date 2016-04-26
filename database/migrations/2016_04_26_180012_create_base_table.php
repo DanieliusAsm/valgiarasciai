@@ -19,6 +19,7 @@ class CreateBaseTable extends Migration
             $table->integer('weight');
             $table->integer('wrist');
             $table->integer('waist');
+            $table->dateTime('created');
         });
     }
 

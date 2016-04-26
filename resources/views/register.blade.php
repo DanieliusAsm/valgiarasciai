@@ -22,10 +22,11 @@
                                     <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Petrauskas"/>
                                 </div>
                                 <div class="form-group">
-                                    <label class="radio-inline">
+                                    <label for="gender">Lytis</label><br/>
+                                    <label class="radio-inline" id="gender">
                                         <input type="radio" name="gender" value="vyras" checked>Vyras</input>
                                     </label>
-                                    <label class="radio-inline">
+                                    <label class="radio-inline" id="gender">
                                         <input type ="radio" name="gender" value="moteris">Moteris</input>
                                     </label>
                                 </div>

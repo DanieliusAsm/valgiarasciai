@@ -24,6 +24,7 @@ class CreateBodyDataTable extends Migration
             $table->string("bone_mass");
             $table->integer("kmi");
             $table->string("calorie_intake");
+            $table->dateTime('created');
         });
     }
 
