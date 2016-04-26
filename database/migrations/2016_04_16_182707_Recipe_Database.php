@@ -13,6 +13,7 @@ class RecipeDatabase extends Migration
             $table->increments("id");
             $table->integer("product_id");
             $table->text("recipe");
+            $table->text("image_name");
         });
     }
 

@@ -8,11 +8,6 @@ use App\Http\Requests\ProductRequest;
 use App\Product;
 use App\Recipe;
 
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
-use Illuminate\Http\Response;
-
-
 class ProductController extends Controller
     {
     public function addProduct(ProductRequest $request){
@@ -46,14 +41,17 @@ class ProductController extends Controller
         return redirect('/products');
     }
     public function addRecipe($id, RecipeRequest $request){
-        $recipe = new Recipe();
-        $recipe->product_id=$id;
-        $recipe->recipe=$request->input('recipe');
-        $recipe->save();
+
         if($request->hasFile('file') and $request->file('file')->isValid()){
+            $recipe = new Recipe();
+            $recipe->product_id=$id;
+            $recipe->recipe=$request->input('recipe');
+            $recipe->image_name=$request->file('file')->getClientOriginalName();
+            $recipe->save();
             $file = $request->file('file');
             $file->move('img', $file->getClientOriginalName());
             echo '<img src="' . asset('img/') .'/'.   $file->getClientOriginalName() . '">';
         }
+
 }
 }
