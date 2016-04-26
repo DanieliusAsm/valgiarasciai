@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RecipeRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use App\Product;
+use App\Recipe;
+
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Http\Response;
+
 
 class ProductController extends Controller
     {
@@ -38,4 +45,15 @@ class ProductController extends Controller
 
         return redirect('/products');
     }
+    public function addRecipe($id, RecipeRequest $request){
+        $recipe = new Recipe();
+        $recipe->product_id=$id;
+        $recipe->recipe=$request->input('recipe');
+        $recipe->save();
+        if($request->hasFile('file') and $request->file('file')->isValid()){
+            $file = $request->file('file');
+            $file->move('img', $file->getClientOriginalName());
+            echo '<img src="' . asset('img/') .'/'.   $file->getClientOriginalName() . '">';
+        }
+}
 }
