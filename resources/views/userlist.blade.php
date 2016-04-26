@@ -73,17 +73,17 @@
                             <div id="<@ getContentId($index, 'blood') @>" class="tab-pane" ng-init="blood = getItemById(bloods,user.id)">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <p>Arterinis kraujo spaudimas: <@ blood.arterija @></p>
-                                        <p>Pulsas: <@ blood.pulsas @></p>
-                                        <p>Bendras cholesterolis: <@ blood.cholesterolis @></p>
+                                        <p>Arterinis kraujo spaudimas: <@ blood.blood_pressure @></p>
+                                        <p>Pulsas: <@ blood.pulse @></p>
+                                        <p>Bendras cholesterolis: <@ blood.cholesterol @></p>
                                     </div>
                                     <div class="col-sm-4">
                                         <p>Mažo tankio lipoproteinai: <@ blood.mtl @></p>
                                         <p>Didelio tankio lipoproteinai: <@ blood.dtl @></p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <p>Trigliceridai: <@ blood.trig @></p>
-                                        <p>Gliukozė: <@ blood.gliukoze @></p>
+                                        <p>Trigliceridai: <@ blood.triglycerides @></p>
+                                        <p>Gliukozė: <@ blood.glucose @></p>
                                     </div>
                                 </div>
                             </div>

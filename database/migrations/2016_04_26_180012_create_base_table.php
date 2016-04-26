@@ -12,7 +12,7 @@ class CreateBaseTable extends Migration
      */
     public function up()
     {
-        Scheme::create('base_data', function(Blueprint $table){
+        Schema::create('base_data', function(Blueprint $table){
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('height');

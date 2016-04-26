@@ -27,7 +27,7 @@ class UserController extends Controller {
 
         UserController::addBase($user->id,$request);
         UserController::addBody($user->id,$request);
-        UserController::assBlood($user->id,$request);
+        UserController::addBlood($user->id,$request);
 
         return redirect('/user');
     }
