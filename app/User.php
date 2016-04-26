@@ -13,4 +13,7 @@ class User extends Model{
     public function body(){
         return $this->hasMany('App\Body');
     }
+    public function base(){
+        return $this->hasMany('App\Base');
+    }
 }

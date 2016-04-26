@@ -16,14 +16,13 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(ProductsTableSeeder::class);
-
-        $users = factory(User::class,20)
+        factory(User::class,20)
             ->create()
             ->each(function($user){
                 $user->blood()->save(factory(App\Blood::class)->make());
                 $user->body()->save(factory(App\Body::class)->make());
+                $user->base()->save(factory(App\Base::class)->make());
             });
-
 
         Model::reguard();
     }

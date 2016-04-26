@@ -17,17 +17,21 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'last_name'=>$faker->lastName,
         'gender'=>'vyras',
         'age'=>$faker->randomDigit,
-        'height'=>$faker->randomDigit,
         'email'=>$faker->safeEmail,
         'phone'=>$faker->phoneNumber,
+        'diet'=>$faker->sentence(2),
         'notes'=>$faker->sentence(5),
-        'weight'=>$faker->randomDigit,
-        'wrist'=>$faker->randomDigit,
-        'waist'=>$faker->randomDigit,
         'created'=>$faker->time("Y:m:d H:i:s")
     ];
 });
-
+$factory->define(App\Base::class, function(Faker\Generator $faker){
+    return [
+        'height'=>$faker->randomDigit,
+        'weight'=>$faker->randomDigit,
+        'wrist'=>$faker->randomDigit,
+        'waist'=>$faker->randomDigit,
+    ];
+});
 $factory->define(App\Blood::class, function(Faker\Generator $faker){
     return [
         'arterija'=>$faker->randomDigit,
