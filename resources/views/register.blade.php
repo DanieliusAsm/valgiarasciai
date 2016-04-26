@@ -155,33 +155,33 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="blood_pressure">Arterinis kraujo spaudimas</label>
-                                    <inpute type="number" class="form-control" name="blood_pressure" id="blood_pressure" placeholder=""/>
+                                    <input type="number" class="form-control" name="blood_pressure" id="blood_pressure" placeholder=""/>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Pulsas</label>
-                                    <inpute type="number" class="form-control" name="pulse" id="pulse" placeholder=""/>
+                                    <input type="number" class="form-control" name="pulse" id="pulse" placeholder=""/>
                                 </div>
                                 <div class="form-group">
                                     <label for="cholesterol">Bendras cholesterolis</label>
-                                    <inpute type="number" class="form-control" name="cholesterol" id="cholesterol" placeholder=""/>
+                                    <input type="number" class="form-control" name="cholesterol" id="cholesterol" placeholder=""/>
                                 </div>
                                 <div class="form-group">
                                     <label for="mtl">MTL</label>
-                                    <inpute type="number" class="form-control" name="mtl" id="mtl" placeholder=""/>
+                                    <input type="number" class="form-control" name="mtl" id="mtl" placeholder=""/>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="dtl">DTL</label>
-                                    <inpute type="number" class="form-control" name="dtl" id="dtl" placeholder=""/>
+                                    <input type="number" class="form-control" name="dtl" id="dtl" placeholder=""/>
                                 </div>
                                 <div class="form-group">
                                     <label for="triglycerides">Trigliceridai</label>
-                                    <inpute type="number" class="form-control" name="triglycerides" id="triglycerides" placeholder=""/>
+                                    <input type="number" class="form-control" name="triglycerides" id="triglycerides" placeholder=""/>
                                 </div>
                                 <div class="form-group">
                                     <label for="glucose">Gliukozė</label>
-                                    <inpute type="number" class="form-control" name="glucose" id="glucose" placeholder=""/>
+                                    <input type="number" class="form-control" name="glucose" id="glucose" placeholder=""/>
                                 </div>
                             </div>
                         </div>
