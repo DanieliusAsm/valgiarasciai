@@ -95,4 +95,17 @@ class UserController extends Controller {
 
         return redirect('/user');
     }
+    public function addBlood($id, BloodRequest $request){
+        $blood = new Blood();
+        $blood->user_id = $id;
+        $blood->blood_pressure = $request->input('blood_pressure');
+        $blood->pulse = $request->input('pulse');
+        $blood->cholesterol = $request->input('cholesterol');
+        $blood->mtl = $request->input('mtl');
+        $blood->dtl = $request->input('dtl');
+        $blood->triglycerides = $request->input('triglycerides');
+        $blood->glucose = $request->input('glucose');
+        $blood->save();
+        return redirect('/user');
+    }
 }

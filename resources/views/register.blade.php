@@ -12,7 +12,7 @@
                 <div id="collapseUser" class="panel-collapse collapse in">
                     <div class="panel-body text-justify">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="first_name">Vardas</label>
                                     <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Petras"/>
@@ -33,6 +33,8 @@
                                     <label for="age">Amžius</label>
                                     <input type="number" class="form-control" name="age" id="age" placeholder="30"/>
                                 </div>
+                            </div>
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="phone">Telefono numeris</label>
                                     <input type="text" class="form-control" name="phone" id="phone" placeholder="860652656"/>
@@ -57,7 +59,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-title">
-                        <a role="button" data-toggle="collapse" data-target="#collapseBase" aria-expanded="true">Pagrindinė informacija</a>
+                        <a role="button" data-toggle="collapse" data-target="#collapseBase" aria-expanded="true">Papildoma informacija</a>
                     </div>
                 </div>
                 <div id="collapseBase" class="panel-collapse collapse">
@@ -149,8 +151,37 @@
                 <div id="collapseBlood" class="panel-collapse collapse">
                     <div class="panel-body text-justify">
                         <div class="row">
-                            <div class="col-sm-4">
-
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="blood_pressure">Arterinis kraujo spaudimas</label>
+                                    <inpute type="number" class="form-control" name="blood_pressure" id="blood_pressure" placeholder=""/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Pulsas</label>
+                                    <inpute type="number" class="form-control" name="pulse" id="pulse" placeholder=""/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cholesterol">Bendras cholesterolis</label>
+                                    <inpute type="number" class="form-control" name="cholesterol" id="cholesterol" placeholder=""/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mtl">MTL</label>
+                                    <inpute type="number" class="form-control" name="mtl" id="mtl" placeholder=""/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="dtl">DTL</label>
+                                    <inpute type="number" class="form-control" name="dtl" id="dtl" placeholder=""/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="triglycerides">Trigliceridai</label>
+                                    <inpute type="number" class="form-control" name="triglycerides" id="triglycerides" placeholder=""/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="glucose">Gliukozė</label>
+                                    <inpute type="number" class="form-control" name="glucose" id="glucose" placeholder=""/>
+                                </div>
                             </div>
                         </div>
                     </div>
