@@ -53,11 +53,9 @@ class UserController extends Controller {
     }
 	
     public function getUsers() {
-        $users = User::all();
-        $blood = Blood::all();
-        $body = Body::all();
+        $users = User::with("base")->with("blood")->with("body")->all();
 
-        return view('userlist', ['users' => $users,'blood'=>$blood,'body'=>$body]);
+        return view('userlist', ['users' => $users]);
     }
 
     public function getUser($id) {

@@ -10,6 +10,7 @@
 | database. Just tell the factory how a default model should look.
 |
 */
+use Carbon\Carbon;
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
@@ -21,7 +22,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'phone'=>$faker->phoneNumber,
         'diet'=>$faker->sentence(2),
         'notes'=>$faker->sentence(5),
-        'created'=>$faker->time("Y:m:d H:i:s")
+        'created'=>Carbon::now()
     ];
 });
 $factory->define(App\Base::class, function(Faker\Generator $faker){
@@ -30,17 +31,19 @@ $factory->define(App\Base::class, function(Faker\Generator $faker){
         'weight'=>$faker->randomDigit,
         'wrist'=>$faker->randomDigit,
         'waist'=>$faker->randomDigit,
+        'created'=>Carbon::now()
     ];
 });
 $factory->define(App\Blood::class, function(Faker\Generator $faker){
     return [
-        'arterija'=>$faker->randomDigit,
-        'pulsas'=>$faker->randomDigit,
-        'cholesterolis'=>$faker->randomDigit,
+        'blood_pressure'=>$faker->randomDigit,
+        'pulse'=>$faker->randomDigit,
+        'cholesterol'=>$faker->randomDigit,
         'mtl'=>$faker->randomDigit,
         'dtl'=>$faker->randomDigit,
-        'trig'=>$faker->randomDigit,
-        'gliukoze'=>$faker->randomDigit
+        'triglycerides'=>$faker->randomDigit,
+        'glucose'=>$faker->randomDigit,
+        'created'=>Carbon::now()
     ];
 });
 
@@ -55,5 +58,6 @@ $factory->define(App\Body::class, function(Faker\Generator $faker){
         'bone_mass'=>$faker->randomDigit,
         'kmi'=>$faker->randomDigit,
         'calorie_intake'=>$faker->randomDigit,
+        'created'=>Carbon::now()
     ];
 });
