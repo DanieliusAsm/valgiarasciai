@@ -2,7 +2,7 @@
 @section('content')
     <div class="row">
     <div class="col-sm-4">
-        <form action="{{ url('/recipe/'.$id.'/add') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ url('/products/'.$id.'/addrecipe') }}" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="Nuotrauka">Receptas:</label>
                 <textarea class="form-control" id="Nuotrauka" rows="4" name="recipe"></textarea>

@@ -37,8 +37,8 @@ Route::get('/products/{id}/edit', 'ProductController@getProduct');
 Route::post('/products/{id}/edit', 'ProductController@editProduct');
 Route::get('/products/{id}/delete', 'ProductController@deleteProduct');
 
-Route::post('/recipe/{id}/add', 'ProductController@addRecipe');
-Route::get('/recipe/{id}/add', function($id){
+Route::post('/products/{id}/addrecipe', 'ProductController@addRecipe');
+Route::get('/products/{id}/addrecipe', function($id){
 	return View::make('recipe', ['id'=>$id]);
 });
 /*
