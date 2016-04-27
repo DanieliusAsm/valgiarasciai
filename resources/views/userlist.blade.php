@@ -15,7 +15,7 @@
             </div>
         </div>
         <!-- Userlist -->
-        <div id="userlist" class="panel-group" ng-init="users={{ htmlspecialchars(json_encode($users)) }}">
+        <div id="userlist" class="panel-group" ng-init="users={{ htmlspecialchars(json_encode($users)) }}; bloods={{htmlspecialchars(json_encode($blood))}}; bodies={{htmlspecialchars(json_encode($body))}}">
             <div class="panel panel-default" ng-repeat="user in users | filter:search">
                 <!-- User panel heading -->
                 <div class="panel-heading">
@@ -28,7 +28,7 @@
                 <!-- User panel content section -->
                 <div id="<@ getContentId($index) @>" class="panel-collapse collapse">
                     <div class="panel-body text-justify">
-                        <p>Pritaikytos dietos sąrašas:</p>
+                        <p>Pritaikyta dieta:</p>
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" data-target="<@ setContentId($index, 'contacts') @>">Bendri duomenys</a></li>
                             <li><a data-toggle="tab" data-target="<@ setContentId($index, 'body') @>">Kūno kompleksijos analizė</a></li>
@@ -38,51 +38,52 @@
                             <div id="<@ getContentId($index, 'contacts') @>" class="tab-pane active">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <p>Lytis:</p>
-                                        <p>Amžius:</p>
+                                        <p>Lytis: <@ user.gender @></p>
+                                        <p>Amžius: <@ user.age @></p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <p>Ūgis:</p>
-                                        <p>Svoris:</p>
+                                        <p>Ūgis: <@ user.height @> </p>
+                                        <p>Svoris:<@ user.weight @></p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <p>Riešo apimtis:</p>
-                                        <p>Liemuo:</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="<@ getContentId($index, 'body') @>" class="tab-pane">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <p>Biologinis amžius:</p>
-                                        <p>Procentinė kūno skysčių išraiška:</p>
-                                        <p>Pilvo riebalų lygis:</p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p>Procentinė riebalų išraiška:</p>
-                                        <p>Raumenų masė:</p>
-                                        <p>Kaulų masė:</p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p>Kūno masės indeksas:</p>
-                                        <p>Dienos kalorijų norma:</p>
+                                        <p>Riešo apimtis: <@ user.wrist @></p>
+                                        <p>Liemuo: <@ user.waist @></p>
                                     </div>
                                 </div>
                             </div>
-                            <div id="<@ getContentId($index, 'blood') @>" class="tab-pane">
+                            <div id="<@ getContentId($index, 'body') @>" class="tab-pane" ng-init="body = getItemById(bodies,user.id)">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <p>Arterinis kraujo spaudimas:</p>
-                                        <p>Pulsas:</p>
-                                        <p>Bendras cholesterolis:</p>
+                                        <p>Biologinis amžius: <@ body.biological_age @></p>
+                                        <p>Procentinė kūno skysčių išraiška: <@ body.body_fluid @></p>
+                                        <p>Pilvo riebalų lygis: <@ body.abdominal_fat @></p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <p>Mažo tankio lipoproteinai:</p>
-                                        <p>Didelio tankio lipoproteinai:</p>
+                                        <p>Svoris: <@ body.weight @></p>
+                                        <p>Procentinė riebalų išraiška: <@ body.fat_expression @></p>
+                                        <p>Raumenų masė: <@ body.muscle_mass @></p>
                                     </div>
                                     <div class="col-sm-4">
-                                        <p>Trigliceridai:</p>
-                                        <p>Gliukozė:</p>
+                                        <p>Kaulų masė: <@ body.bone_mass @></p>
+                                        <p>Kūno masės indeksas: <@ body.kmi @></p>
+                                        <p>Dienos kalorijų norma: <@ body.calorie_intake @></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="<@ getContentId($index, 'blood') @>" class="tab-pane" ng-init="blood = getItemById(bloods,user.id)">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p>Arterinis kraujo spaudimas: <@ blood.blood_pressure @></p>
+                                        <p>Pulsas: <@ blood.pulse @></p>
+                                        <p>Bendras cholesterolis: <@ blood.cholesterol @></p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p>Mažo tankio lipoproteinai: <@ blood.mtl @></p>
+                                        <p>Didelio tankio lipoproteinai: <@ blood.dtl @></p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p>Trigliceridai: <@ blood.triglycerides @></p>
+                                        <p>Gliukozė: <@ blood.glucose @></p>
                                     </div>
                                 </div>
                             </div>

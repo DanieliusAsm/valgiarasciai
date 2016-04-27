@@ -17,12 +17,10 @@ class CreateUsersTable extends Migration
             $table->string('last_name', 30);
             $table->string('gender');
             $table->integer('age');
+            $table->string('diet');
             $table->string('email'); // ->unique() ?
             $table->string('phone');
             $table->string('notes');
-            $table->integer('weight');
-            $table->integer('wrist');
-            $table->integer('waist');
             $table->dateTime('created');
         });
     }
