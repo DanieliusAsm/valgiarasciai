@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 sign-up">
         <h3>Sign Up</h3>
         <form action="{{ route('signup') }}" method="post">
             <div class="form-group">
@@ -21,7 +21,7 @@
             <input type="hidden" name="_token" value="{{ Session::token() }}">
         </form>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 sign-in">
         <h3>Sign In</h3>
         <form action="{{ route('signin') }}" method="post">
             <div class="form-group">
