@@ -9,6 +9,10 @@ body {
     margin: 1em 0;
 }
 
+#userlist thead tr th {
+    border: none;
+}
+
 #userlist .panel-heading a:after {
     font-family: 'Glyphicons Halflings';
     content: '\e114';

@@ -22,7 +22,7 @@ class CreateBloodTable extends Migration
             $table->integer("dtl");
             $table->integer("triglycerides");
             $table->integer("glucose");
-            $table->dateTime('created');
+            $table->date('created');
         });
     }
 

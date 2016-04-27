@@ -15,7 +15,7 @@
             </div>
         </div>
         <!-- Userlist -->
-        <div id="userlist" class="panel-group" ng-init="users={{ htmlspecialchars(json_encode($users)) }}; bloods={{htmlspecialchars(json_encode($blood))}}; bodies={{htmlspecialchars(json_encode($body))}}">
+        <div id="userlist" class="panel-group" ng-init="users={{ htmlspecialchars(json_encode($users)) }}">
             <div class="panel panel-default" ng-repeat="user in users | filter:search">
                 <!-- User panel heading -->
                 <div class="panel-heading">
@@ -36,62 +36,136 @@
                         </ul>
                         <div class="tab-content">
                             <div id="<@ getContentId($index, 'contacts') @>" class="tab-pane active">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <p>Lytis: <@ user.gender @></p>
-                                        <p>Amžius: <@ user.age @></p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p>Ūgis: <@ user.height @> </p>
-                                        <p>Svoris:<@ user.weight @></p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p>Riešo apimtis: <@ user.wrist @></p>
-                                        <p>Liemuo: <@ user.waist @></p>
-                                    </div>
-                                </div>
+                                <table class="table table-hover table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Antraštė</th>
+                                            <th ng-repeat="base in user.base" ng-bind="base.created"></th>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <td>Lytis</td>
+                                        <td ng-bind="user.gender"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amžius</td>
+                                        <td ng-bind="user.age"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ūgis</td>
+                                        <td ng-repeat="base in user.base" ng-bind="base.height"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Svoris</td>
+                                        <td ng-repeat="base in user.base" ng-bind="base.weight"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Riešo apimtis</td>
+                                        <td ng-repeat="base in user.base" ng-bind="base.wrist"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Liemuo</td>
+                                        <td ng-repeat="base in user.base" ng-bind="base.waist"></td>
+                                    </tr>
+                                </table>
                             </div>
-                            <div id="<@ getContentId($index, 'body') @>" class="tab-pane" ng-init="body = getItemById(bodies,user.id)">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <p>Biologinis amžius: <@ body.biological_age @></p>
-                                        <p>Procentinė kūno skysčių išraiška: <@ body.body_fluid @></p>
-                                        <p>Pilvo riebalų lygis: <@ body.abdominal_fat @></p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p>Svoris: <@ body.weight @></p>
-                                        <p>Procentinė riebalų išraiška: <@ body.fat_expression @></p>
-                                        <p>Raumenų masė: <@ body.muscle_mass @></p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p>Kaulų masė: <@ body.bone_mass @></p>
-                                        <p>Kūno masės indeksas: <@ body.kmi @></p>
-                                        <p>Dienos kalorijų norma: <@ body.calorie_intake @></p>
-                                    </div>
-                                </div>
+                            <div id="<@ getContentId($index, 'body') @>" class="tab-pane">
+                                <table class="table table-hover table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Antraštė</th>
+                                            <th ng-repeat="body in user.body" ng-bind="body.created"></th>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <td>Biologinis amžius</td>
+                                        <td ng-repeat="body in user.body" ng-bind="body.biological_age"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Procentinė kūno skysčių išraiška</td>
+                                        <td ng-repeat="body in user.body" ng-bind="body.body_fluid"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pilvo riebalų lygis</td>
+                                        <td ng-repeat="body in user.body" ng-bind="body.abdominal_fat"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Svoris</td>
+                                        <td ng-repeat="body in user.body" ng-bind="body.weight"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Procentinė riebalų išraiška</td>
+                                        <td ng-repeat="body in user.body" ng-bind="body.fat_expression"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Raumenų masė</td>
+                                        <td ng-repeat="body in user.body" ng-bind="body.muscle_mass"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kaulų masė</td>
+                                        <td ng-repeat="body in user.body" ng-bind="body.bone_mass"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kūno masės indeksas</td>
+                                        <td ng-repeat="body in user.body" ng-bind="body.kmi"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dienos kalorijų norma</td>
+                                        <td ng-repeat="body in user.body" ng-bind="body.calorie_intake"></td>
+                                    </tr>
+                                </table>
                             </div>
-                            <div id="<@ getContentId($index, 'blood') @>" class="tab-pane" ng-init="blood = getItemById(bloods,user.id)">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <p>Arterinis kraujo spaudimas: <@ blood.blood_pressure @></p>
-                                        <p>Pulsas: <@ blood.pulse @></p>
-                                        <p>Bendras cholesterolis: <@ blood.cholesterol @></p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p>Mažo tankio lipoproteinai: <@ blood.mtl @></p>
-                                        <p>Didelio tankio lipoproteinai: <@ blood.dtl @></p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <p>Trigliceridai: <@ blood.triglycerides @></p>
-                                        <p>Gliukozė: <@ blood.glucose @></p>
-                                    </div>
-                                </div>
+                            <div id="<@ getContentId($index, 'blood') @>" class="tab-pane">
+                                <table class="table table-hover table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Antraštė</th>
+                                            <th ng-repeat="blood in user.blood" ng-bind="blood.created"></th>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <td>Arterinis kraujo spaudimas</td>
+                                        <td ng-repeat="blood in user.blood" ng-bind="blood.blood_pressure"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pulsas</td>
+                                        <td ng-repeat="blood in user.blood" ng-bind="blood.pulse"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bendras cholesterolis</td>
+                                        <td ng-repeat="blood in user.blood" ng-bind="blood.cholesterol"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mažo tankio lipoproteinai</td>
+                                        <td ng-repeat="blood in user.blood" ng-bind="blood.mtl"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Didelio tankio lipoproteinai</td>
+                                        <td ng-repeat="blood in user.blood" ng-bind="blood.dtl"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Trigliceridai</td>
+                                        <td ng-repeat="blood in user.blood" ng-bind="blood.triglycerides"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gliukozė</td>
+                                        <td ng-repeat="blood in user.blood" ng-bind="blood.glucose"></td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                         <div class="text-container">
                             <h4>Kontaktinė informacija</h4>
-                            <p>El. paštas: <@ user.email @> </p>
-                            <p>Telefono numeris: <@ user.phone @></p>
+                            <table class="table table-hover table-condensed">
+                                <tr>
+                                    <td>El. paštas</td>
+                                    <td ng-bind="user.email"></td>
+                                </tr>
+                                <tr>
+                                    <td>Telefono numeris</td>
+                                    <td ng-bind="user.phone"></td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="text-container">
                             <h4>Priskirtos pastabos</h4>
