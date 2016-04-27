@@ -53,7 +53,7 @@ class UserController extends Controller {
     }
 	
     public function getUsers() {
-        $users = User::with("base")->with("blood")->with("body")->all();
+        $users = User::with("base")->with("blood")->with("body")->get();
 
         return view('userlist', ['users' => $users]);
     }
