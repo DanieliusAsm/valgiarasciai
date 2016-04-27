@@ -48,7 +48,6 @@ class UserController extends Controller {
         $user-> waist = $request->input("waist");
 
         $user->save();
-
         return redirect('/user');
     }
 	
