@@ -37,7 +37,10 @@ Route::get('/products/add', function(){
 Route::post('/products/add/submit', 'ProductController@addProduct');
 Route::get('/products/{id}/delete', 'ProductController@deleteProduct');
 
-
+Route::post('/recipe/{id}/add', 'ProductController@addRecipe');
+Route::get('/recipe/{id}/add', function($id){
+	return View::make('recipe', ['id'=>$id]);
+});
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -74,5 +77,5 @@ Route::group(['middleware' => ['web']], function () {
 		'uses' => 'LoginController@getDashboard',
 		'as' => 'dashboard',
 		'middleware' => 'auth'
-	]);
+		]);
 });
