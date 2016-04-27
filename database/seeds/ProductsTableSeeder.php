@@ -542,3 +542,5 @@ class ProductsTableSeeder extends Seeder
 (527, 'Džiovinti petražolių lapai ', 20.60, 3.80, 53.30, 0.00, 153.00, 'Prieskoniai');");
     }
 }
+
+
