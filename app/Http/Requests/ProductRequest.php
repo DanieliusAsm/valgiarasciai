@@ -13,12 +13,14 @@ class ProductRequest extends Request
     public function rules()
     {
         return [
-            'baltymai' => 'required'
+            'pavadinimas' => 'required',
+            'tipas' => 'required'
         ];
     }
     public function messages(){
         return[
-            'baltymai.required' => 'Iveskite baltimus'
+            'pavadinimas.required' => 'Iveskite pavadinimas',
+            'tipas.required' => 'Nustatykite produkto tipą'
         ];
     }
 }
