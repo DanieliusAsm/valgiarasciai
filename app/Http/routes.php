@@ -1,5 +1,9 @@
 <?php
 
+Route::get('/home', function() {
+	return View::make('home');
+});
+
 Route::get('/calculator', function() {
 	return View::make('calculator');
 });
