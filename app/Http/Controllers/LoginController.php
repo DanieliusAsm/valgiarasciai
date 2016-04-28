@@ -27,16 +27,23 @@ class LoginController extends Controller
 
 		$admin->save();
 
+		Auth::login($admin);
+
 		return redirect()->route('dashboard');
 	}
 
 	public function postSignIn(Request $request) {
 
+		$this->validate($request, [
+			'email' => 'required',
+			'password' => 'required'
+		]);
+
 		if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
 			return redirect()->route('dashboard');
 		}
 
-		return redirect()->back();
+		return redirect()->back()->withErrors(['email' => 'Klaidingai įvestas el. pašto adresas arba slaptažodis']);
 
 	}
 
