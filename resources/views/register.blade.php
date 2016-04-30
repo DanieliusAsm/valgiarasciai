@@ -15,12 +15,12 @@
                             <div class="col-sm-6">
                                 <div class="form-group @if($errors->has('first_name')) has-error @endif">
                                     <label class="control-label" for="first_name">*Vardas</label>
-                                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Petras"/>
+                                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Petras" value="{{old('first_name')}}"/>
                                     @if($errors->has('first_name')) <p class="help-block">{{$errors->first('first_name')}}</p>@endif
                                 </div>
                                 <div class="form-group @if($errors->has('last_name')) has-error @endif">
                                     <label class="control-label" for="last_name">*Pavardė</label>
-                                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Petrauskas"/>
+                                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Petrauskas" value="{{old('last_name')}}"/>
                                     @if($errors->has('last_name')) <p class="help-block">{{$errors->first('last_name')}}</p>@endif
                                 </div>
                                 <div class="form-group">
@@ -34,19 +34,19 @@
                                 </div>
                                 <div class="form-group @if($errors->has('age')) has-error @endif">
                                     <label class="control-label" for="age">*Amžius</label>
-                                    <input type="number" class="form-control" name="age" id="age" placeholder="30"/>
+                                    <input type="number" class="form-control" name="age" id="age" placeholder="30"  value="{{old('age')}}"/>
                                     @if($errors->has('age')) <p class="help-block">{{$errors->first('age')}}</p>@endif
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group @if($errors->has('phone')) has-error @endif">
                                     <label class="control-label" for="phone">*Telefono numeris</label>
-                                    <input type="text" class="form-control" name="phone" id="phone" placeholder="860652656"/>
+                                    <input type="text" class="form-control" name="phone" id="phone" placeholder="860652656" value="{{old('phone')}}"/>
                                     @if($errors->has('phone')) <p class="help-block">{{$errors->first('phone')}}</p>@endif
                                 </div>
                                 <div class="form-group @if($errors->has('email')) has-error @endif">
                                     <label class="control-label" for="email">*El. paštas</label>
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="petras@example.com"/>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="petras@example.com" value="{{old('email')}}"/>
                                     @if($errors->has('email')) <p class="help-block">{{$errors->first('email')}}</p>@endif
                                 </div>
                                 <div class="form-group">
