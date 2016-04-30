@@ -8,12 +8,6 @@ Route::post('/calculator', 'CalculatorController@calculate');
 
 Route::get('user', 'UserController@getUsers');
 
-Route::get('user/new',function() {
-	return View::make('register');
-});
-
-Route::post('user/new/result', 'UserController@createUser');
-
 Route::get('user/{id}/edit', 'UserController@getUser');
 Route::post('/user/{id}/edit', 'UserController@editUser');
 
@@ -78,4 +72,9 @@ Route::group(['middleware' => ['web']], function () {
 		'as' => 'dashboard',
 		'middleware' => 'auth'
 		]);
+
+	Route::get('user/new',function() {
+		return View::make('register');
+	});
+	Route::post('user/new/result', 'UserController@createUser');
 });

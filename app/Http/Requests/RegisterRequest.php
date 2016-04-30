@@ -25,14 +25,20 @@ class RegisterRequest extends Request
     {
         return [
             'first_name' => 'required',
-            'last_name' => 'required'
+            'last_name' => 'required',
+            'age' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email'
         ];
     }
 
     public function messages(){
         return [
-            'first_name.required'=>'Neivestas Vardas',
-            'last_name.required'=>'Neivesta Pavarde'
+            'first_name.required'=>'Neįvestas Vardas',
+            'last_name.required'=>'Neįvesta Pavarde',
+            'age.required'=>'Neįvestas amžius',
+            'phone.required'=>'Neįvestas telefono numeris',
+            'email.required'=>'Neįvestas el. paštas',
         ];
     }
 }

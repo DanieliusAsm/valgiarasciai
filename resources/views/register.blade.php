@@ -13,13 +13,15 @@
                     <div class="panel-body text-justify">
                         <div class="row">
                             <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="first_name">Vardas</label>
+                                <div class="form-group @if($errors->has('first_name')) has-error @endif">
+                                    <label class="control-label" for="first_name">*Vardas</label>
                                     <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Petras"/>
+                                    @if($errors->has('first_name')) <p class="help-block">{{$errors->first('first_name')}}</p>@endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="last_name">Pavardė</label>
+                                <div class="form-group @if($errors->has('last_name')) has-error @endif">
+                                    <label class="control-label" for="last_name">*Pavardė</label>
                                     <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Petrauskas"/>
+                                    @if($errors->has('last_name')) <p class="help-block">{{$errors->first('last_name')}}</p>@endif
                                 </div>
                                 <div class="form-group">
                                     <label for="gender">Lytis</label><br/>
@@ -30,19 +32,22 @@
                                         <input type ="radio" name="gender" value="moteris">Moteris</input>
                                     </label>
                                 </div>
-                                <div class="form-group">
-                                    <label for="age">Amžius</label>
+                                <div class="form-group @if($errors->has('age')) has-error @endif">
+                                    <label class="control-label" for="age">*Amžius</label>
                                     <input type="number" class="form-control" name="age" id="age" placeholder="30"/>
+                                    @if($errors->has('age')) <p class="help-block">{{$errors->first('age')}}</p>@endif
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="phone">Telefono numeris</label>
+                                <div class="form-group @if($errors->has('phone')) has-error @endif">
+                                    <label class="control-label" for="phone">*Telefono numeris</label>
                                     <input type="text" class="form-control" name="phone" id="phone" placeholder="860652656"/>
+                                    @if($errors->has('phone')) <p class="help-block">{{$errors->first('phone')}}</p>@endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="email">El. paštas</label>
+                                <div class="form-group @if($errors->has('email')) has-error @endif">
+                                    <label class="control-label" for="email">*El. paštas</label>
                                     <input type="email" class="form-control" name="email" id="email" placeholder="petras@example.com"/>
+                                    @if($errors->has('email')) <p class="help-block">{{$errors->first('email')}}</p>@endif
                                 </div>
                                 <div class="form-group">
                                     <label for="diet">Pritaikyta dieta</label>
@@ -191,5 +196,6 @@
         </div>
 
         <button type="submit" class="btn btn-primary center-block">Kurti vartotoją</button>
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
     </form>
 @stop
