@@ -13,6 +13,7 @@
             </div>
             <input type="hidden" value="{{ csrf_token() }}" name="_token">
             <button type="submit" class="btn btn-primary">Patvirtinti</button>
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
         </form>
     </div>
     </div>

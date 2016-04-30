@@ -10,6 +10,7 @@
         <input type="radio" name="veiksnys1" value="palaikymas" checked> Svorio palaikymui<br>
         <input type="radio" name="veiksnys1" value="prieaugis"> Svorio prieaugiui<br>
         <input type="submit" value="Skaičiuoti KMI">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
     </form>
     @if(!empty($kmi))
         {{$kmi}}(kg/m²)<br>

@@ -18,6 +18,7 @@
             @endforeach
         </datalist><br>
         <input type="submit" value="Išsaugoti pakeitimus"/>
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
     </form>
     @endif
 @stop
