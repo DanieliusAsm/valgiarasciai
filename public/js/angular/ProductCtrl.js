@@ -12,8 +12,20 @@ productList.controller('ProductCtrl', function($scope, $window) {
             $window.location.href += '/' + product.id + '/delete';
         }
     }
-    $scope.open = function (product) {
-        alert(product.pavadinimas);
-        return product.pavadinimas;
+
+    $scope.showReceptas = function (product) {
+
+       var recipe = product.recipe;
+       var recipeText = recipe.recipe;
+       var title = product.pavadinimas;
+       var image = recipe.image_name;
+
+        $('#myModal').on('show.bs.modal', function () {
+
+            var modal = $(this);
+            modal.find('.modal-title').text(title + ' receptas');
+            modal.find('.modal-body .row .col-sm-4 img').attr('src','http://localhost/valgiarasciu-programa/public/img/'+ image);
+            modal.find('.modal-body .row .col-sm-8 pre').text(recipeText);
+        });
     }
 });

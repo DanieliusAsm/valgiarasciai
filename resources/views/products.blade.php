@@ -66,7 +66,7 @@
                                 <a href="" ng-click="confirmAction(product)" style="text-decoration: none">
                                     <i class="glyphicon glyphicon-trash" aria-label="Pašalinti"></i>
                                 </a>
-                                <a data-toggle="modal" data-target="#myModal" href="" ng-click="open(product)" ng-if="product.recipe"
+                                <a ng-click="showReceptas(product)" data-toggle="modal" data-target="#myModal" href="" ng-if="product.recipe"
                                    style="text-decoration: none">
                                     <i class="glyphicon glyphicon-list-alt" aria-label="Pašalinti"></i>
                                 </a>
@@ -82,17 +82,15 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">
-                                            <@ product.pavadinimas @>
-                                        </h4>
+                                        <h4 class="modal-title"></h4>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="row">{{products->pavadinimas}}
+                                        <div class="row">
                                             <div class="col-sm-4">
-                                                <@ product.pavadinimas @>
+                                                <img src="" width="100%" heigh="">
                                             </div>
                                             <div class="col-sm-8">
-                                                <@ product.pavadinimas @>
+                                                <pre>
                                             </div>
                                         </div>
                                     </div>
@@ -105,6 +103,7 @@
                         </div>
                     </tr>
                 </table>
+            </div>
             </div>
         </div>
     </div>
