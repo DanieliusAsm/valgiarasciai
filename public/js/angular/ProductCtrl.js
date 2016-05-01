@@ -12,4 +12,8 @@ productList.controller('ProductCtrl', function($scope, $window) {
             $window.location.href += '/' + product.id + '/delete';
         }
     }
+    $scope.open = function (product) {
+        alert(product.pavadinimas);
+        return product.pavadinimas;
+    }
 });
