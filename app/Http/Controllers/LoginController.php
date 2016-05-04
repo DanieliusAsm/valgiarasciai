@@ -11,7 +11,6 @@ class LoginController extends Controller
 {
 	public function getDashboard() {
 		return view('dashboard');
-
 	}
 
     public function postSignUp(Request $request) {

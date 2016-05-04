@@ -59,11 +59,9 @@ class UserController extends Controller {
     }
 
     public function getUser($id) {
-        $user = User::find($id);
-        $blood = Blood::find($id);
-        $body = Body::find($id);
+        $user = User::find($id)->with("base")->with("blood")->with("body")->get();
 
-        return view('edituser', ['user'=>$user,'id'=>$id,'blood'=>$blood,'body'=>$body]);
+        return view('register', ['user'=>$user,'id'=>$id]);
     }
 
     public function deleteUser($id) {
