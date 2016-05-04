@@ -59,6 +59,8 @@ class ProductController extends Controller
             $file = $request->file('file');
             $file->move('img', $file->getClientOriginalName());
             echo '<img src="' . asset('img/') .'/'.   $file->getClientOriginalName() . '">';
+
+            return redirect('/products');
         }
     }
 

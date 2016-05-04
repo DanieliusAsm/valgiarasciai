@@ -22,9 +22,12 @@ productList.controller('ProductCtrl', function($scope, $window) {
 
         $('#myModal').on('show.bs.modal', function () {
 
+            var loc = window.location.href;
+            var rootUrl = loc.substring(0, loc.lastIndexOf("/"));
             var modal = $(this);
+
             modal.find('.modal-title').text(title + ' receptas');
-            modal.find('.modal-body .row .col-sm-4 img').attr('src','http://localhost/valgiarasciu-programa/public/img/'+ image);
+            modal.find('.modal-body .row .col-sm-4 img').attr('src', rootUrl + '/img/' + image);
             modal.find('.modal-body .row .col-sm-8 pre').text(recipeText);
         });
     }
