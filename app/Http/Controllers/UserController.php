@@ -48,7 +48,6 @@ class UserController extends Controller {
         $user-> waist = $request->input("waist");
 
         $user->save();
-
         return redirect('/user');
     }
 	
@@ -83,7 +82,7 @@ class UserController extends Controller {
             $base->weight = $request->input("weight");
             $base->wrist = $request->input("wrist");
             $base->waist = $request->input("waist");
-            $base->created = Carbon::now();
+            $base->created = Carbon::now()->format('Y-m-d');
             $base->save();
         }
     }
@@ -101,7 +100,7 @@ class UserController extends Controller {
             $body->bone_mass = $request->input("bone_mass");
             $body->kmi = $request->input("kmi");
             $body->calorie_intake = $request->input("calorie_intake");
-            $body->created = Carbon::now();
+            $body->created = Carbon::now()->format('Y-m-d');
             $body->save();
         }
     }
@@ -117,7 +116,7 @@ class UserController extends Controller {
             $blood->dtl = $request->input('dtl');
             $blood->triglycerides = $request->input('triglycerides');
             $blood->glucose = $request->input('glucose');
-            $blood->created = Carbon::now();
+            $blood->created = Carbon::now()->format('Y-m-d');
             $blood->save();
         }
     }

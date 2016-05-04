@@ -7,9 +7,6 @@
 		
 		<title>{{ $meta_title or 'Pagrindinis' }}</title>
 
-		<!-- Bootstrap styles -->
-		<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-
 		<!-- Own styles -->
 		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
