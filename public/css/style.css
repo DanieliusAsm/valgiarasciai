@@ -4,6 +4,13 @@
 body {
     margin: 1em 0;
 }
+.panel .panel-heading{
+    padding: 0px;
+}
+.panel .panel-heading .clickable{
+    padding: 10px 15px;
+    text-decoration: none;
+}
 
 #userlist {
     margin: 1em 0;
@@ -19,7 +26,9 @@ body {
     float: right;
     color: gray;
 }
-
+#userlist .panel .panel-heading{
+    padding: 10px 15px;
+}
 #userlist .panel-heading .collapsed:after {
     content: '\e080';
 }

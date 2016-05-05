@@ -6,18 +6,6 @@ Route::get('/calculator', function() {
 
 Route::post('/calculator', 'CalculatorController@calculate');
 
-Route::get('/user/{id}/delete', 'UserController@deleteUser');
-
-
-Route::get('/user/{id}/blood', function($id){
-	return View::make('blood', ['id'=>$id]);
-});
-Route::post('/user/{id}/blood', 'UserController@addBlood');
-Route::get('/user/{id}/body',function($id){
-	return View::make('bodydata', ['id'=>$id]);
-});
-Route::post('/user/{id}/body','UserController@addBody');
-
 Route::get('/products', 'ProductController@getProducts');
 Route::get('/products/add', 'ProductController@addProductView');
 Route::post('/products/add/submit', 'ProductController@addProduct');
@@ -70,7 +58,6 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('user', [
 		'uses'=>'UserController@getUsers',
-		'middleware' => 'auth'
 	]);
 
 	Route::get('user/new',function() {
@@ -85,4 +72,5 @@ Route::group(['middleware' => ['web']], function () {
 		'uses' => 'UserController@addUserData',
 		'as' => 'addUserData'
 	]);
+	Route::get('/user/{id}/delete', 'UserController@deleteUser');
 });

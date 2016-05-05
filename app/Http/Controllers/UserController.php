@@ -31,25 +31,6 @@ class UserController extends Controller {
 
         return redirect('/user');
     }
-
-    public function editUser($id, RegisterRequest $request) {
-        $user = User::find($id);
-
-        $user->first_name = $request->input("first_name");
-        $user->last_name = $request->input("last_name");
-        $user->gender = $request->input("gender");
-        $user->age = $request->input("age");
-        $user->phone = $request->input("phone");
-        $user->email = $request->input("email");
-        $user->height = $request->input("height");
-        $user->notes = $request->input("notes");
-        $user->weight = $request->input("weight");
-        $user->wrist = $request->input("wrist");
-        $user-> waist = $request->input("waist");
-
-        $user->save();
-        return redirect('/user');
-    }
 	
     public function getUsers() {
         $users = User::with("base")->with("blood")->with("body")->get();
@@ -58,9 +39,56 @@ class UserController extends Controller {
     }
 
     public function getUser($id) {
-        $user = User::find($id)->with("base")->with("blood")->with("body")->get();
+        $user = User::with("base")->with("blood")->with("body")->get()->find($id);
 
-        return view('register', ['user'=>$user,'id'=>$id]);
+        return view('edituser', ['user'=>$user,'id'=>$id]);
+    }
+
+    public function editUser($id, RegisterRequest $request) {
+        $user = User::with("base")->with("blood")->with("body")->get()->find($id);
+
+        $user->first_name = $request->input("first_name");
+        $user->last_name = $request->input("last_name");
+        $user->gender = $request->input("gender");
+        $user->age = $request->input("age");
+        $user->phone = $request->input("phone");
+        $user->email = $request->input("email");
+        $user->diet = $request->input("diet");
+        $user->notes = $request->input("notes");
+
+        $item = $request->get("height","");
+        for($i=0;$i<count($item);$i++){
+            $user->base[$i]->height = $request->get("height","")[$i];
+            $user->base[$i]->weight = $request->get("weight","")[$i];
+            $user->base[$i]->wrist = $request->get("wrist","")[$i];
+            $user->base[$i]->waist = $request->get("waist","")[$i];
+        }
+
+        $item = $request->get("biological_age","");
+        for($i=0;$i<count($item);$i++) {
+            $user->body[$i]->biological_age = $request->get("biological_age","")[$i];
+            $user->body[$i]->body_fluid = $request->get("body_fluid","")[$i];
+            $user->body[$i]->abdominal_fat = $request->get("abdominal_fat","")[$i];
+            $user->body[$i]->weight = $request->get("weight","")[$i];
+            $user->body[$i]->fat_expression = $request->get("fat_expression","")[$i];
+            $user->body[$i]->muscle_mass = $request->get("muscle_mass","")[$i];
+            $user->body[$i]->bone_mass = $request->get("bone_mass","")[$i];
+            $user->body[$i]->kmi = $request->get("kmi","")[$i];
+            $user->body[$i]->calorie_intake = $request->get("calorie_intake","")[$i];
+        }
+
+        $item = $request->get("blood_pressure","");
+        for($i=0;$i<count($item);$i++) {
+            $user->blood[$i]->blood_pressure = $request->get('blood_pressure','')[$i];
+            $user->blood[$i]->pulse = $request->get('pulse','')[$i];
+            $user->blood[$i]->cholesterol = $request->get('cholesterol','')[$i];
+            $user->blood[$i]->mtl = $request->get('mtl','')[$i];
+            $user->blood[$i]->dtl = $request->get('dtl','')[$i];
+            $user->blood[$i]->triglycerides = $request->get('triglycerides','')[$i];
+            $user->blood[$i]->glucose = $request->get('glucose','')[$i];
+        }
+        $user->save();
+        return redirect('/user');
     }
 
     public function deleteUser($id) {
