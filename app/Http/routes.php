@@ -73,4 +73,8 @@ Route::group(['middleware' => ['web']], function () {
 		'as' => 'addUserData'
 	]);
 	Route::get('/user/{id}/delete', 'UserController@deleteUser');
+
+	Route::get('/diet/{id}/new',function($id){
+		return View::make('adddiet',['id'=>$id]);
+	});
 });
