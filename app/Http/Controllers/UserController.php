@@ -56,7 +56,7 @@ class UserController extends Controller {
         $user->diet = $request->input("diet");
         $user->notes = $request->input("notes");
 
-        $item = $request->get("height","");
+        $item = $request->get("base","");
         for($i=0;$i<count($item);$i++){
             $user->base[$i]->height = $request->get("height","")[$i];
             $user->base[$i]->weight = $request->get("weight","")[$i];

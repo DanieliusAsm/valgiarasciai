@@ -30,10 +30,10 @@
                                 <div class="form-group">
                                     <label for="gender">Lytis</label><br/>
                                     <label class="radio-inline" id="gender">
-                                        <input type="radio" name="gender" value="vyras" checked>Vyras
+                                        <input type="radio" name="gender" value="vyras" @if($user->gender == "vyras")checked @endif>Vyras
                                     </label>
                                     <label class="radio-inline" id="gender">
-                                        <input type="radio" name="gender" value="moteris">Moteris
+                                        <input type="radio" name="gender" value="moteris" @if($user->gender == "moteris")checked @endif>Moteris
                                     </label>
                                 </div>
                                 <div class="form-group @if($errors->has('age')) has-error @endif">
@@ -236,7 +236,7 @@
             @endforeach
         </div>
 
-        <button type="submit" class="btn btn-primary center-block">Sukurti</button>
+        <button type="submit" class="btn btn-primary center-block">Redaguoti</button>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
     </form>
 @stop
