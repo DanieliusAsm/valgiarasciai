@@ -89,8 +89,11 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'email' => [
+            'required' => 'El. pašto laukas negali būti tuščias!',
+        ],
+        'password' => [
+            'required' => 'Slaptažodžio laukas negali būti tuščias!',
         ],
     ],
 

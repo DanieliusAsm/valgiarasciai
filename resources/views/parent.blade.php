@@ -28,8 +28,11 @@
 		<![endif]-->
 	</head>
 	<body>
-
-		@include("includes.header")
+		@if (!Auth::check())
+			@include("includes.guestheader")
+				@else (Auth::check())
+					@include("includes.header")
+		@endif
 		<div class="container">
 			@yield('content')
 		</div>

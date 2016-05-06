@@ -8,13 +8,23 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <a class="navbar-brand" href="{{ route('dashboard') }}">Beta</a>
     </div>
-
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Vartotojai <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Valgiaraščiai</a></li>
+        <li><a href="#">Produktai</a></li>
+      </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{{ route('logout') }}">Logout</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ Auth::user()->username }} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ route('account') }}">Profilis</a></li>
+          </ul>
+        </li>
+        <li><a href="{{ route('logout') }}">Atsijungti</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
