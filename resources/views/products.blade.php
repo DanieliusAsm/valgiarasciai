@@ -64,6 +64,13 @@
                         <a href="" ng-click="confirmAction(product)" style="text-decoration: none">
                             <i class="glyphicon glyphicon-trash" aria-label="Pašalinti"></i>
                         </a>
+                        <a href="" ng-if="product.recipe" ng-click="" style="text-decoration: none">
+                            <i class="glyphicon glyphicon-list-alt" aria-label="Pašalinti"></i>
+                        </a>
+                        <a href="" ng-if="product.recipe == null" ng-click="setRoute(product, 'addrecipe')" style="text-decoration: none">
+                            <i class="glyphicon glyphicon-plus" aria-label="Pašalinti"></i>
+                        </a>
+
                     </div>
                 </td>
             </tr>

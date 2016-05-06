@@ -1,7 +1,8 @@
 productList.controller('ProductCtrl', function($scope, $window) {
 
     $scope.setRoute = function(product, route){
-        $window.location.href += '/' + product.id + '/' + route;
+        $window.location.href += '/' +product.id + '/' + route
+
     }
 
     $scope.confirmAction = function(product) {

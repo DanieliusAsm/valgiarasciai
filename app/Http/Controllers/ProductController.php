@@ -32,7 +32,9 @@ class ProductController extends Controller
     }
     public function getProducts()
     {
-        $products = Product::all();
+        $products = Product::with('Recipe')->get();
+        //echo $products;
+
         $productoTipas =  Product::select('tipas')->distinct()->get();
 
         return view('products',['products'=>$products,'productoTipas'=>$productoTipas]);
