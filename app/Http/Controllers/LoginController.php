@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Admin;
 use Illuminate\Http\Request;
-use App\Http\Requests;
+use App\Http\Requests\AccountRequest;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -51,5 +51,20 @@ class LoginController extends Controller
 		
 		Auth::logout();
 		return redirect()->route('home');
+	}
+
+	public function getAccount() {
+		return view('account', ['admin' => Auth::user()]);
+	}
+
+	public function postUpdate(AccountRequest $request) {
+
+		$admin = Auth::user();
+		$admin->email = $request['email'];
+		$admin->username = $request['username'];
+		$admin->password = bcrypt($request['password']);
+		$admin->update();
+
+		return redirect()->route('account');
 	}
 }

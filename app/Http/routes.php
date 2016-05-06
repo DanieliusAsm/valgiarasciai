@@ -73,9 +73,19 @@ Route::group(['middleware' => ['web']], function () {
 		'as' => 'logout'
 	]);
 
-	Route:: get('/dashboard', [
+	Route::get('/account', [
+		'uses' => 'LoginController@getAccount',
+		'as' => 'account'
+	]);
+
+	Route::post('/update', [
+		'uses' => 'LoginController@postUpdate',
+		'as' => 'account.save'
+	]);
+
+	Route::get('/dashboard', [
 		'uses' => 'LoginController@getDashboard',
 		'as' => 'dashboard',
 		'middleware' => 'auth'
-		]);
+	]);
 });

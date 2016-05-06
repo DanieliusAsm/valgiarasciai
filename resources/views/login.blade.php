@@ -36,7 +36,6 @@
         </form>
     </div>
     <div class="col-md-4 col-md-offset-4">
-        <h3>Prisijungimas</h3>
         <form action="{{ route('signin') }}" method="post">
             <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                 <label for="email">El. paštas:</label>
