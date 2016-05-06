@@ -44,3 +44,8 @@ body {
 #userlist .tab-content .tab-pane {
     margin-top: 1em;
 }
+
+.center {
+    position: absolute;
+    top: 50%;
+}
