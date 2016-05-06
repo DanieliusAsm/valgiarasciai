@@ -19,6 +19,6 @@ class RecipeDatabase extends Migration
 
     public function down()
     {
-
+        Schema::drop("recipe_database");
     }
 }
