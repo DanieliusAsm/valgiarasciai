@@ -28,7 +28,6 @@
                 <!-- User panel content section -->
                 <div id="<@ getContentId($index) @>" class="panel-collapse collapse">
                     <div class="panel-body text-justify">
-                        <p>Pritaikyta dieta:</p>
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" data-target="<@ setContentId($index, 'contacts') @>">Bendri duomenys</a></li>
                             <li><a data-toggle="tab" data-target="<@ setContentId($index, 'body') @>">Kūno kompleksijos analizė</a></li>
@@ -43,14 +42,6 @@
                                             <th ng-repeat="base in user.base" ng-bind="base.created"></th>
                                         </tr>
                                     </thead>
-                                    <tr>
-                                        <td>Lytis</td>
-                                        <td ng-bind="user.gender"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Amžius</td>
-                                        <td ng-bind="user.age"></td>
-                                    </tr>
                                     <tr>
                                         <td>Ūgis</td>
                                         <td ng-repeat="base in user.base" ng-bind="base.height"></td>
@@ -155,7 +146,7 @@
                             </div>
                         </div>
                         <div class="text-container">
-                            <h4>Kontaktinė informacija</h4>
+                            <h4>Kita informacija</h4>
                             <table class="table table-hover table-condensed">
                                 <tr>
                                     <td>El. paštas</td>
@@ -164,6 +155,18 @@
                                 <tr>
                                     <td>Telefono numeris</td>
                                     <td ng-bind="user.phone"></td>
+                                </tr>
+                                <tr>
+                                    <td>Lytis</td>
+                                    <td ng-bind="user.gender"></td>
+                                </tr>
+                                <tr>
+                                    <td>Amžius</td>
+                                    <td ng-bind="user.age"></td>
+                                </tr>
+                                <tr>
+                                    <td>Pritaikyta dieta</td>
+                                    <td ng-bind="user.diet"></td>
                                 </tr>
                             </table>
                         </div>
@@ -176,6 +179,8 @@
                         <div class="pull-right">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                             <a ng-click="setRoute(user, 'data')">Prideti duomenų</a>
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <a href="{{url("/diet")}}/<@ user.id @>">Valgiaraštis</a>
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             <a ng-click="setRoute(user, 'edit')">Redaguoti</a>
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
