@@ -180,7 +180,7 @@
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                             <a ng-click="setRoute(user, 'data')">Prideti duomenų</a>
                             <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                            <a href="{{url("/diet")}}/<@ user.id @>">Valgiaraštis</a>
+                            <a href="{{url("/diets")}}/<@ user.id @>">Valgiaraštis</a>
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             <a ng-click="setRoute(user, 'edit')">Redaguoti</a>
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>

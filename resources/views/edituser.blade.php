@@ -77,12 +77,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-title">
-                        <a class="btn-block clickable" role="button" data-toggle="collapse" data-target="#collapseBase" aria-expanded="true">Papildoma
+                        <a class="btn-block clickable" role="button" data-toggle="collapse" data-target="#collapseBase{{$base->id}}" aria-expanded="true">Papildoma
                             informacija
                             <p class="pull-right">({{$base->created}})</p></a>
                     </div>
                 </div>
-                <div id="collapseBase" class="panel-collapse collapse">
+                <div id="collapseBase{{$base->id}}" class="panel-collapse collapse">
                     <div class="panel-body text-justify">
                         <div class="row">
                             <div class="col-sm-6">
@@ -118,11 +118,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-title">
-                        <a class="btn-block clickable"role="button" data-toggle="collapse" data-target="#collapseBody" aria-expanded="true">Kūno
+                        <a class="btn-block clickable"role="button" data-toggle="collapse" data-target="#collapseBody{{$body->id}}" aria-expanded="true">Kūno
                             kompleksijos analizė<p class="pull-right">({{$body->created}})</p></a>
                     </div>
                 </div>
-                <div id="collapseBody" class="panel-collapse collapse">
+                <div id="collapseBody{{$body->id}}" class="panel-collapse collapse">
                     <div class="panel-body text-justify">
                         <div class="row">
                             <div class="col-sm-6">
@@ -183,11 +183,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-title">
-                        <a class="btn-block clickable" role="button" data-toggle="collapse" data-target="#collapseBlood" aria-expanded="true">Kraujo
+                        <a class="btn-block clickable" role="button" data-toggle="collapse" data-target="#collapseBlood{{$blood->id}}" aria-expanded="true">Kraujo
                             tyrimas<p class="pull-right">({{$blood->created}})</p></a>
                     </div>
                 </div>
-                <div id="collapseBlood" class="panel-collapse collapse">
+                <div id="collapseBlood{{$blood->id}}" class="panel-collapse collapse">
                     <div class="panel-body text-justify">
                         <div class="row">
                             <div class="col-sm-6">
