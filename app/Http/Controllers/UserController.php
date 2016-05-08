@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UserDataRequest;
+use App\Http\Requests\Request;
 use App\User;
 use App\Body;
 use App\Blood;
@@ -12,7 +14,6 @@ use Carbon\Carbon;
 class UserController extends Controller {
 
     public function createUser(RegisterRequest $request) {
-
         $user = new User();
         $user->first_name = $request->input("first_name");
         $user->last_name = $request->input("last_name");
@@ -101,9 +102,16 @@ class UserController extends Controller {
         return redirect('/user');
     }
 
-    public function addBase($id, RegisterRequest $request)
+    public function addUserData($id, UserDataRequest $request){
+        $this->addBase($id, $request);
+        $this->addBody($id, $request);
+        $this->addBlood($id, $request);
+
+        return redirect('/user');
+    }
+    public function addBase($id, Request $request)
     {
-        if($request->has("height") || $request->has("weight") || $request->has("wrist") || $request->has("waist")){
+        if($request->has("height") || $request->has("wrist") || $request->has("waist")){
             $base = new Base();
             $base->user_id = $id;
             $base->height = $request->input("height");
@@ -114,8 +122,8 @@ class UserController extends Controller {
             $base->save();
         }
     }
-    public function addBody($id, RegisterRequest $request){
-        if($request->has("biological_age") || $request->has("body_fluid") || $request->has("abdominal_fat") || $request->has("weight") || $request->has("fat_expression")
+    public function addBody($id, Request $request){
+        if($request->has("biological_age") || $request->has("body_fluid") || $request->has("abdominal_fat") || $request->has("fat_expression")
             || $request->has("muscle_mass") || $request->has("bone_mass") || $request->has("kmi") || $request->has("calorie_intake")) {
             $body = new Body();
             $body->user_id = $id;
@@ -132,7 +140,7 @@ class UserController extends Controller {
             $body->save();
         }
     }
-    public function addBlood($id, RegisterRequest $request){
+    public function addBlood($id, Request $request){
         if($request->has("blood_pressure") || $request->has("pulse") || $request->has("cholesterol") || $request->has("mtl")
             || $request->has("dtl") || $request->has("triglycerides") || $request->has("glucose")){
             $blood = new Blood();

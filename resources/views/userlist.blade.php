@@ -174,6 +174,8 @@
                     </div>
                     <div class="panel-footer">
                         <div class="pull-right">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            <a ng-click="setRoute(user, 'data')">Prideti duomenų</a>
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             <a ng-click="setRoute(user, 'edit')">Redaguoti</a>
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>

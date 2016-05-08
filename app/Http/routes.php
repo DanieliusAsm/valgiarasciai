@@ -62,13 +62,17 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('user', [
 		'uses'=>'UserController@getUsers',
 	]);
-	Route::get('user/new',function() {
-			return View::make('register');
-	});
+	Route::get('user/new',[
+		function() {
+			return View::make('register');}
+	]);
 	Route::post('user/new', 'UserController@createUser');
 	Route::get('user/{id}/edit', 'UserController@getUser');
 	Route::post('/user/{id}/edit', 'UserController@editUser');
-	Route::get('user/{id}/data', [
+	Route::get('user/{id}/data',[function($id){
+		return View::make('register',['id'=>$id]);
+	}]);
+	Route::post('user/{id}/data', [
 		'uses' => 'UserController@addUserData',
 		'as' => 'addUserData'
 	]);
@@ -87,7 +91,9 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 	// DIET
-	Route::get('/diet/{id}/new',function($id){
-		return View::make('adddiet',['id'=>$id]);
-	});
+	Route::get('/diet/{id}/new',[
+		function($id){
+			return View::make('adddiet',['id'=>$id]);
+		}
+	]);
 });
