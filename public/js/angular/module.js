@@ -10,3 +10,8 @@ var productList = angular.module('ProductApp', [], function($interpolateProvider
     $interpolateProvider.startSymbol('<@');
     $interpolateProvider.endSymbol('@>');
 });
+
+var diet = angular.module('DietApp', [], function($interpolateProvider) {
+    $interpolateProvider.startSymbol('<@');
+    $interpolateProvider.endSymbol('@>');
+});

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row center">
-  <div class="col-m-6">
+  <div class="col-md-6">
     <div class="input-group">
       <span class="input-group-btn">
         <button class="btn btn-primary" type="button">Ieškoti</button>

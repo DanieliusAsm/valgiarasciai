@@ -53,7 +53,7 @@
 		<!-- Import Angular.js controllers -->
 		<script src="{{ asset('js/angular/UserlistCtrl.js') }}"></script>
 		<script src="{{ asset('js/angular/ProductCtrl.js') }}"></script>
-
+		<script src="{{ asset('js/angular/DietController.js') }}"></script>
 		<!-- JQuery diet.js -->
 		<script src="{{ asset('js/diet.js') }}"></script>
 	</body>

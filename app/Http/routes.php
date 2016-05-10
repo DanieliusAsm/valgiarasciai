@@ -91,12 +91,13 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 	// DIET
-	Route::get('/diets/{id}',function($id){
-		return View::make('diets',['id'=>$id]);
-	});
-	Route::get('/diet/{id}/new',[
+	Route::get('/diets/{id}',[
+		'as'=>'diets',
 		function($id){
-			return View::make('adddiet',['id'=>$id]);
-		}
+			return View::make('diets',['id'=>$id]);
+	}]);
+	Route::get('/diet/{id}/new',[
+		'uses'=>'DietController@getProducts',
+		'as'=>'newDiet'
 	]);
 });

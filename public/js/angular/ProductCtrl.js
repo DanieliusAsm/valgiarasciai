@@ -21,7 +21,6 @@ productList.controller('ProductCtrl', function($scope, $window) {
        var image = recipe.image_name;
 
         $('#myModal').on('show.bs.modal', function () {
-
             var loc = window.location.href;
             var rootUrl = loc.substring(0, loc.lastIndexOf("/"));
             var modal = $(this);
