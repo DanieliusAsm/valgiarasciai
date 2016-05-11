@@ -30,8 +30,8 @@
 	<body>
 		@if (!Auth::check())
 			@include("includes.guestheader")
-				@else (Auth::check())
-					@include("includes.header")
+		@else (Auth::check())
+			@include("includes.header")
 		@endif
 		<div class="container">
 			@yield('content')

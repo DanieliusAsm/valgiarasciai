@@ -7,7 +7,7 @@
         <form action="{{url('/user/new')}}" method ="post">
     @endif
         <div class="panel-group">
-            <div class="panel panel-default @if(Request::is('*/data')) hidden @endif">
+            <div class="panel panel-default click @if(Request::is('*/data')) hidden @endif">
                 <div class="panel-heading">
                     <div class="panel-title">
                         <a class="btn-block clickable" role="button" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true">Vartotojas</a>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default">
+            <div class="panel panel-default click">
                 <div class="panel-heading">
                     <div class="panel-title">
                         <a class="btn-block clickable" role="button" data-toggle="collapse" data-target="#collapseBase" aria-expanded="true">Papildoma informacija</a>
@@ -100,7 +100,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default">
+            <div class="panel panel-default click">
                 <div class="panel-heading">
                     <div class="panel-title">
                         <a class="btn-block clickable" role="button" data-toggle="collapse" data-target="#collapseBody" aria-expanded="true">Kūno kompleksijos analizė</a>
@@ -153,7 +153,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default">
+            <div class="panel panel-default click">
                 <div class="panel-heading">
                     <div class="panel-title">
                         <a class="btn-block clickable" role="button" data-toggle="collapse" data-target="#collapseBlood" aria-expanded="true">Kraujo tyrimas</a>

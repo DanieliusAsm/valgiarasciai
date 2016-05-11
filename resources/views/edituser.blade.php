@@ -3,7 +3,7 @@
 @section('content')
     <form action="{{url('/user/'.$id.'/edit')}}" method="post">
         <div class="panel-group">
-            <div class="panel panel-default">
+            <div class="panel panel-default click">
                 <div class="panel-heading">
                     <div class="panel-title">
                         <a class="btn-block clickable" role="button" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true">Vartotojas</a>
@@ -74,7 +74,7 @@
                 </div>
             </div>
             @foreach($user->base as $base)
-            <div class="panel panel-default">
+            <div class="panel panel-default click">
                 <div class="panel-heading">
                     <div class="panel-title">
                         <a class="btn-block clickable" role="button" data-toggle="collapse" data-target="#collapseBase{{$base->id}}" aria-expanded="true">Papildoma
@@ -115,7 +115,7 @@
             </div>
             @endforeach
             @foreach($user->body as $body)
-            <div class="panel panel-default">
+            <div class="panel panel-default click">
                 <div class="panel-heading">
                     <div class="panel-title">
                         <a class="btn-block clickable"role="button" data-toggle="collapse" data-target="#collapseBody{{$body->id}}" aria-expanded="true">Kūno
@@ -180,7 +180,7 @@
             </div>
             @endforeach
             @foreach($user->blood as $blood)
-            <div class="panel panel-default">
+            <div class="panel panel-default click">
                 <div class="panel-heading">
                     <div class="panel-title">
                         <a class="btn-block clickable" role="button" data-toggle="collapse" data-target="#collapseBlood{{$blood->id}}" aria-expanded="true">Kraujo

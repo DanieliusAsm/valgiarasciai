@@ -18,6 +18,12 @@ class AdminTableSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now()
             ]);
 
+        DB::table('admins')->insert([
+            'email'=>'admin@gmail.com',
+            'username'=>'admin',
+            'password'=>bcrypt('admin'),
+            'created_at'=>\Carbon\Carbon::now()
+        ]);
         $this->command->info('Admin added!');
     }
 }

@@ -13,9 +13,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Vartotojai <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Valgiaraščiai</a></li>
-        <li><a href="#">Produktai</a></li>
+        <li @if(Route::currentRouteName()=="user")class="active"@endif><a href="{{route("user")}}">Vartotojai <span class="sr-only">(current)</span></a></li>
+        <li @if(Route::currentRouteName()=="products")class="active"@endif><a href="{{route("products")}}">Produktai</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

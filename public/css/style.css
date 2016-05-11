@@ -4,7 +4,7 @@
 body {
     margin: 1em 0;
 }
-.panel .panel-heading{
+.panel.click .panel-heading{
     padding: 0px;
 }
 .panel .panel-heading .clickable{

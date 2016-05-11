@@ -41,63 +41,68 @@ Route::group(['middleware' => ['web']], function () {
 		'uses' => 'LoginController@getLogout',
 		'as' => 'logout'
 	]);
-
-	Route::get('/account', [
-		'uses' => 'LoginController@getAccount',
-		'as' => 'account'
-	]);
-
-	Route::post('/update', [
-		'uses' => 'LoginController@postUpdate',
-		'as' => 'account.save'
-	]);
-
-	Route::get('/dashboard', [
-		'uses' => 'LoginController@getDashboard',
-		'as' => 'dashboard',
-		'middleware' => 'auth'
+	Route::group(['middleware'=> ['auth']], function(){
+		Route::get('/account', [
+				'uses' => 'LoginController@getAccount',
+				'as' => 'account',
 		]);
 
-	//USER
-	Route::get('user', [
-		'uses'=>'UserController@getUsers',
-	]);
-	Route::get('user/new',[
-		function() {
-			return View::make('register');}
-	]);
-	Route::post('user/new', 'UserController@createUser');
-	Route::get('user/{id}/edit', 'UserController@getUser');
-	Route::post('/user/{id}/edit', 'UserController@editUser');
-	Route::get('user/{id}/data',[function($id){
-		return View::make('register',['id'=>$id]);
-	}]);
-	Route::post('user/{id}/data', [
-		'uses' => 'UserController@addUserData',
-		'as' => 'addUserData'
-	]);
-	Route::get('/user/{id}/delete', 'UserController@deleteUser');
+		Route::post('/update', [
+				'uses' => 'LoginController@postUpdate',
+				'as' => 'account.save'
+		]);
 
-	// PRODUCT
-	Route::get('/products', 'ProductController@getProducts');
-	Route::get('/products/add', 'ProductController@addProductView');
-	Route::post('/products/add/submit', 'ProductController@addProduct');
-	Route::get('/products/{id}/edit', 'ProductController@getProduct');
-	Route::post('/products/{id}/edit', 'ProductController@editProduct');
-	Route::get('/products/{id}/delete', 'ProductController@deleteProduct');
-	Route::post('/products/{id}/addrecipe', 'ProductController@addRecipe');
-	Route::get('/products/{id}/addrecipe', function($id){
-		return View::make('recipe', ['id'=>$id]);
+		Route::get('/dashboard', [
+				'uses' => 'LoginController@getDashboard',
+				'as' => 'dashboard',
+		]);
+
+		//USER
+		Route::get('user', [
+				'as'=>'user',
+				'uses'=>'UserController@getUsers',
+		]);
+		Route::get('user/new',[
+				function() {
+					return View::make('register');}
+		]);
+		Route::post('user/new', 'UserController@createUser');
+		Route::get('user/{id}/edit', 'UserController@getUser');
+		Route::post('/user/{id}/edit', 'UserController@editUser');
+		Route::get('user/{id}/data',[function($id){
+			return View::make('register',['id'=>$id]);
+		}]);
+		Route::post('user/{id}/data', [
+				'uses' => 'UserController@addUserData',
+				'as' => 'addUserData'
+		]);
+		Route::get('/user/{id}/delete', 'UserController@deleteUser');
+
+		// PRODUCT
+		Route::get('/products', [
+			'uses'=>'ProductController@getProducts',
+			'as'=>'products'
+		]);
+		Route::get('/products/add', 'ProductController@addProductView');
+		Route::post('/products/add/submit', 'ProductController@addProduct');
+		Route::get('/products/{id}/edit', 'ProductController@getProduct');
+		Route::post('/products/{id}/edit', 'ProductController@editProduct');
+		Route::get('/products/{id}/delete', 'ProductController@deleteProduct');
+		Route::post('/products/{id}/addrecipe', 'ProductController@addRecipe');
+		Route::get('/products/{id}/addrecipe', function($id){
+			return View::make('recipe', ['id'=>$id]);
+		});
+
+		// DIET
+		Route::get('/diets/{id}',[
+				'as'=>'diets',
+				function($id){
+					return View::make('diets',['id'=>$id]);
+				}]);
+		Route::get('/diet/{id}/new',[
+				'uses'=>'DietController@getProducts',
+				'as'=>'newDiet'
+		]);
 	});
 
-	// DIET
-	Route::get('/diets/{id}',[
-		'as'=>'diets',
-		function($id){
-			return View::make('diets',['id'=>$id]);
-	}]);
-	Route::get('/diet/{id}/new',[
-		'uses'=>'DietController@getProducts',
-		'as'=>'newDiet'
-	]);
 });
