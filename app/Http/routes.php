@@ -36,7 +36,6 @@ Route::group(['middleware' => ['web']], function () {
 		'uses' => 'LoginController@postSignIn',
 		'as' => 'signin'
 	]);
-
 	Route::get('/logout', [
 		'uses' => 'LoginController@getLogout',
 		'as' => 'logout'
@@ -92,7 +91,6 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/products/{id}/addrecipe', function($id){
 			return View::make('recipe', ['id'=>$id]);
 		});
-
 		// DIET
 		Route::get('/diets/{id}',[
 				'as'=>'diets',

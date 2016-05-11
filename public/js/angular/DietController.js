@@ -1,5 +1,7 @@
 diet.controller('DietController', function($scope){
     $scope.rows = [{}];
+
+
     $scope.onProductSelected = function(){
         //var product = $(this).find('option[value="' +$scope.productName + '"]');
         //console.log($(event.target).attr("id"));
@@ -11,9 +13,7 @@ diet.controller('DietController', function($scope){
         //console.log($(this).siblings("datalist"));
 
     }
-    $scope.onDatalist = function(ll){
-        console.log(ll);
-    }
+
     $scope.onQuantityChanged = function(){
         console.log("lol");
     }
