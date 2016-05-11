@@ -27,35 +27,25 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr id="row0">
-                        <td>9:00</td>
+                    <tr ng-repeat="row in rows">
+                        <td><p ng-if="$first">9:00</p></td>
                         <td>
-                            <input type="text" class="form-control" list="product" name="product[]" ng-model="productName" ng-change="onProductSelected($event)" style="width:100%"
-                                   placeholder="Pavadinimas"/>
-                            <datalist id="product" ng-model="datalist" ng-change="onDatalist(datalist)">
-                                @foreach($products as $product)
-                                    <label>
-                                        <option id="{{$product->id}}"
-                                                value="{{$product->pavadinimas}}">{{$product->tipas}}</option>
-                                    </label><br/>
-                                @endforeach
-                            </datalist>
+                            <input class="form-control" type="text" ng-model="selected" uib-typeahead="product as product.pavadinimas for product in products | filter:$viewValue | limitTo:10">
                         </td>
                         <td>
-                            <input class="form-control" id="quantity" type="number" name="quantity[]" placeholder="100" ng-bind="productName" ng-model="quantity" ng-change="onQuantityChanged()"/>
+                            <input class="form-control" ng-model="quantity" id="quantity" type="number" name="quantity[]" placeholder="100"/>
                         </td>
-                        <td><input class="form-control" id="disabledInput" type="number" name="baltymai" placeholder="0"
+                        <td><input class="form-control" id="disabledInput" name="baltymai" placeholder="0" ng-value="calculateValue(quantity,selected.baltymai)"
                                    disabled/></td>
-                        <td><input class="form-control" id="disabledInput" type="number" name="riebalai" placeholder="0"
+                        <td><input class="form-control" id="disabledInput" type="number" name="riebalai" placeholder="0" ng-value="calculateValue(quantity,selected.riebalai)"
                                    disabled/></td>
-                        <td><input class="form-control" id="disabledInput" type="number" name="angliavandeniai"
-                                   placeholder="0" disabled/></td>
-                        <td><input class="form-control" id="disabledInput" type="number" name="eVerte" placeholder="0"
+                        <td><input class="form-control" id="disabledInput" type="number" name="angliavandeniai" placeholder="0" ng-value="calculateValue(quantity,selected.angliavandeniai)"
+                            disabled/></td>
+                        <td><input class="form-control" id="disabledInput" type="number" name="eVerte" placeholder="0" ng-value="calculateValue(quantity,selected.eVerte)"
                                    disabled/></td>
-                        <td><input class="form-control" id="disabledInput" type="number" name="cholesterolis"
-                                   placeholder="0" disabled/></td>
+                        <td><input class="form-control" id="disabledInput" type="number" name="cholesterolis" placeholder="0" ng-value="calculateValue(quantity,selected.cholesterolis)"
+                            disabled/></td>
                     </tr>
-                    <tr id="row1"></tr>
                     </tbody>
                     <tfoot>
                     <tr>
@@ -68,8 +58,8 @@
                     </tr>
                     </tfoot>
                 </table>
-                <button class="add-row btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button>
-                <button class="delete-row btn btn-danger"><i class="glyphicon glyphicon-minus"></i></button>
+                <button class="add-row btn btn-primary" ng-click="rows.push({})"><i class="glyphicon glyphicon-plus"></i></button>
+                <button class="delete-row btn btn-danger" ng-click="rows.splice(rows.length-1,1)"><i class="glyphicon glyphicon-minus"></i></button>
             </div>
         </div>
     </div>

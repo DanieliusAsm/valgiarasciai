@@ -11,7 +11,7 @@ var productList = angular.module('ProductApp', [], function($interpolateProvider
     $interpolateProvider.endSymbol('@>');
 });
 
-var diet = angular.module('DietApp', [], function($interpolateProvider) {
+var diet = angular.module('DietApp', ['ui.bootstrap'], function($interpolateProvider) {
     $interpolateProvider.startSymbol('<@');
     $interpolateProvider.endSymbol('@>');
 });

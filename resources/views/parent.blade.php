@@ -46,7 +46,7 @@
 
 		<!-- Angular.js -->
 		<script src="{{ asset('js/angular.min.js') }}"></script>
-
+		<script src="{{asset('js/ui-bootstrap-tpls-1.3.2.min.js')}}"></script>
 		<!-- Import Angular.js modules -->
 		<script src="{{ asset('js/angular/module.js') }}"></script>
 
