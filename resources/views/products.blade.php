@@ -26,13 +26,13 @@
             <div class="col-md-9">
                 <div id="usersearch" class="search-container">
                     <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="glyphicon glyphicon-search"></i>
-                </span>
-                        <input type="text" class="form-control" ng-model="search"/></br>
-                <span class="input-group-btn">
-                    <a href="{{ url('/products/add') }}" class="btn btn-primary">Pridėti produktą</a></br>
-                </span>
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </span>
+                                <input type="text" class="form-control" ng-model="search"/></br>
+                        <span class="input-group-btn">
+                            <a href="{{ url('/products/add') }}" class="btn btn-primary">Pridėti produktą</a></br>
+                        </span>
                     </div>
                 </div>
 
