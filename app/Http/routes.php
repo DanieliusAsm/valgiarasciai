@@ -97,7 +97,7 @@ Route::group(['middleware' => ['web']], function () {
 				function($id){
 					return View::make('diets',['id'=>$id]);
 				}]);
-		Route::get('/diet/{id}/new',[
+		Route::get('/diets/{id}/new',[
 				'uses'=>'DietController@getProducts',
 				'as'=>'newDiet'
 		]);
