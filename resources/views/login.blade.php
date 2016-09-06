@@ -39,11 +39,11 @@
         <form action="{{ route('signin') }}" method="post">
             <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                 <label for="email">El. paštas:</label>
-                <input class="form-control" type="text" name="email" id="email">
+                <input class="form-control" type="text" name="email" id="email" value="admin@gmail.com">
             </div>
             <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                 <label for="password">Slaptažodis:</label>
-                <input class="form-control" type="password" name="password" id="password">
+                <input class="form-control" type="password" name="password" id="password" value="admin">
             </div>
             <button type="submit" class="btn btn-primary center-block">Login</button>
             <input type="hidden" name="_token" value="{{ Session::token() }}">

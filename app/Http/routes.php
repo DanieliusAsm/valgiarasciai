@@ -1,6 +1,6 @@
 <?php
 
-Route::get('/home', function() {
+Route::get('/', function() {
 	return View::make('home');
 });
 
@@ -94,12 +94,19 @@ Route::group(['middleware' => ['web']], function () {
 		// DIET
 		Route::get('/diets/{id}',[
 				'as'=>'diets',
-				function($id){
-					return View::make('diets',['id'=>$id]);
-				}]);
+				'uses'=>'DietController@getUserDiets'
+		]);
 		Route::get('/diets/{id}/new',[
 				'uses'=>'DietController@getProducts',
 				'as'=>'newDiet'
+		]);
+		Route::post('/diets/{id}/new',[
+			'uses'=>'DietController@saveDiet',
+			'as'=>'saveDiet'
+		]);
+		Route::get('/idd',[
+			'uses'=>'DietController@saveDiet',
+			'as'=>'saveDieta'
 		]);
 	});
 

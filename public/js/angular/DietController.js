@@ -1,4 +1,4 @@
-diet.controller('DietController', function ($scope) {
+diet.controller('DietController', function ($scope, $http, $window,$httpParamSerializerJQLike) {
     $scope.diet = [{"type": "", "time": "", "rows": []},{"type": "", "time": "", "rows": []},{"type": "", "time": "", "rows": []},{"type": "", "time": "", "rows": []},{"type": "", "time": "", "rows": []},{"type": "", "time": "", "rows": []}];
     $scope.sumValues = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0],];
 
@@ -40,6 +40,16 @@ diet.controller('DietController', function ($scope) {
 // valueIndex 0-4 baltymai - eVerte
     $scope.getTotal = function (dietIndex, valueIndex) {
         return $scope.sumValues[dietIndex][valueIndex];
+    }
+
+    $scope.sendDiet = function(saveLink,redirect){
+        $http({
+            method: 'POST',
+            url: saveLink,
+            headers: {'Content-Type' : 'application/x-www-form-urlencoded'},
+            data: $scope.diet //$httpParamSerializerJQLike($scope.diet)
+        });
+        //$window.location = redirect;
     }
 })
 ;

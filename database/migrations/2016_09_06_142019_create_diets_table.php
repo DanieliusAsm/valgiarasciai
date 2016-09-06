@@ -3,20 +3,16 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDietTable extends Migration
+class CreateDietsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create("diets", function(Blueprint $table){
             $table->increments("id");
-            $table->integer("user_id");
-            $table->integer("total_days");
-            $table->string("notes");
+            $table->integer("user_id"); // belongs to
+            $table->integer("total_days"); //full diet in days
+            $table->integer("total_eating"); // how many times per day
+            $table->string("notes"); // notes regarding client
             $table->date("created");
         });
     }

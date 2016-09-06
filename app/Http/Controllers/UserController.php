@@ -26,9 +26,9 @@ class UserController extends Controller {
         $user->created = Carbon::now();
         $user->save();
 
-        UserController::addBase($user->id,$request);
-        UserController::addBody($user->id,$request);
-        UserController::addBlood($user->id,$request);
+        $this->addBase($user->id,$request);
+        $this->addBody($user->id,$request);
+        $this->addBlood($user->id,$request);
 
         return redirect('/user');
     }

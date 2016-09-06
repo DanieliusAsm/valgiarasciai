@@ -1,4 +1,5 @@
-<div class="form" ng-init="eatingTypes = {{$eatingTypes}};eatingTimes={{$eatingTimes}}; rows = [[{}],[{}],[{}],[{}],[{}],[{}]];"></div>
+<div class="form"
+     ng-init="eatingTypes = {{$eatingTypes}};eatingTimes={{$eatingTimes}}; rows = [[{}],[{}],[{}],[{}],[{}],[{}]];"></div>
 <div class="row" ng-repeat="eatingType in eatingTypes">
     <div class="col-md-12" ng-init="diet[$index].type = eatingType; diet[$index].time=eatingTimes[$index]">
         <h4 ng-bind="eatingTypes[$index]"></h4>
@@ -25,13 +26,14 @@
             </thead>
             <tbody>
             <tr ng-repeat="row in rows[$index]">
-                <td><p ng-if="$first" ng-bind="eatingTimes[$parent.$parent.$index]"></p></td>
+                <td><input ng-if="$first" class="form-control" type="text" ng-model="diet[$parent.$parent.$index].time" ng-bind="eatingTimes[$parent.$parent.$index]" name="time[]"></td>
                 <td>
                     <input class="form-control" type="text" ng-model="diet[$parent.$index].rows[$index]"
                            uib-typeahead="product as product.pavadinimas for product in products | filter:$viewValue | limitTo:10">
                 </td>
                 <td>
-                    <input class="form-control" ng-model="diet[$parent.$index].rows[$index].quantity" id="quantity" type="number" name="quantity[]"
+                    <input class="form-control" ng-model="diet[$parent.$index].rows[$index].quantity" id="quantity"
+                           type="number" name="quantity[]"
                            placeholder="100" min="0"/>
                 </td>
                 <td><input class="form-control" id="disabledInput" name="baltymai[]" placeholder="0"
@@ -40,26 +42,42 @@
                 <td><input class="form-control" id="disabledInput" type="number" name="riebalai" placeholder="0"
                            ng-value="calculateValue(diet[$parent.$index].rows[$index].quantity,diet[$parent.$index].rows[$index].riebalai)"
                            disabled/></td>
-                <td><input class="form-control" id="disabledInput" type="number" name="angliavandeniai" placeholder="0"
+                <td><input class="form-control" id="disabledInput" type="number" name="angliavandeniai"
+                           placeholder="0"
                            ng-value="calculateValue(diet[$parent.$index].rows[$index].quantity,diet[$parent.$index].rows[$index].angliavandeniai)"
                            disabled/></td>
                 <td><input class="form-control" id="disabledInput" type="number" name="eVerte" placeholder="0"
                            ng-value="calculateValue(diet[$parent.$index].rows[$index].quantity,diet[$parent.$index].rows[$index].eVerte)"
                            disabled/></td>
-                <td><input class="form-control" id="disabledInput" type="number" name="cholesterolis" placeholder="0"
+                <td><input class="form-control" id="disabledInput" type="number" name="cholesterolis"
+                           placeholder="0"
                            ng-value="calculateValue(diet[$parent.$index].rows[$index].quantity,diet[$parent.$index].rows[$index].cholesterolis)"
                            disabled/></td>
-                <td><@ diet @></td>
             </tr>
             </tbody>
             <tfoot>
             <tr>
                 <th class="text-center" colspan="3">Bendra pusryčių maistinė ir energinė vertė</th>
-                <th><@ sumValues[$index][0] @></th>
-                <th><@ sumValues[$index][1] @></th>
-                <th><@ sumValues[$index][2] @></th>
-                <th><@ sumValues[$index][4] @></th>
-                <th><@ sumValues[$index][3] @></th>
+                <th>
+                    <@ sumValues
+                            [$index][0] @>
+                </th>
+                <th>
+                    <@ sumValues
+                            [$index][1] @>
+                </th>
+                <th>
+                    <@ sumValues
+                            [$index][2] @>
+                </th>
+                <th>
+                    <@ sumValues
+                            [$index][4] @>
+                </th>
+                <th>
+                    <@ sumValues
+                            [$index][3] @>
+                </th>
             </tr>
             </tfoot>
         </table>
