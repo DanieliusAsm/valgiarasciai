@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Http\Requests;
 use App\Diet;
-use App\DietEatingProduct;
 use App\Eating;
 use Carbon\Carbon;
 
@@ -19,17 +18,40 @@ class DietController extends Controller
     }
 
     public function getUserDiets($id){
-        // method name $diet = Diet::with("eatingType.dietFood")->get()->find($id)->toArray();
-        //Diet::where('user_id',$id)->with('eatingType.dietFood')->get()->toArray()
-        \DB::listen(function($sql) {
-            //var_dump($sql);
-        });
-        $diet = Diet::where('user_id',$id)->with(['eatingType','dietFood'])->toSql();
-        //$diet->with('eatingType')->where('eating_types.diet_id','22');
-        //$diet->with('dietFood')->get()->toArray();
-        dd($diet);
+        $diets = Diet::with('eating')->get();
 
-        //dd($diet);
+        // loop through diets. Usually only 1 diet.
+        foreach($diets as $diet){
+            $eating = $diet->eating;
+            var_dump($eating->toArray());
+            $lastEatingType="";
+            $newEating = array();
+            // merges same arrays into array of pivots
+            for($i=0;$i<count($eating)-1;$i++){
+                // merge duplicates of same day and eating type.
+                if(($eating[$i]['pivot']['day']===$eating[$i+1]['pivot']['day']) && ($eating[$i]['eating_type']===$eating[$i]['eating_type'])){
+                    // if theres more than 2 duplicates
+                    if($lastEatingType===$eating[$i]['eating_type']){
+                        // pivot array merging merge THE NEXT i+1 array
+                    }else{
+                        //first time merging duplicates merge both into one
+                        $this->mergePivot();
+                    }
+                }else{
+                    //jei nesutampa, isvalyti temp array ?
+                }
+                echo "arrays:";
+                var_dump($eating[$i]['eating_type']);
+                var_dump($eating[$i+1]['eating_type']);
+            }
+            //loop through eating array/collection
+        }
+
+        $A = array('a' => 1, 'b' => array('pienas'=>1,'cukrus'=>2,'druska'=>3));
+        $B = array( 'a'=> 5, 'b' => array('pienas'=>4,'cukrus'=>5,'druska'=>6));
+        $c = array_merge($A,$B);
+
+        //var_dump($c);
 
 
         return view('diets',['id'=>$id]);
@@ -59,8 +81,7 @@ class DietController extends Controller
 
 
                 if($eatingId==-1) {
-                    $eatingType = new EatingType();
-                    $eatingType->diet_id = $diet->id;
+                    $eatingType = new Eating();
                     $eatingType->eating_type = $array[$i]['type'];
                     $eatingType->eating_time = $array[$i]['time'];
                     $eatingType->recommended_rate = 0;
@@ -68,14 +89,11 @@ class DietController extends Controller
                     $eatingId = $eatingType->id;
                 }
 
-                $dietFood = new DietFood();
-                $dietFood->product_id = $row['id'];
-                $dietFood->eating_type_id = $eatingId;
-                $dietFood->day = ($i+1);
-                $dietFood->quantity = $row['quantity'];
-                $dietFood->save();
+                $diet->eating()->attach($eatingId,['product_id'=>$row['id'],'day'=>($i+1),'quantity'=>$row['quantity']]);
             }
             $eatingId=-1;
         }
     }
+
+    public function mergePivot($newEating,$eating){}
 }
