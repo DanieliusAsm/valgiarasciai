@@ -10,7 +10,7 @@ class Diet extends Model
     public $timestamps = false;
 
     public function eating(){
-        return $this->belongsToMany(Eating::class, 'diet_eating_product')
-            ->withPivot('product_id','day','quantity');
+        return $this->belongsToMany(Eating::class, 'diet_eating')
+            ->withPivot('day');
     }
 }

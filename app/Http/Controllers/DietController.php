@@ -19,40 +19,21 @@ class DietController extends Controller
 
     public function getUserDiets($id){
         $diets = Diet::with('eating')->get();
+        $eatings = Eating::with('product')->get();
+        //var_dump($eatings->toArray());
+
+        foreach($eatings as $eat){
+            var_dump($eat->toArray());
+        }
 
         // loop through diets. Usually only 1 diet.
         foreach($diets as $diet){
             $eating = $diet->eating;
-            var_dump($eating->toArray());
-            $lastEatingType="";
-            $newEating = array();
-            // merges same arrays into array of pivots
-            for($i=0;$i<count($eating)-1;$i++){
-                // merge duplicates of same day and eating type.
-                if(($eating[$i]['pivot']['day']===$eating[$i+1]['pivot']['day']) && ($eating[$i]['eating_type']===$eating[$i]['eating_type'])){
-                    // if theres more than 2 duplicates
-                    if($lastEatingType===$eating[$i]['eating_type']){
-                        // pivot array merging merge THE NEXT i+1 array
-                    }else{
-                        //first time merging duplicates merge both into one
-                        $this->mergePivot();
-                    }
-                }else{
-                    //jei nesutampa, isvalyti temp array ?
-                }
-                echo "arrays:";
-                var_dump($eating[$i]['eating_type']);
-                var_dump($eating[$i+1]['eating_type']);
-            }
-            //loop through eating array/collection
+            //var_dump($eating->toArray());
+
+            echo "here goes EVERYTHING";
+            
         }
-
-        $A = array('a' => 1, 'b' => array('pienas'=>1,'cukrus'=>2,'druska'=>3));
-        $B = array( 'a'=> 5, 'b' => array('pienas'=>4,'cukrus'=>5,'druska'=>6));
-        $c = array_merge($A,$B);
-
-        //var_dump($c);
-
 
         return view('diets',['id'=>$id]);
     }
@@ -88,12 +69,11 @@ class DietController extends Controller
                     $eatingType->save();
                     $eatingId = $eatingType->id;
                 }
-
-                $diet->eating()->attach($eatingId,['product_id'=>$row['id'],'day'=>($i+1),'quantity'=>$row['quantity']]);
+                //'product_id'=>$row['id'],'quantity'=>$row['quantity']
+                $diet->eating()->attach($eatingId,['day'=>($i+1)]);
+                $eatingType->product()->attach($row['id'],['quantity'=>$row['quantity']]);
             }
             $eatingId=-1;
         }
     }
-
-    public function mergePivot($newEating,$eating){}
 }
