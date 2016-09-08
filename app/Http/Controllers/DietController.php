@@ -16,26 +16,33 @@ class DietController extends Controller
 
         return view('adddiet',['id'=>$id,'products'=>$products]);
     }
-
+    //TODO: remake into more than one day
     public function getUserDiets($id){
         $diets = Diet::with('eating')->get();
-        $eatings = Eating::with('product')->get();
-        //var_dump($eatings->toArray());
-
-        foreach($eatings as $eat){
-            var_dump($eat->toArray());
-        }
-
+        $pivotArray = array();
+        $eatings = array();
         // loop through diets. Usually only 1 diet.
-        foreach($diets as $diet){
+        for($b=0;$b<count($diets);$b++){
+            $diet = $diets[$b];
             $eating = $diet->eating;
-            //var_dump($eating->toArray());
+           // var_dump($eating->toArray());
+            $pivotArray[$b] = array('diet_id'=>$diet['id'],'eating_ids'=>array());
+            // loop through all the eatings and save them in the array
+            for($i=0;$i<count($eating);$i++){
+                $pivot = $eating[$i]['pivot'];
+                $pivotArray[$b]['eating_ids'][$i] = $pivot['eating_id'];
+            }
+            $pivotArray[$b]['eating_ids'] = array_unique($pivotArray[$b]['eating_ids']);
+           // var_dump($pivotArray);
 
-            echo "here goes EVERYTHING";
-            
+            $eatingDiet = Eating::with('product')->whereIn('id',$pivotArray[$b]['eating_ids'])->get();
+            $eatings[$b]=$eatingDiet;
+            foreach($eatingDiet as $eating){
+                //var_dump($eating->toArray());
+            }
         }
 
-        return view('diets',['id'=>$id]);
+        return view('diets',['id'=>$id,'eatings'=>$eatings,'pivot'=>$pivotArray]);
     }
 
     public function saveDiet(/*Request $request, $id*/){
