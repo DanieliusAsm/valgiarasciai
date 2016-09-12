@@ -92,3 +92,4 @@
     </div>
     <!--<p ng-if="$first" ng-bind="getProteinSum(0)"></p>-->
 </div>
+<@ diet @></br>

@@ -30,6 +30,7 @@ diet.controller('DietController', function ($scope, $http, $window,$httpParamSer
                 }}
             }
             $scope.sumValues[i] = [sumB.toFixed(2), sumR.toFixed(2), sumA.toFixed(2), sumCh.toFixed(2), sumE.toFixed(2)];
+            $scope.diet[i]['bendraVerte'] = {"baltymai":sumB.toFixed(2), "riebalai":sumR.toFixed(2), "angliavandeniai":sumA.toFixed(2), "cholesterolis":sumCh.toFixed(2), "eVerte":sumE.toFixed(2)};
             sumB = 0;
             sumR = 0;
             sumA = 0;
@@ -46,8 +47,11 @@ diet.controller('DietController', function ($scope, $http, $window,$httpParamSer
         $http({
             method: 'POST',
             url: saveLink,
-            headers: {'Content-Type' : 'application/x-www-form-urlencoded'},
             data: $scope.diet //$httpParamSerializerJQLike($scope.diet)
+        }).then(function successCallback(response){
+            console.log(response)
+        }, function errorCallback(response){
+            console.log(response);
         });
         //$window.location = redirect;
     }

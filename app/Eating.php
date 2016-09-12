@@ -13,8 +13,4 @@ class Eating extends Model
         return $this->belongsToMany(Product::class)
             ->withPivot('quantity');
     }
-    public function diet(){
-        return $this->belongsToMany(Diet::class, 'diet_eating')
-            ->withPivot('day');
-    }
 }

@@ -17,6 +17,11 @@ class CreateEatingsTable extends Migration
             $table->string("eating_time");//9:40
             $table->string("eating_type");//pusryciai
             $table->integer("recommended_rate"); //30% kcal dienos normos suvartojama per pusrycius
+            $table->double("baltymai");
+            $table->double("riebalai");
+            $table->double("angliavandeniai");
+            $table->double("cholesterolis");
+            $table->double("eVerte");
         });
     }
 
