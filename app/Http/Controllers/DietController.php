@@ -45,11 +45,7 @@ class DietController extends Controller
         }
         //var_dump($eatings);
 
-        $f = "{\"type\":\"Pusryčiai\",\"time\":\"8:00\",\"rows\":{\"0\":{\"id\":1,\"pavadinimas\":\"Agurkų sriuba\",\"baltymai\":1.21,\"riebalai\":1.27,\"angliavandeniai\":10.51,\"cholesterolis\":0,\"eVerte\":54.33,\"tipas\":\"Sriuba\"},\"1\":{\"id\":108,\"pavadinimas\":\"Pica su kumpiu\",\"baltymai\":8.29,\"riebalai\":7.18,\"angliavandeniai\":20.54,\"cholesterolis\":20.79,\"eVerte\":180.92,\"tipas\":\"Kita\"}}}";
-        $js = json_decode($f,true);
-        foreach($js['rows'] as $item){
-            var_dump($item);
-        }
+
 
         return view('diets',['id'=>$id,'eatings'=>$eatings,'pivot'=>$pivotArray]);
     }
@@ -57,42 +53,49 @@ class DietController extends Controller
     // TODO: sql injection protection
     public function saveDiet(Request $request, $id){
         //return redirect("/login");
-        //$json = "[{\"type\":\"Pusryčiai\",\"time\":\"8:00\",\"rows\":[{\"id\":1,\"pavadinimas\":\"Agurkų sriuba\",\"baltymai\":1.21,\"riebalai\":1.27,\"angliavandeniai\":10.51,\"cholesterolis\":0,\"eVerte\":54.33,\"tipas\":\"Sriuba\",\"quantity\":100},{\"id\":486,\"pavadinimas\":\"Chalva\",\"baltymai\":11.6,\"riebalai\":29.9,\"angliavandeniai\":54.6,\"cholesterolis\":0,\"eVerte\":517,\"tipas\":\"Saldumynai\",\"quantity\":200}]},{\"type\":\"Priešpiečiai\",\"time\":\"11:00\",\"rows\":[{\"id\":17,\"pavadinimas\":\"Ryžių sriuba su pomidorais\",\"baltymai\":0.85,\"riebalai\":3.59,\"angliavandeniai\":3.46,\"cholesterolis\":10.63,\"eVerte\":47.62,\"tipas\":\"Sriuba\",\"quantity\":100}]},{\"type\":\"Pietūs\",\"time\":\"13:00\",\"rows\":[{\"id\":359,\"pavadinimas\":\"Džiūvėsiai\",\"baltymai\":9.7,\"riebalai\":1,\"angliavandeniai\":76.8,\"cholesterolis\":0,\"eVerte\":350,\"tipas\":\"Duona\",\"quantity\":100},{\"id\":12,\"pavadinimas\":\"Raugintų kopūstų sriuba\",\"baltymai\":0.91,\"riebalai\":1.23,\"angliavandeniai\":2.88,\"cholesterolis\":0,\"eVerte\":24.11,\"tipas\":\"Sriuba\",\"quantity\":100}]},{\"type\":\"Pavakariai\",\"time\":\"16:00\",\"rows\":[]},{\"type\":\"Vakarienė\",\"time\":\"18:00\",\"rows\":[]},{\"type\":\"Naktipiečiai\",\"time\":\"21:00\",\"rows\":[]}]";
+        $json = "[{\"day\":1,\"eating_types\":[{\"rows\":[{\"id\":1,\"pavadinimas\":\"Agurkų sriuba\",\"baltymai\":1.21,\"riebalai\":1.27,\"angliavandeniai\":10.51,\"cholesterolis\":0,\"eVerte\":54.33,\"tipas\":\"Sriuba\",\"quantity\":100},{\"id\":108,\"pavadinimas\":\"Pica su kumpiu\",\"baltymai\":8.29,\"riebalai\":7.18,\"angliavandeniai\":20.54,\"cholesterolis\":20.79,\"eVerte\":180.92,\"tipas\":\"Kita\",\"quantity\":120}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]}],\"total_values\":[{\"baltymai\":\"11.16\",\"riebalai\":\"9.89\",\"angliavandeniai\":\"35.16\",\"cholesterolis\":\"24.95\",\"eVerte\":\"271.43\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"}]},{\"day\":2,\"eating_types\":[{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]}],\"total_values\":[{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"}]},{\"day\":3,\"eating_types\":[{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]}],\"total_values\":[{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"}]}]";
         $array =  $request->json()->all();
+        if($array == null){
+            return;
+        }
+        $dieta = $array[0];
+        $eating_types = $array[1];
         //var_dump($masyvas);
         $id = 1;
         $eatingId=-1;
 
         $diet = new Diet();
         $diet->user_id = $id;
-        $diet->total_days = 1;
+        $diet->total_days = 1; // useless
         $diet->notes = "";
         $diet->created = Carbon::now();
         $diet->total_eating = 6; // you dont need this since you get all related by id
         $diet->save();
 
-        for($i=0;$i<count($array);$i++){
+        for($i=0;$i<count($dieta);$i++){ // loop through days
             var_dump($array[$i]);
-            for($b=0;$b<count($array[$i]['rows']);$b++){
-                $row = $array[$i]['rows'][$b];
-                //var_dump($row);
-                if($eatingId==-1) {
-                    $eating = new Eating();
-                    $eating->eating_type = $array[$i]['type'];
-                    $eating->eating_time = $array[$i]['time'];
-                    $eating->recommended_rate = 0;
-                    $eating->baltymai = $array[$i]['bendraVerte']['baltymai'];
-                    $eating->riebalai = $array[$i]['bendraVerte']['riebalai'];
-                    $eating->angliavandeniai = $array[$i]['bendraVerte']['angliavandeniai'];
-                    $eating->cholesterolis = $array[$i]['bendraVerte']['cholesterolis'];
-                    $eating->eVerte = $array[$i]['bendraVerte']['eVerte'];
-                    $eating->save();
-                    $eatingId = $eating->id;
+            for($a=0;$a<$diet->total_eating;$a++){ // 6 eatings per day
+                for($b=0;$b<count($dieta[$i]['eating_types'][$a]['rows']);$b++){
+                    $row = $dieta[$i]['eating_types'][$a]['rows'][$b];
+                    //var_dump($row);
+                    if($eatingId==-1) {
+                        $eating = new Eating();
+                        $eating->eating_type = $eating_types[$a]['type'];
+                        $eating->eating_time = $eating_types[$a]['time'];
+                        $eating->recommended_rate = 0;
+                        $eating->baltymai = $dieta[$i]['total_values'][$b]['baltymai'];
+                        $eating->riebalai = $dieta[$i]['total_values'][$b]['riebalai'];
+                        $eating->angliavandeniai = $dieta[$i]['total_values'][$b]['angliavandeniai'];
+                        $eating->cholesterolis = $dieta[$i]['total_values'][$b]['cholesterolis'];
+                        $eating->eVerte = $dieta[$i]['total_values'][$b]['eVerte'];
+                        $eating->save();
+                        $eatingId = $eating->id;
+                    }
+                    $diet->eating()->attach($eatingId,['day'=>($i+1)]);
+                    $eating->product()->attach($row['id'],['quantity'=>$row['quantity']]);
                 }
-                $diet->eating()->attach($eatingId,['day'=>($i+1)]);
-                $eating->product()->attach($row['id'],['quantity'=>$row['quantity']]);
+                $eatingId=-1;
             }
-            $eatingId=-1;
         }
         return $array;
     }
