@@ -43,7 +43,14 @@ class DietController extends Controller
                 //var_dump($eating->toArray());
             }
         }
-        var_dump($eatings);
+        //var_dump($eatings);
+
+        $f = "{\"type\":\"Pusryčiai\",\"time\":\"8:00\",\"rows\":{\"0\":{\"id\":1,\"pavadinimas\":\"Agurkų sriuba\",\"baltymai\":1.21,\"riebalai\":1.27,\"angliavandeniai\":10.51,\"cholesterolis\":0,\"eVerte\":54.33,\"tipas\":\"Sriuba\"},\"1\":{\"id\":108,\"pavadinimas\":\"Pica su kumpiu\",\"baltymai\":8.29,\"riebalai\":7.18,\"angliavandeniai\":20.54,\"cholesterolis\":20.79,\"eVerte\":180.92,\"tipas\":\"Kita\"}}}";
+        $js = json_decode($f,true);
+        foreach($js['rows'] as $item){
+            var_dump($item);
+        }
+
         return view('diets',['id'=>$id,'eatings'=>$eatings,'pivot'=>$pivotArray]);
     }
 

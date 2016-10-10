@@ -35,15 +35,23 @@
                                     </thead>
                                     <tbody>
                                     @foreach($diet as $eating)
+                                        <?php $vanduo = ""; ?>
+                                        @if($diet[0]==$eating)
+                                            <?php $vanduo = "Atsikėlus"; ?>
+                                        @elseif($diet[count($diet)-1]==$eating)
+                                            <?php $vanduo = "Prieš miegą"; ?>
+                                        @else
+                                            <?php $vanduo = "30min prieš"; ?>
+                                        @endif
                                         <tr>
-                                            <td>Atsikelus</td>
+                                            <td>{{$vanduo}}</td>
                                             <td>Vanduo</td>
-                                            <td>Vanduo</td>
-                                            <td>Vanduo</td>
-                                            <td>Vanduo</td>
-                                            <td>Vanduo</td>
-                                            <td>Vanduo</td>
-                                            <td>Vanduo</td>
+                                            <td>200</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
                                         </tr>
                                         <thead>
                                         <th class="text-center">{{$eating['eating_time']}}</th>
@@ -60,21 +68,21 @@
                                                 <td></td>
                                                 <td>{{$product['pavadinimas']}}</td>
                                                 <td>{{$product['pivot']['quantity']}}</td>
-                                                <td>{{$product['baltymai']}}</td>
-                                                <td>{{$product['riebalai']}}</td>
-                                                <td>{{$product['angliavandeniai']}}</td>
-                                                <td>{{$product['eVerte']}}</td>
-                                                <td>{{$product['cholesterolis']}}</td>
+                                                <td>{{round(($product['baltymai'] * $product['pivot']['quantity'] / 100),2)}}</td>
+                                                <td>{{round(($product['riebalai'] * $product['pivot']['quantity'] / 100),2)}}</td>
+                                                <td>{{round(($product['angliavandeniai'] * $product['pivot']['quantity'] / 100),2)}}</td>
+                                                <td>{{round(($product['eVerte'] * $product['pivot']['quantity'] / 100),2)}}</td>
+                                                <td>{{round(($product['cholesterolis'] * $product['pivot']['quantity'] / 100),2)}}</td>
                                             </tr>
                                         @endforeach
                                         <tr class="active">
                                             <td class="text-center" colspan="3">Bendra maistinė ir energinė vertė
                                             </td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <td>{{$eating['baltymai']}}</td>
+                                            <td>{{$eating['riebalai']}}</td>
+                                            <td>{{$eating['angliavandeniai']}}</td>
+                                            <td>{{$eating['eVerte']}}</td>
+                                            <td>{{$eating['cholesterolis']}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
