@@ -36,9 +36,13 @@ class DietController extends Controller
             $pivotArray[$b]['eating_ids'] = array_unique($pivotArray[$b]['eating_ids']);
            // var_dump($pivotArray);
 
-            $eatingDiet = Eating::with('product')->whereIn('id',$pivotArray[$b]['eating_ids'])->get();
-            $eatings[$b]=$eatingDiet->toArray();
-            //var_dump($eatings[$b]);
+            $eatingDiet = Eating::with('product')->whereIn('id', $pivotArray[$b]['eating_ids'])->get()->toArray();
+            for($i=0;$i<$diet->total_days;$i++) {
+                for($c=0;$c<$diet->total_eating;$c++){
+                    $eatings[$b][$i][$c] = $eatingDiet[$c+$i*6];
+                }
+            }
+            var_dump($eatings[0][1]);
             foreach($eatingDiet as $eating){
                 //var_dump($eating->toArray());
             }
@@ -46,8 +50,8 @@ class DietController extends Controller
         //var_dump($eatings);
 
 
-
-        return view('diets',['id'=>$id,'eatings'=>$eatings,'pivot'=>$pivotArray]);
+        $fullDiet = $eatings;
+        return view('diets',['id'=>$id,'fullDiet'=>$fullDiet,'pivot'=>$pivotArray]);
     }
 
     // TODO: sql injection protection
@@ -60,41 +64,35 @@ class DietController extends Controller
         }
         $dieta = $array[0];
         $eating_types = $array[1];
-        //var_dump($masyvas);
         $id = 1;
-        $eatingId=-1;
-
         $diet = new Diet();
         $diet->user_id = $id;
-        $diet->total_days = 1; // useless
+        $diet->total_days = count($dieta);
         $diet->notes = "";
         $diet->created = Carbon::now();
-        $diet->total_eating = 6; // you dont need this since you get all related by id
+        $diet->total_eating = 6;
         $diet->save();
 
         for($i=0;$i<count($dieta);$i++){ // loop through days
-            var_dump($array[$i]);
             for($a=0;$a<$diet->total_eating;$a++){ // 6 eatings per day
+                $eating = new Eating();
+                $eating->eating_type = $eating_types[$a]['type'];
+                $eating->eating_time = $eating_types[$a]['time'];
+                $eating->recommended_rate = 0;
+                $eating->baltymai = $dieta[$i]['total_values'][$a]['baltymai'];
+                $eating->riebalai = $dieta[$i]['total_values'][$a]['riebalai'];
+                $eating->angliavandeniai = $dieta[$i]['total_values'][$a]['angliavandeniai'];
+                $eating->cholesterolis = $dieta[$i]['total_values'][$a]['cholesterolis'];
+                $eating->eVerte = $dieta[$i]['total_values'][$a]['eVerte'];
+                $eating->save();
                 for($b=0;$b<count($dieta[$i]['eating_types'][$a]['rows']);$b++){
                     $row = $dieta[$i]['eating_types'][$a]['rows'][$b];
                     //var_dump($row);
-                    if($eatingId==-1) {
-                        $eating = new Eating();
-                        $eating->eating_type = $eating_types[$a]['type'];
-                        $eating->eating_time = $eating_types[$a]['time'];
-                        $eating->recommended_rate = 0;
-                        $eating->baltymai = $dieta[$i]['total_values'][$b]['baltymai'];
-                        $eating->riebalai = $dieta[$i]['total_values'][$b]['riebalai'];
-                        $eating->angliavandeniai = $dieta[$i]['total_values'][$b]['angliavandeniai'];
-                        $eating->cholesterolis = $dieta[$i]['total_values'][$b]['cholesterolis'];
-                        $eating->eVerte = $dieta[$i]['total_values'][$b]['eVerte'];
-                        $eating->save();
-                        $eatingId = $eating->id;
+                    $diet->eating()->attach($eating->id,['day'=>($i+1)]);
+                    if(isset($row['id'])){
+                        $eating->product()->attach($row['id'],['quantity'=>$row['quantity']]);
                     }
-                    $diet->eating()->attach($eatingId,['day'=>($i+1)]);
-                    $eating->product()->attach($row['id'],['quantity'=>$row['quantity']]);
                 }
-                $eatingId=-1;
             }
         }
         return $array;
