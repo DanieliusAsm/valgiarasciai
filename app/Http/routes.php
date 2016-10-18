@@ -3,12 +3,6 @@
 Route::get('/', function() {
 	return View::make('home');
 });
-
-Route::get('/calculator', function() {
-	return View::make('calculator');
-});
-
-Route::post('/calculator', 'CalculatorController@calculate');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -107,6 +101,10 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/idd',[
 			'uses'=>'DietController@saveDiet',
 			'as'=>'saveDieta'
+		]);
+		Route::get('/calculator', [
+			function() {return View::make('calculator');},
+			'as'=>'calculator'
 		]);
 	});
 

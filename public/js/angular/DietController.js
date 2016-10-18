@@ -1,4 +1,4 @@
-diet.controller('DietController', function ($scope, $http, $window,$httpParamSerializerJQLike) {
+diet.controller('DietController', function ($scope, $http) { // $window,$httpParamSerializerJQLike
     //TODO learn to form array
     $scope.eatingInfo = [{type:"Pusryčiai",time:"8:00"},{type:"Priešpiečiai",time:"11:00"},
         {type:"Pietūs",time:"13:00"},{type:"Pavakariai",time:"16:00"},
@@ -99,5 +99,43 @@ diet.controller('DietController', function ($scope, $http, $window,$httpParamSer
             }
             $scope.lastDays = $scope.days;
         }
+    }
+
+    $scope.calculate = function(){
+        var kmi = Number($scope.mass) / (Math.pow(Number($scope.height),2) / 10000);
+        kmi = kmi.toFixed(2);
+        var salyga,pma,idealusSvoris,idealusPMA;
+        
+        if (Math.round(kmi) == 22) {
+            salyga = "idealus KMI";
+        } else if (kmi >= 25.5 && kmi <= 29.9) {
+            salyga = "Antsvoris";
+        } else if (kmi >= 30 && kmi <= 34.9) {
+            salyga = "1 laipsnio nutukimas";
+        } else if (kmi >= 35 && kmi <= 39.9) {
+            salyga = "2 laipsnio nutukimas";
+        } else if (kmi >= 40) {
+            salyga = "3 laipsnio nutukimas";
+        } else if (kmi >= 17.5 && kmi <= 18.5) {
+            salyga = "1 laipsnio mitybos nepakankamumas";
+        } else if (kmi >= 16 && kmi <= 17.4) {
+            salyga = "2 laipsnio mitybos nepakankamumas";
+        } else if (kmi <= 16) {
+            salyga = "3 laipsnio mitybos nepakankamumas";
+        }
+
+        idealusSvoris = Math.pow(Number($scope.height),2) * 22 / 10000;
+        if ($scope.gender == 'vyras') {
+            pma = (66 + 13.7 * Number($scope.mass) + 5 * Number($scope.height) - 6.8 * Number($scope.age)) * Number($scope.selected.rate);
+            idealusPMA = (66 + 13.7 * idealusSvoris + 5 * Number($scope.height) - 6.8 * Number($scope.age)) * Number($scope.selected.rate);
+        } else {
+            pma = (655 + 9.6 * Number($scope.mass) + 1.7 * Number($scope.height) - 4.7 * Number($scope.age)) * Number($scope.selected.rate);
+            idealusPMA = (655 + 9.6 * idealusSvoris + 1.7 * Number($scope.height) - 4.7 * Number($scope.age)) * Number($scope.selected.rate);
+        }
+        $scope.calcData.kmi = kmi;
+        $scope.calcData.salyga = salyga;
+        $scope.calcData.pma = pma.toFixed(2);
+        $scope.calcData.idealusSvoris = idealusSvoris;
+        $scope.calcData.idealusPMA = idealusPMA.toFixed(2);
     }
 });

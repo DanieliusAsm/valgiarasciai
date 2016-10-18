@@ -8,13 +8,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{ route('dashboard') }}">Beta</a>
+      <a class="navbar-brand">Closed Beta</a>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li @if(Route::currentRouteName()=="user")class="active"@endif><a href="{{route("user")}}">Vartotojai <span class="sr-only">(current)</span></a></li>
         <li @if(Route::currentRouteName()=="products")class="active"@endif><a href="{{route("products")}}">Produktai</a></li>
+        <li @if(Route::currentRouteName()=="calculator")class="active"@endif><a href="{{route("calculator")}}">Skaičiuoklė</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

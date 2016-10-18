@@ -14,6 +14,7 @@ class CalculatorController extends Controller
         $amzius = $request->input('amzius');
         $veiksnys = $request->input('veiksnys1');
         $kmi = round($svoris / (($ugis / 100) * ($ugis / 100)));
+
         $salyga = '';
         $pma = '';
         $fag = '';
