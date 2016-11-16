@@ -98,9 +98,9 @@ Route::group(['middleware' => ['web']], function () {
 			'uses'=>'DietController@saveDiet',
 			'as'=>'saveDiet'
 		]);
-		Route::get('/idd',[
-			'uses'=>'DietController@saveDiet',
-			'as'=>'saveDieta'
+		Route::post('/diet/export',[
+			'uses'=>'DietController@exportDiet',
+			'as'=>'exportDiet'
 		]);
 		Route::get('/calculator', [
 			function() {return View::make('calculator');},

@@ -9,6 +9,7 @@ use App\Diet;
 use App\Eating;
 use Carbon\Carbon;
 use App\Http\Controllers\Response;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DietController extends Controller
 {
@@ -51,12 +52,12 @@ class DietController extends Controller
 
 
         $fullDiet = $eatings;
+        var_dump($pivotArray);
         return view('diets',['id'=>$id,'fullDiet'=>$fullDiet,'pivot'=>$pivotArray]);
     }
 
     // TODO: sql injection protection
     public function saveDiet(Request $request, $id){
-        //return redirect("/login");
         $json = "[{\"day\":1,\"eating_types\":[{\"rows\":[{\"id\":1,\"pavadinimas\":\"Agurkų sriuba\",\"baltymai\":1.21,\"riebalai\":1.27,\"angliavandeniai\":10.51,\"cholesterolis\":0,\"eVerte\":54.33,\"tipas\":\"Sriuba\",\"quantity\":100},{\"id\":108,\"pavadinimas\":\"Pica su kumpiu\",\"baltymai\":8.29,\"riebalai\":7.18,\"angliavandeniai\":20.54,\"cholesterolis\":20.79,\"eVerte\":180.92,\"tipas\":\"Kita\",\"quantity\":120}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]}],\"total_values\":[{\"baltymai\":\"11.16\",\"riebalai\":\"9.89\",\"angliavandeniai\":\"35.16\",\"cholesterolis\":\"24.95\",\"eVerte\":\"271.43\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"}]},{\"day\":2,\"eating_types\":[{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]}],\"total_values\":[{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"}]},{\"day\":3,\"eating_types\":[{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]}],\"total_values\":[{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"}]}]";
         $array =  $request->json()->all();
         if($array == null){
@@ -97,4 +98,55 @@ class DietController extends Controller
         }
         return $array;
     }
+
+    public function exportDiet(Request $request){
+           $fullDiet = json_decode($request->input("fullDiet"), true);
+           //var_dump($fullDiet);
+
+           return Excel::create("diet", function ($excel) use($fullDiet) {
+               if (isset($excel)) {
+                   $excel->setTitle("Test");
+                   $excel->setDescription("Vartotojo Dieta");
+                   for($i=0;$i<count($fullDiet);$i++){ // loop days
+                       $dietDay = $fullDiet[$i];
+
+                       $excel->sheet("($i+1)",function($sheet) use($dietDay){
+                           //$sheet->setAllBorders('thin');
+                           $rows = 1;
+                           $sheet->appendRow(array("Valgymo laikas", "Maisto produktas/gaminys", "Kiekis/išeiga", "Baltymai", "Riebalai","Angliavandeniai","kcal"));
+
+                           for($i=0;$i<count($dietDay);$i++){ // loop eatings in each day
+                               // one eating - 3 extra rows + 1 at the top.
+                               $rows += 3;
+                               $eating = $dietDay[$i];
+                               if($i==0){
+                                   $vanduo = "Atsikėlus";
+                               }else if($i==(count($dietDay)-1)){
+                                   $vanduo = "Prieš miegą";
+                               }else{
+                                   $vanduo = "30min. prieš";
+                               }
+                               $sheet->appendRow(array($vanduo,"Stiklinė vandens","~150-200ml","0","0","0","0"));
+                               $sheet->appendRow(array($eating['eating_time'],$eating['eating_type']));
+                               for($b=0;$b<count($eating['product']);$b++){ // loop products in each eating type
+                                   $rows +=1;
+                                   $product = $eating['product'][$b];
+                                   $sheet->appendRow(array("",$product['pavadinimas'],$product['pivot']['quantity'] . 'g',$product['baltymai'],$product['riebalai'],$product['angliavandeniai'],$product['eVerte']));
+                               }
+                               // TODO MERGE cells cuz bugs
+                               $sheet->appendRow(array("Bendra maistinė ir energetinė vertė",$eating['baltymai'],$eating['riebalai'],$eating['angliavandeniai'],$eating['eVerte']));
+                           }
+                            for($i=0;$i<$rows;$i++){
+                                $sheet->row(($i+1), function($row){
+                                    
+                                });
+                            }
+
+                       });
+                   }
+               }
+           })->download("xls");
+        
+           //return redirect('/user');
+       }
 }

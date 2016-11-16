@@ -1,7 +1,13 @@
 <div class="form"></div>
-<div id="form-group">
-    <label class="control-label" for="days">Dienos</label>
+<div class="form-group">
+    <label for="days">Dienos</label>
     <input class="form-control" type="number" id="days" ng-model="days" ng-change="updateDietArray()" min="1">
+</div>
+<div class="row">
+    <div class="form-group"
+</div>
+<div class="form-group">
+    <label for=""></label>
 </div>
 
 <ul class="nav nav-tabs">

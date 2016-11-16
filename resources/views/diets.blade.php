@@ -1,7 +1,6 @@
 @extends('parent',['meta_title'=>'Valgiaraščiai'])
 
 @section("content")
-    <!--var_dump($eatings)-->
     <div ng-app="DietApp" ng-controller="DietController">
         <a href="{{route("newDiet",['id'=>$id])}}">Naujas Valgiarastis</a>
         <div class="panel-group">
@@ -10,7 +9,13 @@
                     <div class="panel-heading">
                         <div class="panel-title">
                             <a class="btn-block clickable" role="button" data-toggle="collapse"
-                               data-target="#collapseDiet">Valgiaraštis (data)</a>
+                               data-target="#collapseDiet">Valgiaraštis (data)
+                                <form id="form" action="{{route('exportDiet')}}" method="post">
+                                    <input type="hidden" name="fullDiet" value="{{json_encode($diet,true)}}"/>
+                                    <a class="pull-right" href="#" onclick="document.getElementById('form').submit()">Atsisiųsti</a>
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                </form>
+                            </a>
                         </div>
                     </div>
                     <div id="collapseDiet" class="panel-collapse collapse in">
