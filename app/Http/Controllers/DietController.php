@@ -9,6 +9,7 @@ use App\Diet;
 use App\Eating;
 use Carbon\Carbon;
 use App\Http\Controllers\Response;
+use Illuminate\Support\Facades\View;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DietController extends Controller
@@ -43,7 +44,7 @@ class DietController extends Controller
                     $eatings[$b][$i][$c] = $eatingDiet[$c+$i*6];
                 }
             }
-            var_dump($eatings[0][1]);
+            //var_dump($eatings[0][1]);
             foreach($eatingDiet as $eating){
                 //var_dump($eating->toArray());
             }
@@ -52,7 +53,7 @@ class DietController extends Controller
 
 
         $fullDiet = $eatings;
-        var_dump($pivotArray);
+        //var_dump($pivotArray);
         return view('diets',['id'=>$id,'fullDiet'=>$fullDiet,'pivot'=>$pivotArray]);
     }
 
@@ -98,12 +99,24 @@ class DietController extends Controller
         }
         return $array;
     }
-
+    // Problem: users can download each other`s clients data.
     public function exportDiet(Request $request){
            $fullDiet = json_decode($request->input("fullDiet"), true);
            //var_dump($fullDiet);
+           //return view('includes.diettable',['dietDay'=>$fullDiet[0]]);
+             Excel::create("diet", function($excel) use($fullDiet){
+                  $excel->setTitle("Test");
+                  $excel->setDescription("Vartotojo Dieta");
+                for($i=0;$i<count($fullDiet);$i++){
+                    $dietDay = $fullDiet[$i];
+                    $excel->sheet("fgh", function($sheet) use($dietDay){
+                        $sheet->loadView("includes.diettable", ['dietDay'=>$dietDay]);
+                    });
+                }
+            })->download('xls');
 
-           return Excel::create("diet", function ($excel) use($fullDiet) {
+        
+           /*return Excel::create("diet", function ($excel) use($fullDiet) {
                if (isset($excel)) {
                    $excel->setTitle("Test");
                    $excel->setDescription("Vartotojo Dieta");
@@ -145,7 +158,7 @@ class DietController extends Controller
                        });
                    }
                }
-           })->download("xls");
+           })->download("xls");*/
         
            //return redirect('/user');
        }
