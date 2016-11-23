@@ -104,6 +104,3 @@
         </div>
     </div>
 </div>
-
-<@ diet @></br>
-<@ eatingInfo @>

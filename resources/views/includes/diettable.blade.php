@@ -56,7 +56,7 @@
             <tr>
                 <td></td>
                 <td>{{$product['pavadinimas']}}</td>
-                <td>{{$product['pivot']['quantity']}}</td>
+                <td>{{$product['pivot']['quantity']}} @if($product['tipas'] == "Gėrimai") ml @else g @endif</td>
                 <td>{{round(($product['baltymai'] * $product['pivot']['quantity'] / 100),2)}}</td>
                 <td>{{round(($product['riebalai'] * $product['pivot']['quantity'] / 100),2)}}</td>
                 <td>{{round(($product['angliavandeniai'] * $product['pivot']['quantity'] / 100),2)}}</td>

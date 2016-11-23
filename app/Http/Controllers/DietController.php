@@ -19,9 +19,8 @@ class DietController extends Controller
 
         return view('adddiet',['id'=>$id,'products'=>$products]);
     }
-    //TODO: remake into more than one day
     public function getUserDiets($id){
-        $diets = Diet::with('eating')->get();
+        $diets = Diet::with('eating')->where('user_id', $id)->get();
         $pivotArray = array();
         $eatings = array();
         // loop through diets. Usually only 1 diet.
@@ -66,7 +65,6 @@ class DietController extends Controller
         }
         $dieta = $array[0];
         $eating_types = $array[1];
-        $id = 1;
         $diet = new Diet();
         $diet->user_id = $id;
         $diet->total_days = count($dieta);

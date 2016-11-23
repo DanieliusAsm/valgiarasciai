@@ -1,8 +1,12 @@
 <?php
 
-Route::get('/', function() {
-	return View::make('home');
-});
+Route::get('/', [
+	'as'=>'about',
+	function(){
+		return View::make('about');
+	}
+]);
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes

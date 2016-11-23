@@ -1,4 +1,4 @@
-diet.controller('DietController', function ($scope, $http) { // $window,$httpParamSerializerJQLike
+diet.controller('DietController', function ($scope, $http, $window) { // $httpParamSerializerJQLike
     //TODO learn to form array
     $scope.eatingInfo = [{type:"Pusryčiai",time:"8:00"},{type:"Priešpiečiai",time:"11:00"},
         {type:"Pietūs",time:"13:00"},{type:"Pavakariai",time:"16:00"},
@@ -61,7 +61,7 @@ diet.controller('DietController', function ($scope, $http) { // $window,$httpPar
         }, function errorCallback(response){
             //console.log(response);
         });
-        //$window.location = redirect;
+        $window.location = redirect;
     }
 
     $scope.getNumberToArray = function(n){

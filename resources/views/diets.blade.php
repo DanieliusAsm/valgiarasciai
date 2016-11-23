@@ -9,12 +9,7 @@
                     <div class="panel-heading">
                         <div class="panel-title">
                             <a class="btn-block clickable" role="button" data-toggle="collapse"
-                               data-target="#collapseDiet">Valgiaraštis (data)
-                                <form id="form" action="{{route('exportDiet')}}" method="post">
-                                    <input type="hidden" name="fullDiet" value="{{json_encode($diet,true)}}"/>
-                                    <a class="pull-right" href="#" onclick="document.getElementById('form').submit()">Atsisiųsti</a>
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                </form>
+                               data-target="#collapseDiet">Valgiaraštis
                             </a>
                         </div>
                     </div>
@@ -62,7 +57,7 @@
                                                 <tr>
                                                     <td>{{$vanduo}}</td>
                                                     <td>Vanduo</td>
-                                                    <td>200</td>
+                                                    <td>200 ml</td>
                                                     <td>0</td>
                                                     <td>0</td>
                                                     <td>0</td>
@@ -83,7 +78,7 @@
                                                 <tr>
                                                     <td></td>
                                                     <td>{{$product['pavadinimas']}}</td>
-                                                    <td>{{$product['pivot']['quantity']}}</td>
+                                                    <td>{{$product['pivot']['quantity']}} @if($product['tipas'] == "Gėrimai") ml @else g @endif</td>
                                                     <td>{{round(($product['baltymai'] * $product['pivot']['quantity'] / 100),2)}}</td>
                                                     <td>{{round(($product['riebalai'] * $product['pivot']['quantity'] / 100),2)}}</td>
                                                     <td>{{round(($product['angliavandeniai'] * $product['pivot']['quantity'] / 100),2)}}</td>
@@ -110,9 +105,17 @@
                                 @endfor
                             </div>
                         </div>
+                            <div class="panel-footer">
+                                <form id="form" action="{{route('exportDiet')}}" method="post">
+                                    <input type="hidden" name="fullDiet" value="{{json_encode($diet,true)}}"/>
+                                    <a href="#" onclick="document.getElementById('form').submit()">Atsisiųsti</a>
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                </form>
+                            </div>
                     </div>
                     @endforeach
                 </div>
+
         </div>
     </div>
 @stop
