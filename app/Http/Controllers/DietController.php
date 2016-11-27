@@ -21,6 +21,7 @@ class DietController extends Controller
     }
     public function getUserDiets($id){
         $diets = Diet::with('eating')->where('user_id', $id)->get();
+        //var_dump(count($diets));
         $pivotArray = array();
         $eatings = array();
         // loop through diets. Usually only 1 diet.
@@ -28,22 +29,23 @@ class DietController extends Controller
             $diet = $diets[$b];
             $eating = $diet->eating;
            // var_dump($eating->toArray());
-            $pivotArray[$b] = array('diet_id'=>$diet['id'],'eating_ids'=>array());
+            $pivotArray[$b] = array('diet_id'=>$diet['id'],'eating_ids'=>array(), 'with_cholesterol'=>$diet['with_cholesterol']);
             // loop through all the eatings and save them in the array
             for($i=0;$i<count($eating);$i++){
                 $pivot = $eating[$i]['pivot'];
                 $pivotArray[$b]['eating_ids'][$i] = $pivot['eating_id'];
             }
             $pivotArray[$b]['eating_ids'] = array_unique($pivotArray[$b]['eating_ids']);
-           // var_dump($pivotArray);
+            //var_dump($eating);
 
             $eatingDiet = Eating::with('product')->whereIn('id', $pivotArray[$b]['eating_ids'])->get()->toArray();
             for($i=0;$i<$diet->total_days;$i++) {
                 for($c=0;$c<$diet->total_eating;$c++){
-                    $eatings[$b][$i][$c] = $eatingDiet[$c+$i*6];
+                    //var_dump($diet->total_eating);
+                    $eatings[$b][$i][$c] = $eatingDiet[$c+$i*$diet->total_days];
                 }
             }
-            //var_dump($eatings[0][1]);
+            //var_dump($eatings[0][0]);
             foreach($eatingDiet as $eating){
                 //var_dump($eating->toArray());
             }
@@ -52,7 +54,7 @@ class DietController extends Controller
 
 
         $fullDiet = $eatings;
-        //var_dump($pivotArray);
+        var_dump($pivotArray);
         return view('diets',['id'=>$id,'fullDiet'=>$fullDiet,'pivot'=>$pivotArray]);
     }
 
@@ -60,6 +62,7 @@ class DietController extends Controller
     public function saveDiet(Request $request, $id){
         $json = "[{\"day\":1,\"eating_types\":[{\"rows\":[{\"id\":1,\"pavadinimas\":\"Agurkų sriuba\",\"baltymai\":1.21,\"riebalai\":1.27,\"angliavandeniai\":10.51,\"cholesterolis\":0,\"eVerte\":54.33,\"tipas\":\"Sriuba\",\"quantity\":100},{\"id\":108,\"pavadinimas\":\"Pica su kumpiu\",\"baltymai\":8.29,\"riebalai\":7.18,\"angliavandeniai\":20.54,\"cholesterolis\":20.79,\"eVerte\":180.92,\"tipas\":\"Kita\",\"quantity\":120}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]}],\"total_values\":[{\"baltymai\":\"11.16\",\"riebalai\":\"9.89\",\"angliavandeniai\":\"35.16\",\"cholesterolis\":\"24.95\",\"eVerte\":\"271.43\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"}]},{\"day\":2,\"eating_types\":[{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]}],\"total_values\":[{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"}]},{\"day\":3,\"eating_types\":[{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]}],\"total_values\":[{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"}]}]";
         $array =  $request->json()->all();
+        $total_eating = 0;
         if($array == null){
             return;
         }
@@ -70,94 +73,59 @@ class DietController extends Controller
         $diet->total_days = count($dieta);
         $diet->notes = "";
         $diet->created = Carbon::now();
-        $diet->total_eating = 6;
+        if(isset($dieta[0]['cholesterol'])){
+            $diet->with_cholesterol = true;
+        }else{
+            $diet->with_cholesterol = false;
+        }
         $diet->save();
 
         for($i=0;$i<count($dieta);$i++){ // loop through days
-            for($a=0;$a<$diet->total_eating;$a++){ // 6 eatings per day
-                $eating = new Eating();
-                $eating->eating_type = $eating_types[$a]['type'];
-                $eating->eating_time = $eating_types[$a]['time'];
-                $eating->recommended_rate = 0;
-                $eating->baltymai = $dieta[$i]['total_values'][$a]['baltymai'];
-                $eating->riebalai = $dieta[$i]['total_values'][$a]['riebalai'];
-                $eating->angliavandeniai = $dieta[$i]['total_values'][$a]['angliavandeniai'];
-                $eating->cholesterolis = $dieta[$i]['total_values'][$a]['cholesterolis'];
-                $eating->eVerte = $dieta[$i]['total_values'][$a]['eVerte'];
-                $eating->save();
-                for($b=0;$b<count($dieta[$i]['eating_types'][$a]['rows']);$b++){
-                    $row = $dieta[$i]['eating_types'][$a]['rows'][$b];
-                    //var_dump($row);
-                    $diet->eating()->attach($eating->id,['day'=>($i+1)]);
-                    if(isset($row['id'])){
-                        $eating->product()->attach($row['id'],['quantity'=>$row['quantity']]);
+            $total_eating = 0;
+            for($a=0;$a<6;$a++){ // 6 eatings per day
+                if($eating_types[$a]['enabled']){
+                    $total_eating++;
+                    $eating = new Eating();
+                    $eating->eating_type = $eating_types[$a]['type'];
+                    $eating->eating_time = $eating_types[$a]['time'];
+                    $eating->recommended_rate = 0;
+                    $eating->baltymai = $dieta[$i]['total_values'][$a]['baltymai'];
+                    $eating->riebalai = $dieta[$i]['total_values'][$a]['riebalai'];
+                    $eating->angliavandeniai = $dieta[$i]['total_values'][$a]['angliavandeniai'];
+                    $eating->cholesterolis = $dieta[$i]['total_values'][$a]['cholesterolis'];
+                    $eating->eVerte = $dieta[$i]['total_values'][$a]['eVerte'];
+                    $eating->save();
+                    for($b=0;$b<count($dieta[$i]['eating_types'][$a]['rows']);$b++){
+                        $row = $dieta[$i]['eating_types'][$a]['rows'][$b];
+                        //var_dump($row);
+                        $diet->eating()->attach($eating->id,['day'=>($i+1)]);
+                        if(isset($row['id'])){
+                            $eating->product()->attach($row['id'],['quantity'=>$row['quantity']]);
+                        }
                     }
                 }
             }
         }
-        return $array;
+        $diet->total_eating = $total_eating;
+        $diet->save();
     }
     // Problem: users can download each other`s clients data.
     public function exportDiet(Request $request){
-           $fullDiet = json_decode($request->input("fullDiet"), true);
+        $array = json_decode($request->input("fullDiet"), true);
+        $fullDiet = $array[0];
+        $cholesterol = $array[1];
            //var_dump($fullDiet);
            //return view('includes.diettable',['dietDay'=>$fullDiet[0]]);
-             Excel::create("diet", function($excel) use($fullDiet){
-                  $excel->setTitle("Test");
+             Excel::create("diet", function($excel) use($fullDiet,$cholesterol){
+                  $excel->setTitle("Valgiaraštis");
                   $excel->setDescription("Vartotojo Dieta");
                 for($i=0;$i<count($fullDiet);$i++){
                     $dietDay = $fullDiet[$i];
-                    $excel->sheet("fgh", function($sheet) use($dietDay){
-                        $sheet->loadView("includes.diettable", ['dietDay'=>$dietDay]);
+                    $excel->sheet("Diena", function($sheet) use($dietDay,$cholesterol){
+                        $sheet->loadView("includes.diettable", ['dietDay'=>$dietDay,'cholesterol'=>$cholesterol]);
                     });
                 }
             })->download('xls');
-
-        
-           /*return Excel::create("diet", function ($excel) use($fullDiet) {
-               if (isset($excel)) {
-                   $excel->setTitle("Test");
-                   $excel->setDescription("Vartotojo Dieta");
-                   for($i=0;$i<count($fullDiet);$i++){ // loop days
-                       $dietDay = $fullDiet[$i];
-
-                       $excel->sheet("($i+1)",function($sheet) use($dietDay){
-                           //$sheet->setAllBorders('thin');
-                           $rows = 1;
-                           $sheet->appendRow(array("Valgymo laikas", "Maisto produktas/gaminys", "Kiekis/išeiga", "Baltymai", "Riebalai","Angliavandeniai","kcal"));
-
-                           for($i=0;$i<count($dietDay);$i++){ // loop eatings in each day
-                               // one eating - 3 extra rows + 1 at the top.
-                               $rows += 3;
-                               $eating = $dietDay[$i];
-                               if($i==0){
-                                   $vanduo = "Atsikėlus";
-                               }else if($i==(count($dietDay)-1)){
-                                   $vanduo = "Prieš miegą";
-                               }else{
-                                   $vanduo = "30min. prieš";
-                               }
-                               $sheet->appendRow(array($vanduo,"Stiklinė vandens","~150-200ml","0","0","0","0"));
-                               $sheet->appendRow(array($eating['eating_time'],$eating['eating_type']));
-                               for($b=0;$b<count($eating['product']);$b++){ // loop products in each eating type
-                                   $rows +=1;
-                                   $product = $eating['product'][$b];
-                                   $sheet->appendRow(array("",$product['pavadinimas'],$product['pivot']['quantity'] . 'g',$product['baltymai'],$product['riebalai'],$product['angliavandeniai'],$product['eVerte']));
-                               }
-                               // TODO MERGE cells cuz bugs
-                               $sheet->appendRow(array("Bendra maistinė ir energetinė vertė",$eating['baltymai'],$eating['riebalai'],$eating['angliavandeniai'],$eating['eVerte']));
-                           }
-                            for($i=0;$i<$rows;$i++){
-                                $sheet->row(($i+1), function($row){
-                                    
-                                });
-                            }
-
-                       });
-                   }
-               }
-           })->download("xls");*/
-        
            //return redirect('/user');
        }
 }

@@ -19,7 +19,7 @@
             <th>Riebalai</th>
             <th>Angliavadeniai</th>
             <th>Energetinė vertė</th>
-            <th>Cholesterolis</th>
+            @if($cholesterol)<th>Cholesterolis</th>@endif
         </tr>
         </thead>
         <tbody>
@@ -40,17 +40,17 @@
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
-                <td>0</td>
+                @if($cholesterol)<td>0</td>@endif
             </tr>
         <tr>
-        <th>{{$eating['eating_time']}}</th>
-        <th>{{$eating['eating_type']}}</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+            <th>{{$eating['eating_time']}}</th>
+            <th>{{$eating['eating_type']}}</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            @if($cholesterol)<th></th>@endif
         </tr>
         @foreach($eating['product'] as $product)
             <tr>
@@ -61,7 +61,7 @@
                 <td>{{round(($product['riebalai'] * $product['pivot']['quantity'] / 100),2)}}</td>
                 <td>{{round(($product['angliavandeniai'] * $product['pivot']['quantity'] / 100),2)}}</td>
                 <td>{{round(($product['eVerte'] * $product['pivot']['quantity'] / 100),2)}}</td>
-                <td>{{round(($product['cholesterolis'] * $product['pivot']['quantity'] / 100),2)}}</td>
+                @if($cholesterol)<td>{{round(($product['cholesterolis'] * $product['pivot']['quantity'] / 100),2)}}</td>@endif
             </tr>
         @endforeach
         <tr class="active">
@@ -71,7 +71,7 @@
             <td>{{$eating['riebalai']}}</td>
             <td>{{$eating['angliavandeniai']}}</td>
             <td>{{$eating['eVerte']}}</td>
-            <td>{{$eating['cholesterolis']}}</td>
+            @if($cholesterol)<td>{{$eating['cholesterolis']}}</td>@endif
         </tr>
         @endforeach
         </tbody>

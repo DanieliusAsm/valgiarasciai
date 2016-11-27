@@ -13,6 +13,7 @@ class CreateDietsTable extends Migration
             $table->integer("total_days"); //full diet in days
             $table->integer("total_eating"); // how many times per day
             $table->string("notes"); // notes regarding client
+            $table->boolean("with_cholesterol");
             $table->date("created");
         });
     }

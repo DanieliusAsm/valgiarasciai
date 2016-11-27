@@ -4,7 +4,7 @@
     <div ng-app="DietApp" ng-controller="DietController">
         <a href="{{route("newDiet",['id'=>$id])}}">Naujas Valgiarastis</a>
         <div class="panel-group">
-            @foreach($fullDiet as $diet)
+            @for($a=0;$a<count($fullDiet);$a++)
                 <div class="panel panel-default click">
                     <div class="panel-heading">
                         <div class="panel-title">
@@ -16,7 +16,7 @@
                     <div id="collapseDiet" class="panel-collapse collapse in">
                         <div class="panel-body text-justify">
                             <ul class="nav nav-tabs">
-                                @for($i=0;$i<count($diet);$i++)
+                                @for($i=0;$i<count($fullDiet[$a]);$i++)
                                     @if($i==0)
                                         <li class="active"><a data-toggle="tab" data-target="#{{$i}}">{{$i+1}}</a></li>
                                     @else
@@ -25,7 +25,7 @@
                                 @endfor
                             </ul>
                             <div class="tab-content">
-                                @for($i=0;$i<count($diet);$i++)
+                                @for($i=0;$i<count($fullDiet[$a]);$i++)
                                     @if($i==0)
                                         <div id="{{$i}}" class="tab-pane active">
                                     @else
@@ -41,15 +41,15 @@
                                                 <th class="text-center">Riebalai</th>
                                                 <th class="text-center">Angliavadeniai</th>
                                                 <th class="text-center">Energetinė vertė</th>
-                                                <th class="text-center">Cholesterolis</th>
+                                                @if($pivot[$a]['with_cholesterol'])<th class="text-center">Cholesterolis</th>@endif
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($diet[$i] as $eating)
+                                            @foreach($fullDiet[$a][$i] as $eating)
                                                 <?php $vanduo = ""; ?>
-                                                @if($diet[0]==$eating)
+                                                @if($fullDiet[$a][0]==$eating)
                                                     <?php $vanduo = "Atsikėlus"; ?>
-                                                @elseif($diet[count($diet)-1]==$eating)
+                                                @elseif($fullDiet[$a][count($fullDiet[$a])-1]==$eating)
                                                     <?php $vanduo = "Prieš miegą"; ?>
                                                 @else
                                                     <?php $vanduo = "30min prieš"; ?>
@@ -62,7 +62,7 @@
                                                     <td>0</td>
                                                     <td>0</td>
                                                     <td>0</td>
-                                                    <td>0</td>
+                                                    @if($pivot[$a]['with_cholesterol'])<td>0</td>@endif
                                                 </tr>
                                             <thead>
                                             <th class="text-center">{{$eating['eating_time']}}</th>
@@ -72,7 +72,7 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th></th>
+                                            @if($pivot[$a]['with_cholesterol'])<th></th>@endif
                                             </thead>
                                             @foreach($eating['product'] as $product)
                                                 <tr>
@@ -83,7 +83,7 @@
                                                     <td>{{round(($product['riebalai'] * $product['pivot']['quantity'] / 100),2)}}</td>
                                                     <td>{{round(($product['angliavandeniai'] * $product['pivot']['quantity'] / 100),2)}}</td>
                                                     <td>{{round(($product['eVerte'] * $product['pivot']['quantity'] / 100),2)}}</td>
-                                                    <td>{{round(($product['cholesterolis'] * $product['pivot']['quantity'] / 100),2)}}</td>
+                                                    @if($pivot[$a]['with_cholesterol'])<td>{{round(($product['cholesterolis'] * $product['pivot']['quantity'] / 100),2)}}</td>@endif
                                                 </tr>
                                             @endforeach
                                             <tr class="active">
@@ -93,7 +93,7 @@
                                                 <td>{{$eating['riebalai']}}</td>
                                                 <td>{{$eating['angliavandeniai']}}</td>
                                                 <td>{{$eating['eVerte']}}</td>
-                                                <td>{{$eating['cholesterolis']}}</td>
+                                                @if($pivot[$a]['with_cholesterol'])<td>{{$eating['cholesterolis']}}</td>@endif
                                             </tr>
                                             @endforeach
                                             </tbody>
@@ -107,15 +107,14 @@
                         </div>
                             <div class="panel-footer">
                                 <form id="form" action="{{route('exportDiet')}}" method="post">
-                                    <input type="hidden" name="fullDiet" value="{{json_encode($diet,true)}}"/>
+                                    <input type="hidden" name="fullDiet" value="{{json_encode([$fullDiet[$a],$pivot[$a]['with_cholesterol']],true)}}"/>
                                     <a href="#" onclick="document.getElementById('form').submit()">Atsisiųsti</a>
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
                             </div>
                     </div>
-                    @endforeach
                 </div>
-
         </div>
+            @endfor
     </div>
 @stop

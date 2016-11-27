@@ -1,10 +1,11 @@
 diet.controller('DietController', function ($scope, $http, $window) { // $httpParamSerializerJQLike
     //TODO learn to form array
-    $scope.eatingInfo = [{type:"Pusryčiai",time:"8:00"},{type:"Priešpiečiai",time:"11:00"},
-        {type:"Pietūs",time:"13:00"},{type:"Pavakariai",time:"16:00"},
-        {type:"Vakarienė",time:"18:00"},{type:"Naktipiečiai",time:"21:00"}];
+    $scope.eatingInfo = [{type:"Pusryčiai",time:"8:00", enabled:"true"},{type:"Priešpiečiai",time:"11:00", enabled:"true"},
+        {type:"Pietūs",time:"13:00", enabled:"true"},{type:"Pavakariai",time:"16:00", enabled:"true"},
+        {type:"Vakarienė",time:"18:00", enabled:"true"},{type:"Naktipiečiai",time:"21:00", enabled:"true"}];
     $scope.diet=[];
     $scope.lastDays = 0;
+    $scope.initialized = false;
 
     // TODO optimisation. Gets called 6 times per row.
     $scope.calculateValue = function (quantity, baseValue) {
@@ -24,6 +25,7 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
         var sumE = 0;
 
         //TODO Too much work for 1 product added goes through the whole diet. add indexes
+        // bug sometimes values on  each row will be 0 same products bug
         for (var i = 0; i < $scope.diet.length; i++) {
             for (var b = 0; b < 6; b++) {
                 for(var c = 0;c<$scope.diet[i].eating_types[b].rows.length;c++){
@@ -73,6 +75,7 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
     }
 
     $scope.updateDietArray = function(){
+        $scope.initialized = true;
         if($scope.days != null && $scope.days != $scope.lastDays){
             var length = $scope.days - $scope.lastDays;
             if(length > 0){
@@ -98,9 +101,14 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
                 $scope.diet = $scope.diet.slice(0,days);
             }
             $scope.lastDays = $scope.days;
+            for(var b=0;b<6;b++){
+                if($scope.eatingInfo[b].type == ''){
+                    $scope.eatingInfo[b].enabled = false;
+                }
+            }
         }
     }
-
+    
     $scope.calculate = function(){
         var kmi = Number($scope.mass) / (Math.pow(Number($scope.height),2) / 10000);
         kmi = kmi.toFixed(2);

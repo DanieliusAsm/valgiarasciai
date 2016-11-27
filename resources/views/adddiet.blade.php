@@ -5,7 +5,7 @@
          ng-init="products = {{htmlspecialchars(json_encode($products))}};">
         <form method="post">
             @include('includes.dietform')
-            <button type="submit" ng-click="sendDiet('{{route('saveDiet',['id'=>$id])}}','{{route('diets',['id'=>$id])}}')">Kurti</button>
+            <button ng-if="initialized == true" type="submit" class="btn btn-primary" ng-click="sendDiet('{{route('saveDiet',['id'=>$id])}}','{{route('diets',['id'=>$id])}}')">Kurti</button>
         </form>
     </div>
 @stop

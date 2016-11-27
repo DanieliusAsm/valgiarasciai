@@ -1,32 +1,62 @@
-<div class="form"></div>
-<div class="form-group">
-    <label for="days">Dienos</label>
-    <input class="form-control" type="number" id="days" ng-model="days" ng-change="updateDietArray()" min="1">
+
+<div class="col-md-12">
+    <div class="form-group">
+        <label for="days">Dienos</label>
+        <input class="form-control" type="number" id="days" ng-model="days" ng-required="true" min="1" max="20">
+    </div>
 </div>
-<div class="row">
-    <div class="form-group"
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="eating">Valgymas</label>
+        <input class="form-control" ng-disabled="initialized" type="text" id="eating" ng-model="eatingInfo[0].type">
+    </div>
+    <div class="form-group">
+        <label for="eating">Valgymas</label>
+        <input class="form-control" ng-disabled="initialized" type="text" id="eating" ng-model="eatingInfo[1].type">
+    </div>
+    <div class="form-group">
+        <label for="eating">Valgymas</label>
+        <input class="form-control" ng-disabled="initialized" type="text" id="eating" ng-model="eatingInfo[2].type">
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="diet[0].cholesterol">
+            Cholesterolis
+        </label>
+    </div>
 </div>
-<div class="form-group">
-    <label for=""></label>
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="eating">Valgymas</label>
+        <input class="form-control" ng-disabled="initialized" type="text" id="eating" ng-model="eatingInfo[3].type">
+    </div>
+    <div class="form-group">
+        <label for="eating">Valgymas</label>
+        <input class="form-control" ng-disabled="initialized" type="text" id="eating" ng-model="eatingInfo[4].type">
+    </div>
+    <div class="form-group">
+        <label for="eating">Valgymas</label>
+        <input class="form-control" ng-disabled="initialized" type="text" id="eating" ng-model="eatingInfo[5].type">
+    </div>
+</div>
+<div class="col-md-12">
+    <button type="submit" class="btn btn-primary center-block" ng-click="updateDietArray()">Kurti</button>
 </div>
 
-<ul class="nav nav-tabs">
+
+
+
+<ul ng-show="initialized" class="nav nav-tabs">
     <li ng-repeat="tab in getNumberToArray((days)) track by $index" ng-class="$first ? 'active' :''"><a data-toggle="tab" data-target="#<@($index)@>" ng-bind="($index+1)"></a></li>
 </ul>
-<div class="tab-content">
+<div ng-show="initialized" class="tab-content">
     <div class="tab-pane" ng-repeat="dieta in diet track by $index" id="<@($index)@>" ng-class="$first ? 'tab-pane active' :'tab-pane'">
         <div class="row" ng-repeat="eating in eatingInfo">
-            <div class="col-md-12">
+            <div ng-show="eating.enabled" class="col-md-12">
                 <h4 ng-bind="eating.type"></h4>
                 <table class="table table-bordered table-hover" id="diet-table">
                     <col class="col-sm-1">
                     <col class="col-sm-3">
-                    <col class="col-sm-1">
-                    <col class="col-sm-1">
-                    <col class="col-sm-1">
-                    <col class="col-sm-1">
-                    <col class="col-sm-1">
-                    <col class="col-sm-1">
                     <thead>
                     <tr>
                         <th class="text-center">Laikas</th>
@@ -36,7 +66,7 @@
                         <th class="text-center">Riebalai</th>
                         <th class="text-center">Angliavadeniai</th>
                         <th class="text-center">Energetinė vertė</th>
-                        <th class="text-center">Cholesterolis</th>
+                        <th ng-if="diet[0].cholesterol" class="text-center">Cholesterolis</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -64,7 +94,7 @@
                         <td><input class="form-control" id="disabledInput" type="number" name="eVerte" placeholder="0"
                                    ng-value="calculateValue(row.quantity,row.eVerte)"
                                    disabled/></td>
-                        <td><input class="form-control" id="disabledInput" type="number" name="cholesterolis"
+                        <td ng-if="diet[0].cholesterol"><input class="form-control" id="disabledInput" type="number" name="cholesterolis"
                                    placeholder="0"
                                    ng-value="calculateValue(row.quantity,row.cholesterolis)"
                                    disabled/></td>
@@ -85,7 +115,7 @@
                         <th>
                             <@ dieta.total_values[$index].eVerte @>
                         </th>
-                        <th>
+                        <th ng-if="diet[0].cholesterol">
                             <@ dieta.total_values[$index].cholesterolis @>
                         </th>
                     </tr>
@@ -104,3 +134,5 @@
         </div>
     </div>
 </div>
+
+<@ diet @>

@@ -53,9 +53,9 @@
             <td>dan.asmontas@gmail.com</td>
         </tr>
         <tr>
-            <td>Edita</td>
+            <td>Edita Isakova</td>
             <td>Dietologė</td>
-            <td>email</td>
+            <td>editukass31@gmail.com</td>
         </tr>
         <tr>
             <td>Julius Jankus</td>
