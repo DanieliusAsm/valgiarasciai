@@ -47,7 +47,7 @@
 
 
 <ul ng-show="initialized" class="nav nav-tabs">
-    <li ng-repeat="tab in getNumberToArray((days)) track by $index" ng-class="$first ? 'active' :''"><a data-toggle="tab" data-target="#<@($index)@>" ng-bind="($index+1)"></a></li>
+    <li ng-repeat="tab in diet track by $index" ng-class="$first ? 'active' :''"><a data-toggle="tab" data-target="#<@($index)@>" ng-bind="($index+1)"></a></li>
 </ul>
 <div ng-show="initialized" class="tab-content">
     <div class="tab-pane" ng-repeat="dieta in diet track by $index" id="<@($index)@>" ng-class="$first ? 'tab-pane active' :'tab-pane'">

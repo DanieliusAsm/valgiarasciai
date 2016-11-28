@@ -81,17 +81,18 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
             if(length > 0){
                 var baseDays = 0;
                 if($scope.lastDays != 0){
-                    baseDays = $scope.days;
+                    baseDays = $scope.diet.length;
                 }
                 for(var i =0;i<length;i++){
-                    $scope.diet.push({});
-                    $scope.diet[i].day = baseDays + i + 1;
-                    $scope.diet[i].eating_types = [{},{},{},{},{},{}];
-                    $scope.diet[i].total_values = [{},{},{},{},{},{}];
-                    $scope.sumValues
+                    var index = baseDays + i;
+                    $scope.diet[index] = {};
+                    $scope.diet[index].day = baseDays + i + 1;
+                    $scope.diet[index].eating_types = [{},{},{},{},{},{}];
+                    $scope.diet[index].total_values = [{},{},{},{},{},{}];
+
                     for(var b=0;b<6;b++){
-                        $scope.diet[i].eating_types[b].rows = [{"pavadinimas":""}];
-                        $scope.diet[i].total_values[b] = {"baltymai":0, "riebalai":0, "angliavandeniai":0, "cholesterolis":0, "eVerte":0};
+                        $scope.diet[index].eating_types[b].rows = [{"pavadinimas":""}];
+                        $scope.diet[index].total_values[b] = {"baltymai":0, "riebalai":0, "angliavandeniai":0, "cholesterolis":0, "eVerte":0};
                         //$scope.diet[i].eating_types[b].type = $scope.eatingInfo[b].type;
                         //$scope.diet[i].eating_types[b].time = $scope.eatingInfo[b].time;
                         //diet[0].eating_types[$index].type = eatingType; diet[0].eating_types[$index].time=eatingTimes[$index]
