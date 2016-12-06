@@ -53,7 +53,7 @@
             <td>dan.asmontas@gmail.com</td>
         </tr>
         <tr>
-            <td>Edita Isakova</td>
+            <td>Edita Čėsnienė</td>
             <td>Dietologė</td>
             <td>editukass31@gmail.com</td>
         </tr>

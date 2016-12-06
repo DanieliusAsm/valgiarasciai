@@ -102,7 +102,7 @@ Route::group(['middleware' => ['web']], function () {
 			'uses'=>'DietController@saveDiet',
 			'as'=>'saveDiet'
 		]);
-		Route::post('/diet/export',[
+		Route::post('/diet/export/{dietType}',[
 			'uses'=>'DietController@exportDiet',
 			'as'=>'exportDiet'
 		]);

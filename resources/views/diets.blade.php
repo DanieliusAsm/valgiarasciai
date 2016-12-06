@@ -46,6 +46,7 @@
                                             </thead>
                                             <tbody>
                                             @foreach($fullDiet[$a][$i] as $eating)
+                                                {{var_dump($eating)}}
                                                 <?php $vanduo = ""; ?>
                                                 @if($fullDiet[$a][0]==$eating)
                                                     <?php $vanduo = "Atsikėlus"; ?>
@@ -106,9 +107,19 @@
                             </div>
                         </div>
                             <div class="panel-footer">
-                                <form id="form" action="{{route('exportDiet')}}" method="post">
-                                    <input type="hidden" name="fullDiet" value="{{json_encode([$fullDiet[$a],$pivot[$a]['with_cholesterol']],true)}}"/>
-                                    <a href="#" onclick="document.getElementById('form').submit()">Atsisiųsti</a>
+                                <form id="form" style="display:inline;" action="{{route('exportDiet',['dietType'=>'diet'])}}" method="post">
+                                    <input type="hidden" name="diet" value="{{json_encode([$fullDiet[$a],$pivot[$a]['with_cholesterol']],true)}}"/>
+                                    <a href="#" onclick="document.getElementById('form').submit()">Valgiaraštis</a>
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                </form>
+                                <form id="form2" style="display:inline;" action="{{route('exportDiet',['dietType'=>'weeklyDiet'])}}" method="post">
+                                    <input type="hidden" name="diet" value="{{json_encode([$fullDiet[$a],$pivot[$a]['with_cholesterol']],true)}}"/>
+                                    <a href="#" onclick="document.getElementById('form2').submit()">Savaitės valgiaraštis</a>
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                </form>
+                                <form id="form3" style="display:inline;" action="{{route('exportDiet',['dietType'=>'energyDiet'])}}" method="post">
+                                    <input type="hidden" name="diet" value="{{json_encode([$fullDiet[$a],$pivot[$a]['with_cholesterol']],true)}}"/>
+                                    <a href="#" onclick="document.getElementById('form3').submit()">Energetinis</a>
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
                             </div>

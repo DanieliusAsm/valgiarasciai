@@ -54,7 +54,8 @@ class DietController extends Controller
 
 
         $fullDiet = $eatings;
-        var_dump($pivotArray);
+        //var_dump($pivotArray);
+        //var_dump($fullDiet[0][0][0]);
         return view('diets',['id'=>$id,'fullDiet'=>$fullDiet,'pivot'=>$pivotArray]);
     }
 
@@ -110,22 +111,161 @@ class DietController extends Controller
         $diet->save();
     }
     // Problem: users can download each other`s clients data.
-    public function exportDiet(Request $request){
-        $array = json_decode($request->input("fullDiet"), true);
+    public function exportDiet(Request $request, $dietType){
+        //$array = $request->json()->all();
+        $array = json_decode($request->input("diet"), true);
         $fullDiet = $array[0];
         $cholesterol = $array[1];
-           //var_dump($fullDiet);
-           //return view('includes.diettable',['dietDay'=>$fullDiet[0]]);
-             Excel::create("diet", function($excel) use($fullDiet,$cholesterol){
-                  $excel->setTitle("Valgiaraštis");
-                  $excel->setDescription("Vartotojo Dieta");
-                for($i=0;$i<count($fullDiet);$i++){
-                    $dietDay = $fullDiet[$i];
-                    $excel->sheet("Diena", function($sheet) use($dietDay,$cholesterol){
-                        $sheet->loadView("includes.diettable", ['dietDay'=>$dietDay,'cholesterol'=>$cholesterol]);
-                    });
+
+        if($dietType === "diet"){
+            $fileName = "dieta";
+            $viewName = "exports.diet";
+            $weeks = 1;
+            $sheetName  = "Diena";
+        }else if($dietType === "weeklyDiet"){
+            $fileName = "savaitinis_valgiarastis";
+            $viewName = "exports.weeklydiet";
+            $weeks = ceil(count($fullDiet) / 7);
+            $fullDiet = $this->sortDietIntoWeeks($fullDiet,$weeks);
+            $sheetName  = "Savaitė";
+        }else{
+            $fileName = "energija_dienom";
+            $viewName = "exports.energydiet";
+            $weeks = ceil(count($fullDiet) / 7);
+            $fullDiet = $this->sortDietIntoWeeks($fullDiet,$weeks);
+            $sheetName  = "Savaitė";
+        }
+        // make arrray of settings
+        $settings = [
+            "cholesterol"=>$cholesterol,
+            "viewName"=>$viewName,
+            "weeks"=>$weeks,
+            "sheetName"=>$sheetName,
+            "dietType"=>$dietType,
+        ];
+        //var_dump($fullDiet);
+        if($fullDiet==null){
+            return;
+        }
+        //return view('exports.weeklyDiet',['diet' => $fullDiet[0]]);
+        return Excel::create($fileName, function($excel) use($fullDiet,$settings){
+            $excel->setTitle("Valgiaraštis");
+            $excel->setDescription("Vartotojo Dieta");
+
+            foreach($fullDiet as $diet){
+                $dietStats = [];
+                if($settings['dietType'] === "energyDiet"){
+                    $dietStats = $this->calculateWeekDietStats($diet);
                 }
-            })->download('xls');
-           //return redirect('/user');
+                $excel->sheet($settings['sheetName'], function ($sheet) use ($diet, $settings, $dietStats) {
+                    $sheet->loadView($settings['viewName'], [
+                        'diet' => $diet,
+                        'cholesterol' => $settings['cholesterol'],
+                        'dietStats'=>$dietStats
+                    ]);
+                });
+            }
+        })->download('xls');
        }
+
+    public function sortDietIntoWeeks($fullDiet,$weeks){
+        $array = [];
+        $days = ['Pirmadienis','Antradienis','Trečiadienis','Ketvirtadienis','Penktadienis','Šeštadienis','Sekmadienis'];
+        $totalDays = count($fullDiet);
+
+        for($a=0;$a<$weeks;$a++){
+            for($b=0;$b<7;$b++){
+                $index = $b + $a * 7;
+                if($index < $totalDays){
+                    $array[$a][$b] = $fullDiet[$index];
+                    $array[$a][$b]['day'] = $days[$b];
+                }
+            }
+        }
+        return $array;
+    }
+//TODO: init everything
+    // DONT LOOK THIS WAY
+    public function calculateWeekDietStats($dietWeek){
+        $array = [];
+
+        $eatingTimes = 0;
+        for($a=0;$a<=count($dietWeek);$a++) { // 7days
+            if($a<count($dietWeek)){
+                $dietDay = $dietWeek[$a];
+            }else{
+                $dietDay = $dietWeek[$a-1];
+            }
+
+            for ($i = 0; $i < count($dietDay); $i++) {//6 eatings
+                if (isset($dietDay[$i]['eating_type'])) {
+                    if ($a === count($dietWeek)) {
+                        $array['angliavandeniai'][$i] = round(($array['angliavandeniai'][$i] / $eatingTimes), 2);
+                        $array['baltymai'][$i] = round(($array['baltymai'][$i] / $eatingTimes), 2);
+                        $array['riebalai'][$i] = round(($array['riebalai'][$i] / $eatingTimes), 2);
+                        $array['eVerte'][$i] = round(($array['eVerte'][$i] / $eatingTimes), 2);
+                        $array['cholesterolis'][$i] = round(($array['cholesterolis'][$i] / $eatingTimes), 2);
+                    } else {
+                        if(!isset($array[$a]['angliavandeniai'])){
+                            $array[$a]['angliavandeniai'] = 0;
+                            $array[$a]['baltymai'] = 0;
+                            $array[$a]['riebalai'] = 0;
+                            $array[$a]['eVerte'] = 0;
+                            $array[$a]['cholesterolis'] = 0;
+
+                            $array['visoAngliavaneniu'] = 0;
+                            $array['visoBaltymu'] = 0;
+                            $array['visoRiebalu'] = 0;
+                            $array['visoEVertes'] = 0;
+                            $array['visoCholesterolio'] = 0;
+                        }
+                        if(!isset($array['angliavandeniai'][$i])){
+                            $array['angliavandeniai'][$i] = 0;
+                            $array['baltymai'][$i] = 0;
+                            $array['riebalai'][$i] = 0;
+                            $array['eVerte'][$i] = 0;
+                            $array['cholesterolis'][$i] = 0;
+                        }
+                        //total for a day
+                        $array[$a]['angliavandeniai'] += $dietDay[$i]['angliavandeniai'];
+                        $array[$a]['baltymai'] += $dietDay[$i]['baltymai'];
+                        $array[$a]['riebalai'] += $dietDay[$i]['riebalai'];
+                        $array[$a]['eVerte'] += $dietDay[$i]['eVerte'];
+                        $array[$a]['cholesterolis'] += $dietDay[$i]['cholesterolis'];
+                        // total for a week
+                        $array['angliavandeniai'][$i] += $dietDay[$i]['angliavandeniai']; // i- pusrycai pietus, vakariene
+                        $array['baltymai'][$i] += $dietDay[$i]['baltymai'];
+                        $array['riebalai'][$i] += $dietDay[$i]['riebalai'];
+                        $array['eVerte'][$i] += $dietDay[$i]['eVerte'];
+                        $array['cholesterolis'][$i] += $dietDay[$i]['cholesterolis'];
+
+                        // remake
+                        $array['visoAngliavaneniu'] += $dietDay[$i]['angliavandeniai'];
+                        $array['visoBaltymu'] += $dietDay[$i]['baltymai'];;
+                        $array['visoRiebalu'] += $dietDay[$i]['riebalai'];
+                        $array['visoEVertes'] += $dietDay[$i]['eVerte'];
+                        $array['visoCholesterolio'] += $dietDay[$i]['cholesterolis'];
+
+                        if ($a === 0) {
+                            $eatingTimes++;
+                        }
+                    }
+                }
+            }
+        }
+        $array['visoAngliavandeniu'] = 0;
+        $array['visoBaltymu'] = 0;
+        $array['visoRiebalu'] = 0;
+        $array['visoEVertes'] = 0;
+        $array['visoCholesterolio'] = 0;
+        for($i=0;$i<count($array['angliavandeniai']);$i++){
+            $array['visoAngliavandeniu'] += $array['angliavandeniai'][$i];
+            $array['visoBaltymu'] += $array['baltymai'][$i];
+            $array['visoRiebalu'] += $array['riebalai'][$i];
+            $array['visoEVertes'] += $array['eVerte'][$i];
+            $array['visoCholesterolio'] += $array['cholesterolis'][$i];
+        }
+
+        return $array;
+    }
 }

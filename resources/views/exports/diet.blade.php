@@ -23,11 +23,11 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($dietDay as $eating)
+        @foreach($diet as $eating)
             <?php $vanduo = ""; ?>
-            @if($dietDay[0]==$eating)
+            @if($diet[0]==$eating)
                 <?php $vanduo = "Atsikėlus"; ?>
-            @elseif($dietDay[count($dietDay)-1]==$eating)
+            @elseif($diet[count($diet)-1]==$eating)
                 <?php $vanduo = "Prieš miegą"; ?>
             @else
                 <?php $vanduo = "30min prieš"; ?>

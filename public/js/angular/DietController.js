@@ -59,13 +59,13 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
             url: saveLink,
             data: data //$httpParamSerializerJQLike($scope.diet)
         }).then(function successCallback(response){
-            //console.log(response)
+            //success
         }, function errorCallback(response){
-            //console.log(response);
+            //error
         });
         $window.location = redirect;
     }
-
+    
     $scope.getNumberToArray = function(n){
         if(n!= null && n > 0){
             return new Array(n);
