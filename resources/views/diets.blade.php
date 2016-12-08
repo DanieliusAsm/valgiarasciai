@@ -46,7 +46,6 @@
                                             </thead>
                                             <tbody>
                                             @foreach($fullDiet[$a][$i] as $eating)
-                                                {{var_dump($eating)}}
                                                 <?php $vanduo = ""; ?>
                                                 @if($fullDiet[$a][0]==$eating)
                                                     <?php $vanduo = "Atsikėlus"; ?>

@@ -1,6 +1,6 @@
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <style>
         table, th, td {
             border: 1px solid #000000;

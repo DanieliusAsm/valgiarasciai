@@ -45,22 +45,21 @@
             <td>{{$dietStats[$a]['eVerte']}}</td>
             @if($cholesterol)<td>{{$dietStats[$a]['cholesterolis']}}</td>@endif
         </tr>
-
-        <tr>
-            <th colspan="5" align="center">Vienos dienos vidurkiai</th>
-        </tr>
-        @for($i=0;$i<count($diet[$a]);$i++)
-            @if(isset($diet[$i][$a]['eating_type']))
+    @endfor
+    <tr>
+        <th colspan="5" align="center">Vienos dienos vidurkiai</th>
+    </tr>
+    @for($i=0;$i<count($diet[0]);$i++)
+        @if(isset($diet[0][$i]['eating_type']))
             <tr>
-                <td>{{$diet[$i][$a]['eating_type']}}</td>
+                <td>{{$diet[0][$i]['eating_type']}}</td>
                 <td>{{$dietStats['baltymai'][$i]}}</td>
                 <td>{{$dietStats['riebalai'][$i]}}</td>
                 <td>{{$dietStats['angliavandeniai'][$i]}}</td>
                 <td>{{$dietStats['eVerte'][$i]}}</td>
                 @if($cholesterol)<td>{{$dietStats['cholesterolis'][$i]}}</td>@endif
             </tr>
-            @endif
-        @endfor
+        @endif
     @endfor
     <tr>
         <th>Viso:</th>

@@ -8,10 +8,6 @@
         </ol>
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img src="{{url("img/fonas.png")}}" alt="">
-                <div class="carousel-caption">...</div>
-            </div>
-            <div class="item">
                 <img src="{{url("img/products.png")}}" alt="">
                 <div class="carousel-caption">... 2</div>
             </div>
