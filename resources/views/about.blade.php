@@ -4,12 +4,18 @@
     <div id="carousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carousel" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel" data-slide-to="0"></li>
+            <li data-target="#carousel" data-slide-to="1"></li>
+            <li data-target="#carousel" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img src="{{url("img/products.png")}}" alt="">
-                <div class="carousel-caption">... 2</div>
+                <img src="{{url("public/img/user.png")}}" alt="Users">
+            </div>
+            <div class="item">
+                <img src="{{url("public/img/products.png")}}" alt="Products">
+            </div>
+            <div class="item">
+                <img src="{{url("public/img/calc.png")}}" alt="Calculator">
             </div>
         </div>
 
@@ -46,7 +52,7 @@
         <tr>
             <td>Danielius Ašmontas</td>
             <td>Programuotojas</td>
-            <td>dan.asmontas@gmail.com</td>
+            <td>dan.asmontas@gmail.com <a href="http://www.visiogen.io">visiogen.io</a></td>
         </tr>
         <tr>
             <td>Edita Čėsnienė</td>

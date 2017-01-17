@@ -147,7 +147,7 @@ class DietController extends Controller
         if($fullDiet==null){
             return;
         }
-        //return view('exports.weeklyDiet',['diet' => $fullDiet[0]]);
+        //return view('exports.diet',['diet' => $fullDiet[0],'cholesterol'=>0]);
         return Excel::create($fileName, function($excel) use($fullDiet,$settings){
             $excel->setTitle("Valgiaraštis");
             $excel->setDescription("Vartotojo Dieta");
@@ -165,7 +165,7 @@ class DietController extends Controller
                     ]);
                 });
             }
-        })->download('xls');
+        })->download('xlsx');
        }
 
     public function sortDietIntoWeeks($fullDiet,$weeks){

@@ -1,6 +1,6 @@
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <style>
         table, th, td {
             border: 1px solid #000000;
@@ -12,7 +12,7 @@
     <table>
         <thead>
         <tr>
-            <th>Laikas</th>
+            <th>LaikasėęįčėįėįčŠŠŠŠŠŠŠŠŠŠšššššššš</th>
             <th>Maisto produktas/gaminys</th>
             <th>Kiekis/Išeiga</th>
             <th>Baltymai</th>
