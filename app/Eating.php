@@ -9,8 +9,8 @@ class Eating extends Model
     public $timestamps = false;
     public $table = "eatings";
 
-    public function product(){
+    public function products(){
         return $this->belongsToMany(Product::class)
-            ->withPivot('quantity');
+            ->withPivot(['quantity','protein','fat','carbs','cholesterol','energy_value']);
     }
 }

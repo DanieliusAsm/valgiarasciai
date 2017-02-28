@@ -13,6 +13,11 @@ class CreateEatingProductTable extends Migration
             $table->integer("eating_id");
             $table->integer("product_id");
             $table->integer("quantity");
+            $table->double("protein");
+            $table->double("fat");
+            $table->double("carbs");
+            $table->double("cholesterol");
+            $table->double("energy_value");
         });
     }
 

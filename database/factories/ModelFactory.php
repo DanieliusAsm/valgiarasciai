@@ -61,3 +61,23 @@ $factory->define(App\Body::class, function(Faker\Generator $faker){
         'created'=>Carbon::now()
     ];
 });
+
+$factory->define(App\Diet::class, function(Faker\Generator $faker){
+    return[
+        'total_days'=>'1',
+        'total_eating'=>'6',
+        'notes'=>$faker->sentence(5),
+        'with_cholesterol'=>'0',
+        'created'=>Carbon::now()
+    ];
+});
+$factory->define(App\Eating::class, function(Faker\Generator $faker){
+    return [
+        'recommended_rate'=>'10%',
+        'baltymai'=>'0',
+        'riebalai'=>'0',
+        'angliavandeniai'=>'0',
+        'cholesterolis'=>'0',
+        'eVerte'=>'0',
+    ];
+});

@@ -20,7 +20,11 @@ class DietController extends Controller
         return view('adddiet',['id'=>$id,'products'=>$products]);
     }
     public function getUserDiets($id){
-        $diets = Diet::with('eating')->where('user_id', $id)->get();
+        $diets = Diet::with('eatings.products')->where('id',$id)->with('stats')->get();
+        echo '<pre>';
+        print_r($diets->toArray());
+        echo '</pre>';
+        /*$diets = Diet::with('eating')->where('user_id', $id)->get();
         //var_dump(count($diets));
         $pivotArray = array();
         $eatings = array();
@@ -36,8 +40,7 @@ class DietController extends Controller
                 $pivotArray[$b]['eating_ids'][$i] = $pivot['eating_id'];
             }
             $pivotArray[$b]['eating_ids'] = array_unique($pivotArray[$b]['eating_ids']);
-            //var_dump($eating);
-
+            //var_dump($eating); 
             $eatingDiet = Eating::with('product')->whereIn('id', $pivotArray[$b]['eating_ids'])->get()->toArray();
             for($i=0;$i<$diet->total_days;$i++) {
                 for($c=0;$c<$diet->total_eating;$c++){
@@ -56,7 +59,7 @@ class DietController extends Controller
         $fullDiet = $eatings;
         //var_dump($pivotArray);
         //var_dump($fullDiet[0][0][0]);
-        return view('diets',['id'=>$id,'fullDiet'=>$fullDiet,'pivot'=>$pivotArray]);
+        return view('diets',['id'=>$id,'fullDiet'=>$fullDiet,'pivot'=>$pivotArray]);*/
     }
 
     // TODO: sql injection protection

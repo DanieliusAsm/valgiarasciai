@@ -108,19 +108,26 @@
                             <div class="panel-footer">
                                 <form id="form" style="display:inline;" action="{{route('exportDiet',['dietType'=>'diet'])}}" method="post">
                                     <input type="hidden" name="diet" value="{{json_encode([$fullDiet[$a],$pivot[$a]['with_cholesterol']],true)}}"/>
+                                    <i class="glyphicon glyphicon-list-alt"></i>
                                     <a href="#" onclick="document.getElementById('form').submit()">Valgiaraštis</a>
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
                                 <form id="form2" style="display:inline;" action="{{route('exportDiet',['dietType'=>'weeklyDiet'])}}" method="post">
                                     <input type="hidden" name="diet" value="{{json_encode([$fullDiet[$a],$pivot[$a]['with_cholesterol']],true)}}"/>
+                                    <i class="glyphicon glyphicon-list-alt"></i>
                                     <a href="#" onclick="document.getElementById('form2').submit()">Savaitės valgiaraštis</a>
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
                                 <form id="form3" style="display:inline;" action="{{route('exportDiet',['dietType'=>'energyDiet'])}}" method="post">
                                     <input type="hidden" name="diet" value="{{json_encode([$fullDiet[$a],$pivot[$a]['with_cholesterol']],true)}}"/>
+                                    <i class="glyphicon glyphicon-list-alt"></i>
                                     <a href="#" onclick="document.getElementById('form3').submit()">Energetinis</a>
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
+                                <div class="pull-right">
+                                    <i class="glyphicon glyphicon-edit" aria-hidden="true"></i>
+                                    <a href="{{route("editDiet",['id'=>$id])}}">Redaguoti</a>
+                                </div>
                             </div>
                     </div>
                 </div>

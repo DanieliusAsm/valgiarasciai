@@ -106,6 +106,10 @@ Route::group(['middleware' => ['web']], function () {
 			'uses'=>'DietController@exportDiet',
 			'as'=>'exportDiet'
 		]);
+        Route::get('/diet/{id}/edit',[
+            'uses'=>'DietController@something',
+            'as'=>'editDiet'
+        ]);
 		Route::get('/calculator', [
 			function() {return View::make('calculator');},
 			'as'=>'calculator'

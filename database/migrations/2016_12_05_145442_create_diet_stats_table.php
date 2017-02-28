@@ -10,6 +10,7 @@ class CreateDietStatsTable extends Migration
      *
      * @return void
      */
+    //nutrition for one whole day
     public function up()
     {
         Schema::create('diet_stats', function(Blueprint $table){

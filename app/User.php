@@ -16,4 +16,7 @@ class User extends Model{
     public function base(){
         return $this->hasMany('App\Base');
     }
+    public function diets(){
+        return $this->hasMany('App\Diet');
+    }
 }

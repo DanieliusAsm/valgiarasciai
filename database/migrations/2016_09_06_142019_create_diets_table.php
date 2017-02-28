@@ -9,7 +9,8 @@ class CreateDietsTable extends Migration
     {
         Schema::create("diets", function(Blueprint $table){
             $table->increments("id");
-            $table->integer("user_id"); // belongs to
+            $table->integer("user_id")->unsigned();// belongs to
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer("total_days"); //full diet in days
             $table->integer("total_eating"); // how many times per day
             $table->string("notes"); // notes regarding client

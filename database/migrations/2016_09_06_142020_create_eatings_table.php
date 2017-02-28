@@ -14,6 +14,8 @@ class CreateEatingsTable extends Migration
     {
         Schema::create("eatings",function(Blueprint $table){
             $table->increments('id');
+            $table->integer('diet_id')->unsigned();
+            $table->foreign('diet_id')->references('id')->on('diets');
             $table->string("eating_time");//9:40
             $table->string("eating_type");//pusryciai
             $table->integer("recommended_rate"); //30% kcal dienos normos suvartojama per pusrycius
@@ -22,6 +24,7 @@ class CreateEatingsTable extends Migration
             $table->double("angliavandeniai");
             $table->double("cholesterolis");
             $table->double("eVerte");
+
         });
     }
 

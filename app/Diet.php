@@ -9,8 +9,10 @@ class Diet extends Model
     public $table = "diets";
     public $timestamps = false;
 
-    public function eating(){
-        return $this->belongsToMany(Eating::class, 'diet_eating')
-            ->withPivot('day');
+    public function eatings(){
+        return $this->hasMany(Eating::class);
+    }
+    public function stats(){
+        return $this->hasMany(DietStat::class);
     }
 }
