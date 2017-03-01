@@ -11,46 +11,6 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
     $scope.lastDays = 0;
     $scope.initialized = false;
 
-    //sums up stats for one eating and for
-    // a whole day.
-    $scope.updateTotalStats = function ($dayIndex) {
-        var sumB = 0;
-        var sumR = 0;
-        var sumA = 0;
-        var sumCh = 0;
-        var sumE = 0;
-
-        //TODO Too much work for 1 product added goes through the whole diet. add indexes
-        for (var b = 0; b < $scope.diet.total_eating; b++) {
-            for (var c = 0; c < $scope.diet[i].eating_types[b].rows.length; c++) {
-                var row = $scope.diet[i].eating_types[b].rows[c];
-                if (Number(row.quantity) > 0) {
-                    sumB += Number(row.quantity) * Number(row.baltymai) / 100;
-                    sumR += Number(row.quantity) * Number(row.riebalai) / 100;
-                    sumA += Number(row.quantity) * Number(row.angliavandeniai) / 100;
-                    sumCh += Number(row.quantity) * Number(row.cholesterolis) / 100;
-                    sumE += Number(row.quantity) * Number(row.eVerte) / 100;
-                }
-            }
-            $scope.diet[i].total_values[b] = {
-                "baltymai": sumB.toFixed(2),
-                "riebalai": sumR.toFixed(2),
-                "angliavandeniai": sumA.toFixed(2),
-                "cholesterolis": sumCh.toFixed(2),
-                "eVerte": sumE.toFixed(2)
-            };
-            sumB = 0;
-            sumR = 0;
-            sumA = 0;
-            sumCh = 0;
-            sumE = 0;
-        }
-    }
-
-    $scope.getTotal = function (dietIndex, valueIndex) {
-        return $scope.sumValues[dietIndex][valueIndex];
-    }
-
     $scope.sendDiet = function (saveLink, redirect) {
         var data = [$scope.diet, $scope.eatingInfo];
         $http({
@@ -95,7 +55,7 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
         var enabledEatingsArray = $scope.getEatingsPerDay();
         $scope.diet.total_eating = enabledEatingsArray.length;
         $scope.diet.eatings = [];
-        $scope.diet.stats = [];
+        $scope.diet.day_stats = [];
         console.log(enabledEatingsArray);
 
         for (var i = 0; i < $scope.diet.total_days; i++) {
@@ -192,11 +152,61 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
             $eating.carbs = Number(sumA.toFixed(2));
             $eating.cholesterol = Number(sumCh.toFixed(2));
             $eating.energy_value = Number(sumE.toFixed(2));
-        console.log(sumB);
-        }else{
-        console.log("empty");
         }
     };
+
+    //sums up stats for one eating and for
+    // a whole day.
+    $scope.calculateTotalValues = function ($dayIndex) {
+        var eatings = $scope.getEatingsInDay($dayIndex);
+        if(!eatings){
+            return;
+        }
+
+        var sumB = 0;
+        var sumR = 0;
+        var sumA = 0;
+        var sumCh = 0;
+        var sumE = 0;
+        //  loop to calculate this days eating sum and another for diet whole
+        for(var i=0;i<eatings.length;i++){
+            if(eatings[i].protein){
+                sumB += eatings[i].protein;
+                sumA += eatings[i].carbs;
+                sumR += eatings[i].fat;
+                sumE += eatings[i].energy_value;
+                sumCh += eatings[i].cholesterol;
+            }
+        }
+        var day_stats = $scope.diet.day_stats;
+        day_stats[$dayIndex] = {};
+        day_stats[$dayIndex].day = $dayIndex + 1;
+        day_stats[$dayIndex].protein = Number(sumB.toFixed(2));
+        day_stats[$dayIndex].fat = Number(sumR.toFixed(2));
+        day_stats[$dayIndex].carbs = Number(sumA.toFixed(2));
+        day_stats[$dayIndex].cholesterol = Number(sumCh.toFixed(2));
+        day_stats[$dayIndex].energy_value = Number(sumE.toFixed(2));
+
+        sumB = 0;
+        sumR = 0;
+        sumA = 0;
+        sumCh = 0;
+        sumE = 0;
+        for(var i=0;i<day_stats.length;i++){
+            if(day_stats[i].protein){
+                sumB += day_stats[i].protein;
+                sumA += day_stats[i].carbs;
+                sumR += day_stats[i].fat;
+                sumE += day_stats[i].energy_value;
+                sumCh += day_stats[i].cholesterol;
+            }
+        }
+        $scope.diet.protein = Number(sumB.toFixed(2));
+        $scope.diet.fat = Number(sumR.toFixed(2));
+        $scope.diet.carbs = Number(sumA.toFixed(2));
+        $scope.diet.cholesterol = Number(sumCh.toFixed(2));
+        $scope.diet.energy_value = Number(sumE.toFixed(2));
+    }
 
     $scope.getEatingsPerDay = function () {
         var localEatingInfo = [];

@@ -73,7 +73,7 @@
                         <td><input ng-if="$first" class="form-control" type="text" ng-model="eating.eating_time" name="time[]"></td>
                         <td>
                             <input class="form-control" type="text" ng-model="day[$parent.$parent.$index].eating[$parent.$index].products[$index]"
-                                   uib-typeahead="product as product.pavadinimas for product in products | filter:$viewValue | limitTo:10"
+                                   uib-typeahead="product as product.product_name for product in products | filter:$viewValue | limitTo:10"
                                    typeahead-on-select="onProductSelected($item,$parent.$parent.$index,$parent.$index,$index)" name="product_name[]">
                         </td>
                         <td>
@@ -126,8 +126,8 @@
             </div>
             <!--<p ng-if="$first" ng-bind="getProteinSum(0)"></p>-->
         </div>
-        VISO PER DIENA VISO PER DIETA LENTELE
         <h4>Bendra maistinė ir energinė vertė</h4>
+        <@ diet.day_stats @>
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
@@ -142,19 +142,19 @@
             <tbody>
                 <tr>
                     <th>Per šią dieną</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td ng-if="diet.with_cholesterol"></td>
+                    <td ng-value="calculateTotalValues($index)"> <@ diet.day_stats[$index].protein @> </td>
+                    <td> <@ diet.day_stats[$index].fat @> </td>
+                    <td> <@ diet.day_stats[$index].carbs @> </td>
+                    <td> <@ diet.day_stats[$index].energy_value @> </td>
+                    <td ng-if="diet.with_cholesterol"> <@ diet.day_stats[$index].cholesterol @> </td>
                 </tr>
                 <tr>
                     <th>Per visa dietą</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td ng-if="diet.with_cholesterol"></td>
+                    <td> <@ diet.protein @> </td>
+                    <td> <@ diet.fat @> </td>
+                    <td> <@ diet.carbs @> </td>
+                    <td> <@ diet.energy_value @> </td>
+                    <td ng-if="diet.with_cholesterol"> <@ diet.cholesterol @> </td>
                 </tr>
             </tbody>
         </table>
