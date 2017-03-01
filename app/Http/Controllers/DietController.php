@@ -20,7 +20,7 @@ class DietController extends Controller
         return view('adddiet',['id'=>$id,'products'=>$products]);
     }
     public function getUserDiets($id){
-        $diets = Diet::with('eatings.products')->where('id',$id)->with('stats')->get();
+        $diets = Diet::with('eatings.products')->where('id',$id)->with('dayStats')->get();
         echo '<pre>';
         print_r($diets->toArray());
         echo '</pre>';

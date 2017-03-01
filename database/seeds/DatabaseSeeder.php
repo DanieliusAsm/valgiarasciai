@@ -40,15 +40,31 @@ class DatabaseSeeder extends Seeder
                         'eating_time'=>$array[$i]['eating_time'],
                     ]));
                     if($product != null){
-                        $eating->products()->attach(1,['quantity'=>'100','protein'=>$product->baltymai,'fat'=>$product->riebalai,'carbs'=>$product->angliavandeniai,'cholesterol'=>$product->cholesterolis,'energy_value'=>$product->eVerte]);
-                        $eating->baltymai = $product->baltymai;
-                        $eating->riebalai = $product->riebalai;
-                        $eating->angliavandeniai = $product->angliavandeniai;
-                        $eating->cholesterolis = $product->cholesterolis;
-                        $eating->eVerte = $product->eVerte;
+                        $eating->products()->attach(1,['quantity'=>'100','protein'=>$product->protein,'fat'=>$product->fat,'carbs'=>$product->carbs,'cholesterol'=>$product->cholesterol,'energy_value'=>$product->energy_value]);
+                        $eating->protein = $product->protein;
+                        $eating->fat = $product->fat;
+                        $eating->carbs = $product->carbs;
+                        $eating->cholesterol = $product->cholesterol;
+                        $eating->energy_value = $product->energy_value;
                         $eating->save();
                     }
                 }
+                $diet->protein = $product->protein * 6;
+                $diet->fat = $product->fat * 6;
+                $diet->carbs = $product->carbs * 6;
+                $diet->cholesterol = $product->cholesterol * 6;
+                $diet->energy_value = $product->energy_value * 6;
+                $diet->save();
+                
+                $dietDayStat = new App\DietDayStat();
+                $dietDayStat->day = 1;
+                $dietDayStat->protein = $product->protein * 6;
+                $dietDayStat->fat = $product->fat * 6;
+                $dietDayStat->carbs = $product->carbs * 6;
+                $dietDayStat->cholesterol = $product->cholesterol * 6;
+                $dietDayStat->energy_value = $product->energy_value * 6;
+                $diet->dayStats()->save($dietDayStat);
+                
             });
         $this->command->info("Diets were created!");
         Model::reguard();

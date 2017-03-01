@@ -12,7 +12,7 @@
     <table>
         <thead>
         <tr>
-            <th>LaikasėęįčėįėįčŠŠŠŠŠŠŠŠŠŠšššššššš</th>
+            <th>Laikas</th>
             <th>Maisto produktas/gaminys</th>
             <th>Kiekis/Išeiga</th>
             <th>Baltymai</th>

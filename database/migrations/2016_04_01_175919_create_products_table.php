@@ -14,13 +14,13 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function(Blueprint $table){
             $table->increments('id');
-            $table->string('pavadinimas');
-            $table->double('baltymai');
-            $table->double('riebalai');
-            $table->double('angliavandeniai');
-            $table->double('cholesterolis');
-            $table->double('eVerte');
-            $table->string('tipas');
+            $table->string('product_name');
+            $table->double("protein");
+            $table->double("fat");
+            $table->double("carbs");
+            $table->double("cholesterol");
+            $table->double("energy_value");
+            $table->string('product_type');
         });
     }
 

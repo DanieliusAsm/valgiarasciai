@@ -13,20 +13,20 @@ class ProductController extends Controller
     public function addProduct(ProductRequest $request){
         $product = new Product();
 
-        $product->pavadinimas = $request->input('pavadinimas');
-        $product->baltymai = $request->input('baltymai');
-        $product->riebalai = $request->input('riebalai');
-        $product->angliavandeniai = $request->input('angliavandeniai');
-        $product->cholesterolis = $request->input('cholesterolis');
-        $product->eVerte = $request->input('eVerte');
-        $product->tipas = $request->input('tipas');
+        $product->product_name = $request->input('pavadinimas');
+        $product->protein = $request->input('baltymai');
+        $product->fat = $request->input('riebalai');
+        $product->carbs = $request->input('angliavandeniai');
+        $product->cholesterol = $request->input('cholesterolis');
+        $product->energy_value = $request->input('eVerte');
+        $product->product_type = $request->input('tipas');
 
         $product->save();
 
         return redirect('/products');
     }
     public function addProductView(){
-            $tipas =  Product::select('tipas')->distinct()->get();
+            $tipas =  Product::select('product_type')->distinct()->get();
 
             return view('addproduct',['tipas'=>$tipas]);
     }
@@ -35,7 +35,7 @@ class ProductController extends Controller
         $products = Product::with('Recipe')->get();
         //echo $products;
 
-        $productoTipas =  Product::select('tipas')->distinct()->get();
+        $productoTipas =  Product::select('product_type')->distinct()->get();
 
         return view('products',['products'=>$products,'productoTipas'=>$productoTipas]);
     }
@@ -67,7 +67,7 @@ class ProductController extends Controller
     public function getProduct($id){
         $products = Product::find($id);
 
-        $tipas =  Product::select('tipas')->distinct()->get();
+        $tipas =  Product::select('product_type')->distinct()->get();
 
         return view('editproduct',['products'=>$products, 'id'=>$id,'tipas'=>$tipas]);
     }
@@ -75,13 +75,13 @@ class ProductController extends Controller
     public function editProduct($id, ProductRequest $request){
         $product = Product::find($id);
 
-        $product->pavadinimas = $request->input('pavadinimas');
-        $product->baltymai = $request->input('baltymai');
-        $product->riebalai = $request->input('riebalai');
-        $product->angliavandeniai = $request->input('angliavandeniai');
-        $product->cholesterolis = $request->input('cholesterolis');
-        $product->eVerte = $request->input('eVerte');
-        $product->tipas = $request->input('tipas');
+        $product->product_name = $request->input('pavadinimas');
+        $product->protein = $request->input('baltymai');
+        $product->fat = $request->input('riebalai');
+        $product->carbs = $request->input('angliavandeniai');
+        $product->cholesterol = $request->input('cholesterolis');
+        $product->energy_value = $request->input('eVerte');
+        $product->product_type = $request->input('tipas');
 
         $product->save();
 

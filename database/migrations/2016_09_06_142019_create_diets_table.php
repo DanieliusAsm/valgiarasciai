@@ -16,6 +16,11 @@ class CreateDietsTable extends Migration
             $table->string("notes"); // notes regarding client
             $table->boolean("with_cholesterol");
             $table->date("created");
+            $table->double("protein");
+            $table->double("fat");
+            $table->double("carbs");
+            $table->double("cholesterol");
+            $table->double("energy_value");
         });
     }
 

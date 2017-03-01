@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEatingsTable extends Migration
+class CreateDietDayStatsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,19 +12,16 @@ class CreateEatingsTable extends Migration
      */
     public function up()
     {
-        Schema::create("eatings",function(Blueprint $table){
+        Schema::create('diet_day_stats', function(Blueprint $table){
             $table->increments('id');
             $table->integer('diet_id')->unsigned();
             $table->foreign('diet_id')->references('id')->on('diets');
-            $table->string("eating_time");//9:40
-            $table->string("eating_type");//pusryciai
-            $table->integer("recommended_rate"); //30% kcal dienos normos suvartojama per pusrycius
+            $table->integer('day');
             $table->double("protein");
             $table->double("fat");
             $table->double("carbs");
             $table->double("cholesterol");
             $table->double("energy_value");
-
         });
     }
 
@@ -35,6 +32,6 @@ class CreateEatingsTable extends Migration
      */
     public function down()
     {
-        Schema::drop("eatings");
+        Schema::drop('diet_day_stats');
     }
 }

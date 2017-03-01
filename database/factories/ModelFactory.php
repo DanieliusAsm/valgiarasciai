@@ -74,10 +74,5 @@ $factory->define(App\Diet::class, function(Faker\Generator $faker){
 $factory->define(App\Eating::class, function(Faker\Generator $faker){
     return [
         'recommended_rate'=>'10%',
-        'baltymai'=>'0',
-        'riebalai'=>'0',
-        'angliavandeniai'=>'0',
-        'cholesterolis'=>'0',
-        'eVerte'=>'0',
     ];
 });

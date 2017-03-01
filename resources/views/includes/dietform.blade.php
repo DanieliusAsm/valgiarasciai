@@ -77,54 +77,46 @@
                                    typeahead-on-select="onProductSelected($item,$parent.$parent.$index,$parent.$index,$index)" name="product_name[]">
                         </td>
                         <td>
-                            <input class="form-control" ng-model="row.pivot.quantity" id="quantity"
-                                   type="number" ng-change=""
-                                   placeholder="100" min="0"/>
+                            <input class="form-control" ng-model="row.pivot.quantity" type="number" placeholder="100" min="0"/>
                         </td>
-                        <td><input class="form-control" id="disabledInput" ng-model="diet.eatings[getDefaultEatingsIndex($parent.$parent.$index,$parent.$index)].products[$index].pivot.protein" type="number" name="baltymai[]" placeholder="0"
-                                   ng-value="calculateValue(row.pivot.quantity,row.baltymai)"
+                        <td><input class="form-control" id="disabledInput" ng-model="row.pivot.protein" type="number" name="baltymai[]" placeholder="0"
+                                   ng-value="calculateRowValues(row)"
                                    disabled/>
 
                         </td>
-                        <td><input class="form-control" id="disabledInput" type="number" ng-model="day[$parent.$parent.$index].eating[$parent.$index].stats[$index].riebalai" name="riebalai" placeholder="0"
-                                   ng-value="calculateValue(row.pivot.quantity,row.riebalai)"
+                        <td><input class="form-control" id="disabledInput" type="number" ng-model="row.pivot.fat" name="riebalai" placeholder="0"
                                    disabled/></td>
-                        <td><input class="form-control" id="disabledInput" type="number" ng-model="day[$parent.$parent.$index].eating[$parent.$index].stats[$index].angliavandeniai" name="angliavandeniai"
-                                   placeholder="0"
-                                   ng-value="calculateValue(row.pivot.quantity,row.angliavandeniai)"
+                        <td><input class="form-control" id="disabledInput" type="number" ng-model="row.pivot.carbs" name="angliavandeniai"
+                                   placeholder="0" disabled/></td>
+                        <td><input class="form-control" id="disabledInput" type="number" ng-model="row.pivot.energy_value" name="eVerte" placeholder="0"
                                    disabled/></td>
-                        <td><input class="form-control" id="disabledInput" type="number" ng-model="day[$parent.$parent.$index].eating[$parent.$index].stats[$index].eVerte" name="eVerte" placeholder="0"
-                                   ng-value="calculateValue(row.pivot.quantity,row.eVerte)"
-                                   disabled/></td>
-                        <td ng-if="diet.with_cholesterol"><input class="form-control" id="disabledInput" type="number" ng-model="day[$parent.$parent.$index].eating[$parent.$index].stats[$index].cholesterolis" name="cholesterolis"
-                                   placeholder="0"
-                                   ng-value="calculateValue(row.pivot.quantity,row.cholesterolis)"
-                                   disabled/></td>
+                        <td ng-if="diet.with_cholesterol"><input class="form-control" id="disabledInput" type="number" ng-model="row.pivot.cholesterol" name="cholesterolis"
+                                   placeholder="0" disabled/></td>
                     </tr>
                     </tbody>
                     <tfoot>
                     <tr>
                         <th class="text-center" colspan="3">Bendra pusryčių maistinė ir energinė vertė</th>
-                        <th ng-value="calculateEatingValue('baltymai',$parent.$index,$index)">
-
+                        <th ng-value="calculateEatingValues(eating)">
+                            <@ eating.protein @>
                         </th>
                         <th>
-                            <@ eating.riebalai @>
+                            <@ eating.fat @>
                         </th>
                         <th>
-                            <@ eating.angliavandeniai @>
+                            <@ eating.carbs @>
                         </th>
                         <th>
-                            <@ eating.eVerte @>
+                            <@ eating.energy_value @>
                         </th>
                         <th ng-if="diet.with_cholesterol">
-                            <@ eating.cholesterolis @>
+                            <@ eating.cholesterol @>
                         </th>
                     </tr>
                     </tfoot>
                 </table>
                 <div class="form-group pull-right">
-                    <button class="add-row btn btn-primary" ng-click="eating.products.push({'pavadinimas':''})"><i
+                    <button class="add-row btn btn-primary" ng-click="eating.products.push({'product_name':'','pivot':{}})"><i
                                 class="glyphicon glyphicon-plus"></i>
                     </button>
                     <button class="delete-row btn btn-danger" ng-click="eating.products.splice(eating.products.length-1,1)"><i
@@ -134,6 +126,38 @@
             </div>
             <!--<p ng-if="$first" ng-bind="getProteinSum(0)"></p>-->
         </div>
+        VISO PER DIENA VISO PER DIETA LENTELE
+        <h4>Bendra maistinė ir energinė vertė</h4>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th class="text-center">Baltymai</th>
+                    <th class="text-center">Riebalai</th>
+                    <th class="text-center">Angliavadeniai</th>
+                    <th class="text-center">Energetinė vertė</th>
+                    <th ng-if="diet.with_cholesterol" class="text-center">Cholesterolis</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Per šią dieną</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td ng-if="diet.with_cholesterol"></td>
+                </tr>
+                <tr>
+                    <th>Per visa dietą</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td ng-if="diet.with_cholesterol"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

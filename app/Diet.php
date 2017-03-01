@@ -12,7 +12,7 @@ class Diet extends Model
     public function eatings(){
         return $this->hasMany(Eating::class);
     }
-    public function stats(){
-        return $this->hasMany(DietStat::class);
+    public function dayStats(){
+        return $this->hasMany(DietDayStat::class);
     }
 }

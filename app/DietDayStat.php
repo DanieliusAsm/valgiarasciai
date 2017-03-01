@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DietStat extends Model
+class DietDayStat extends Model
 {
-    //
+    public $timestamps = false;
 }

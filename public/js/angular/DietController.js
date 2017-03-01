@@ -11,39 +11,6 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
     $scope.lastDays = 0;
     $scope.initialized = false;
 
-    $scope.calculateValue = function (quantity, baseValue) {
-        if (quantity && baseValue) {
-            var amount = Number(quantity) * Number(baseValue) / 100;
-            return amount.toFixed(2);
-            //call update stats with indexes problem - multiple times
-        }
-        return 0;
-    };
-
-    $scope.calculateEatingValue = function($eatingName, $dayIndex, $eatingIndex){
-        var length = $scope.diet.eatings[$eatingIndex].products.length;
-        var sum = 0;
-
-        if($scope.day){
-            for(var i=0;i<length;i++){
-                console.log("lul");
-                if($eatingName === "baltymai"){
-                    sum += $scope.day[$dayIndex].eating[$eatingIndex].stats[i].baltymai;
-                }else if($eatingName === "angliavandeniai"){
-                    sum += $scope.day[$dayIndex].eating[$eatingIndex].stats[i].angliavandeniai;
-                }else if($eatingName === "riebalai"){
-                    sum += $scope.day[$dayIndex].eating[$eatingIndex].stats[i].riebalai;
-                }else if($eatingName === "eVerte"){
-                    sum += $scope.day[$dayIndex].eating[$eatingIndex].stats[i].eVerte;
-                }else if($eatingName === "cholesterolis"){
-                    sum += $scope.day[$dayIndex].eating[$eatingIndex].stats[i].cholesterolis;
-                }
-            }
-        }
-        console.log($scope.day[0].eating[0].stats[0]);
-        return sum;
-    };
-
     //sums up stats for one eating and for
     // a whole day.
     $scope.updateTotalStats = function ($dayIndex) {
@@ -107,13 +74,11 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
     }
 
     $scope.updateDietArray = function () {
-        console.log("hi");
         if ($scope.days != null && $scope.days != $scope.lastDays) {
             var lengthOfDays = $scope.days - $scope.lastDays;
             // do we add days/initialize or remove ?
             if ($scope.lastDays == 0) {
                 $scope.initializeDietArray();
-                console.log($scope.diet);
             } else if ($scope.lastDays > 0) {
                 //$scope.updateDietArray(lenghtOfDays);
             } else {
@@ -141,16 +106,16 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
                 $scope.diet.eatings[eatingsIndex].day = i + 1;
                 $scope.diet.eatings[eatingsIndex].eating_type = enabledEatingsArray[a].type;
                 $scope.diet.eatings[eatingsIndex].eating_time = enabledEatingsArray[a].time;
-                $scope.diet.eatings[eatingsIndex].baltymai = 0;
-                $scope.diet.eatings[eatingsIndex].riebalai = 0;
-                $scope.diet.eatings[eatingsIndex].angliavandeniai = 0;
-                $scope.diet.eatings[eatingsIndex].cholesterolis = 0;
-                $scope.diet.eatings[eatingsIndex].eVerte = 0;
+                $scope.diet.eatings[eatingsIndex].protein = 0;
+                $scope.diet.eatings[eatingsIndex].fat = 0;
+                $scope.diet.eatings[eatingsIndex].carbs = 0;
+                $scope.diet.eatings[eatingsIndex].cholesterol = 0;
+                $scope.diet.eatings[eatingsIndex].energy_value = 0;
                 $scope.diet.eatings[eatingsIndex].products = [];
 
                 var array = [{
-                    "pavadinimas": "",
-                    "pivot": [{"quantity": ""}],
+                    "product_name": "",
+                    "pivot": {"quantity": 100,"protein":0,"fat":0,"carbs":0,"energy_value":0,"cholesterol":0,}
                 }];
                 $scope.diet.eatings[eatingsIndex].products.push(array[0]);
             }
@@ -186,6 +151,53 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
         }
     }
     // later on you can remove all for example "pusryciai"
+
+
+    //todo errors when undefined
+    $scope.calculateRowValues = function (row) {
+        if(row && row.pivot.quantity){
+            var quantity = row.pivot.quantity;
+            row.pivot.protein = quantity * Number(row.protein) / 100;
+            row.pivot.protein = Number(row.pivot.protein.toFixed(2));
+            row.pivot.fat = quantity * Number(row.fat) / 100;
+            row.pivot.fat = Number(row.pivot.fat.toFixed(2));
+            row.pivot.carbs = quantity * Number(row.carbs) / 100;
+            row.pivot.carbs = Number(row.pivot.carbs.toFixed(2));
+            row.pivot.energy_value = quantity * Number(row.energy_value) / 100;
+            row.pivot.energy_value = Number(row.pivot.energy_value.toFixed(2));
+            row.pivot.cholesterol = quantity * Number(row.cholesterol) / 100;
+            row.pivot.cholesterol = Number(row.pivot.cholesterol.toFixed(2));
+        }
+    };
+    //todo errors when undefined
+    $scope.calculateEatingValues = function($eating) {
+        if($eating){
+            var length = $eating.products.length;
+            var sumB = 0;
+            var sumR = 0;
+            var sumA = 0;
+            var sumCh = 0;
+            var sumE = 0;
+            for (var i = 0; i < length; i++) {
+                if($eating.products[i].pivot.protein){
+                        sumB += $eating.products[i].pivot.protein;
+                        sumA += $eating.products[i].pivot.carbs;
+                        sumR += $eating.products[i].pivot.fat;
+                        sumE += $eating.products[i].pivot.energy_value;
+                        sumCh += $eating.products[i].pivot.cholesterol;
+                }
+            }
+            $eating.protein = Number(sumB.toFixed(2));
+            $eating.fat = Number(sumR.toFixed(2));
+            $eating.carbs = Number(sumA.toFixed(2));
+            $eating.cholesterol = Number(sumCh.toFixed(2));
+            $eating.energy_value = Number(sumE.toFixed(2));
+        console.log(sumB);
+        }else{
+        console.log("empty");
+        }
+    };
+
     $scope.getEatingsPerDay = function () {
         var localEatingInfo = [];
         for (var b = 0; b < 6; b++) {
@@ -207,17 +219,16 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
     };
 
     $scope.onProductSelected = function ($item, $dayIndex, $eatingIndex, $productIndex) {
-        console.log($item);
         // calculate eatigs index
         var index = $scope.getDefaultEatingsIndex($dayIndex, $eatingIndex);
         var product = $scope.diet.eatings[index].products[$productIndex];
         if (product != undefined) {
-            product.pavadinimas = $item.pavadinimas;
-            product.baltymai = $item.baltymai;
-            product.riebalai = $item.riebalai;
-            product.angliavandeniai = $item.angliavandeniai;
-            product.cholesterolis = $item.cholesterolis;
-            product.eVerte = $item.eVerte;
+            product.product_name = $item.product_name;
+            product.protein = $item.protein;
+            product.fat = $item.fat;
+            product.carbs = $item.carbs;
+            product.cholesterol = $item.cholesterol;
+            product.energy_value = $item.energy_value;
         }
         // recalculate the stats for this food.
         // stats are calculated on the front end and not saved

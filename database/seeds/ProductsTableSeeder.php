@@ -12,7 +12,7 @@ class ProductsTableSeeder extends Seeder
     public function run()
     {
         DB::table('products')->delete();
-        DB::statement("INSERT INTO `products` (`id`, `pavadinimas`, `baltymai`, `riebalai`, `angliavandeniai`, `cholesterolis`, `eVerte`, `tipas`) VALUES
+        DB::statement("INSERT INTO `products` (`id`, `product_name`, `protein`, `fat`, `carbs`, `cholesterol`, `energy_value`, `product_type`) VALUES
 (1, 'Agurkų sriuba', 1.21, 1.27, 10.51, 0.00, 54.33, 'Sriuba'),
 (2, 'Bulvių sriuba su kruopomis', 1.12, 1.16, 8.45, 0.00, 47.18, 'Sriuba'),
 (3, 'Bulvių sriuba su pievagrybiais', 1.54, 1.23, 9.90, 0.00, 52.01, 'Sriuba'),
