@@ -7,7 +7,7 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
     },
         {type: "Pietūs", time: "13:00", enabled: "true"}, {type: "Pavakariai", time: "16:00", enabled: "true"},
         {type: "Vakarienė", time: "18:00", enabled: "true"}, {type: "Naktipiečiai", time: "21:00", enabled: "true"}];
-    $scope.diet = [];
+    $scope.diet = {};
     $scope.lastDays = 0;
     $scope.initialized = false;
 
@@ -22,7 +22,7 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
         }, function errorCallback(response) {
             //error
         });
-        $window.location = redirect;
+        //$window.location = redirect;
     }
 
     $scope.getNumberToArray = function (n) {
@@ -54,6 +54,7 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
         $scope.diet.total_days = $scope.days;
         var enabledEatingsArray = $scope.getEatingsPerDay();
         $scope.diet.total_eating = enabledEatingsArray.length;
+        $scope.diet.with_cholesterol = 0;
         $scope.diet.eatings = [];
         $scope.diet.day_stats = [];
         console.log(enabledEatingsArray);
@@ -239,6 +240,7 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
             product.carbs = $item.carbs;
             product.cholesterol = $item.cholesterol;
             product.energy_value = $item.energy_value;
+            product.id = $item.id;
         }
         // recalculate the stats for this food.
         // stats are calculated on the front end and not saved

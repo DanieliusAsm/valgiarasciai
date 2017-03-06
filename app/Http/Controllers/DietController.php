@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DietDayStat;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Http\Requests;
@@ -14,13 +15,17 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class DietController extends Controller
 {
-    public function getProducts($id){
+    public function getProducts($id)
+    {
         $products = Product::all();
 
-        return view('adddiet',['id'=>$id,'products'=>$products]);
+        return view('adddiet', ['id' => $id, 'products' => $products]);
     }
-    public function getUserDiets($id){
-        $diets = Diet::with('eatings.products')->where('id',$id)->with('dayStats')->get();
+
+    public function getUserDiets($id)
+    {
+        $diets = Diet::with('eatings.products')->where('user_id', $id)->with('dayStats')->get();
+
         echo '<pre>';
         print_r($diets->toArray());
         echo '</pre>';
@@ -63,141 +68,163 @@ class DietController extends Controller
     }
 
     // TODO: sql injection protection
-    public function saveDiet(Request $request, $id){
-        $json = "[{\"day\":1,\"eating_types\":[{\"rows\":[{\"id\":1,\"pavadinimas\":\"Agurkų sriuba\",\"baltymai\":1.21,\"riebalai\":1.27,\"angliavandeniai\":10.51,\"cholesterolis\":0,\"eVerte\":54.33,\"tipas\":\"Sriuba\",\"quantity\":100},{\"id\":108,\"pavadinimas\":\"Pica su kumpiu\",\"baltymai\":8.29,\"riebalai\":7.18,\"angliavandeniai\":20.54,\"cholesterolis\":20.79,\"eVerte\":180.92,\"tipas\":\"Kita\",\"quantity\":120}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]}],\"total_values\":[{\"baltymai\":\"11.16\",\"riebalai\":\"9.89\",\"angliavandeniai\":\"35.16\",\"cholesterolis\":\"24.95\",\"eVerte\":\"271.43\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"}]},{\"day\":2,\"eating_types\":[{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]}],\"total_values\":[{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"}]},{\"day\":3,\"eating_types\":[{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]},{\"rows\":[{\"pavadinimas\":\"\"}]}],\"total_values\":[{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"},{\"baltymai\":\"0.00\",\"riebalai\":\"0.00\",\"angliavandeniai\":\"0.00\",\"cholesterolis\":\"0.00\",\"eVerte\":\"0.00\"}]}]";
-        $array =  $request->json()->all();
-        $total_eating = 0;
-        if($array == null){
+    public function saveDiet(Request $request, $id)
+    {
+        $array = $request->json()->all();
+        if ($array == null) {
             return;
         }
         $dieta = $array[0];
         $eating_types = $array[1];
+
         $diet = new Diet();
         $diet->user_id = $id;
-        $diet->total_days = count($dieta);
+        $diet->total_days = $dieta['total_days'];
+        $diet->total_eating = $dieta['total_eating'];
         $diet->notes = "";
         $diet->created = Carbon::now();
-        if(isset($dieta[0]['cholesterol'])){
+        if (isset($diet['with_cholesterol'])) {
             $diet->with_cholesterol = true;
-        }else{
+        } else {
             $diet->with_cholesterol = false;
         }
+        $diet->protein = $dieta['protein'];
+        $diet->fat = $dieta['fat'];
+        $diet->carbs = $dieta['carbs'];
+        $diet->cholesterol = $dieta['cholesterol'];
+        $diet->energy_value = $dieta['energy_value'];
         $diet->save();
 
-        for($i=0;$i<count($dieta);$i++){ // loop through days
-            $total_eating = 0;
-            for($a=0;$a<6;$a++){ // 6 eatings per day
-                if($eating_types[$a]['enabled']){
-                    $total_eating++;
-                    $eating = new Eating();
-                    $eating->eating_type = $eating_types[$a]['type'];
-                    $eating->eating_time = $eating_types[$a]['time'];
-                    $eating->recommended_rate = 0;
-                    $eating->baltymai = $dieta[$i]['total_values'][$a]['baltymai'];
-                    $eating->riebalai = $dieta[$i]['total_values'][$a]['riebalai'];
-                    $eating->angliavandeniai = $dieta[$i]['total_values'][$a]['angliavandeniai'];
-                    $eating->cholesterolis = $dieta[$i]['total_values'][$a]['cholesterolis'];
-                    $eating->eVerte = $dieta[$i]['total_values'][$a]['eVerte'];
-                    $eating->save();
-                    for($b=0;$b<count($dieta[$i]['eating_types'][$a]['rows']);$b++){
-                        $row = $dieta[$i]['eating_types'][$a]['rows'][$b];
-                        //var_dump($row);
-                        $diet->eating()->attach($eating->id,['day'=>($i+1)]);
-                        if(isset($row['id'])){
-                            $eating->product()->attach($row['id'],['quantity'=>$row['quantity']]);
-                        }
-                    }
+        foreach ($dieta['eatings'] as $eat) {
+            $eating = new Eating();
+            $eating->eating_type = $eat['eating_type'];
+            $eating->eating_time = $eat['eating_time'];
+            $eating->recommended_rate = 0;
+            $eating->protein = $eat['protein'];
+            $eating->fat = $eat['fat'];
+            $eating->carbs = $eat['carbs'];
+            $eating->cholesterol = $eat['cholesterol'];
+            $eating->energy_value = $eat['energy_value'];
+            $diet->eatings()->save($eating);
+
+
+            //return $array;
+            foreach ($eat['products'] as $product) {
+                if(isset($product['id'])){
+                    $eating->products()->attach($product['id'], [
+                        'quantity' => $product['pivot']['quantity'],
+                        'protein' => $product['pivot']['protein'],
+                        'fat' => $product['pivot']['fat'],
+                        'carbs' => $product['pivot']['carbs'],
+                        'cholesterol' => $product['pivot']['cholesterol'],
+                        'energy_value' => $product['pivot']['energy_value']
+                    ]);
                 }
             }
         }
-        $diet->total_eating = $total_eating;
-        $diet->save();
+
+        foreach ($dieta['day_stats'] as $dayStat) {
+            $stat = new DietDayStat();
+            $stat->day = $dayStat['day'];
+            $stat->protein = $dayStat['protein'];
+            $stat->fat = $dayStat['fat'];
+            $stat->carbs = $dayStat['carbs'];
+            $stat->cholesterol = $dayStat['cholesterol'];
+            $stat->energy_value = $dayStat['energy_value'];
+            $diet->dayStats()->save($stat);
+        }
     }
-    // Problem: users can download each other`s clients data.
-    public function exportDiet(Request $request, $dietType){
+
+// Problem: users can download each other`s clients data.
+    public function exportDiet(Request $request, $dietType)
+    {
         //$array = $request->json()->all();
         $array = json_decode($request->input("diet"), true);
         $fullDiet = $array[0];
         $cholesterol = $array[1];
 
-        if($dietType === "diet"){
+        if ($dietType === "diet") {
             $fileName = "dieta";
             $viewName = "exports.diet";
             $weeks = 1;
-            $sheetName  = "Diena";
-        }else if($dietType === "weeklyDiet"){
+            $sheetName = "Diena";
+        } else if ($dietType === "weeklyDiet") {
             $fileName = "savaitinis_valgiarastis";
             $viewName = "exports.weeklydiet";
             $weeks = ceil(count($fullDiet) / 7);
-            $fullDiet = $this->sortDietIntoWeeks($fullDiet,$weeks);
-            $sheetName  = "Savaitė";
-        }else{
+            $fullDiet = $this->sortDietIntoWeeks($fullDiet, $weeks);
+            $sheetName = "Savaitė";
+        } else {
             $fileName = "energija_dienom";
             $viewName = "exports.energydiet";
             $weeks = ceil(count($fullDiet) / 7);
-            $fullDiet = $this->sortDietIntoWeeks($fullDiet,$weeks);
-            $sheetName  = "Savaitė";
+            $fullDiet = $this->sortDietIntoWeeks($fullDiet, $weeks);
+            $sheetName = "Savaitė";
         }
         // make arrray of settings
         $settings = [
-            "cholesterol"=>$cholesterol,
-            "viewName"=>$viewName,
-            "weeks"=>$weeks,
-            "sheetName"=>$sheetName,
-            "dietType"=>$dietType,
+            "cholesterol" => $cholesterol,
+            "viewName" => $viewName,
+            "weeks" => $weeks,
+            "sheetName" => $sheetName,
+            "dietType" => $dietType,
         ];
         //var_dump($fullDiet);
-        if($fullDiet==null){
+        if ($fullDiet == null) {
             return;
         }
         //return view('exports.diet',['diet' => $fullDiet[0],'cholesterol'=>0]);
-        return Excel::create($fileName, function($excel) use($fullDiet,$settings){
+        return Excel::create($fileName, function ($excel) use ($fullDiet, $settings) {
             $excel->setTitle("Valgiaraštis");
             $excel->setDescription("Vartotojo Dieta");
 
-            foreach($fullDiet as $diet){
+            foreach ($fullDiet as $diet) {
                 $dietStats = [];
-                if($settings['dietType'] === "energyDiet"){
+                if ($settings['dietType'] === "energyDiet") {
                     $dietStats = $this->calculateWeekDietStats($diet);
                 }
                 $excel->sheet($settings['sheetName'], function ($sheet) use ($diet, $settings, $dietStats) {
                     $sheet->loadView($settings['viewName'], [
                         'diet' => $diet,
                         'cholesterol' => $settings['cholesterol'],
-                        'dietStats'=>$dietStats
+                        'dietStats' => $dietStats
                     ]);
                 });
             }
         })->download('xlsx');
-       }
+    }
 
-    public function sortDietIntoWeeks($fullDiet,$weeks){
+    public function sortDietIntoWeeks($fullDiet, $weeks)
+    {
         $array = [];
-        $days = ['Pirmadienis','Antradienis','Trečiadienis','Ketvirtadienis','Penktadienis','Šeštadienis','Sekmadienis'];
+        $days = ['Pirmadienis', 'Antradienis', 'Trečiadienis', 'Ketvirtadienis', 'Penktadienis', 'Šeštadienis', 'Sekmadienis'];
         $totalDays = count($fullDiet);
 
-        for($a=0;$a<$weeks;$a++){
-            for($b=0;$b<7;$b++){
+        for ($a = 0; $a < $weeks; $a++) {
+            for ($b = 0; $b < 7; $b++) {
                 $index = $b + $a * 7;
-                if($index < $totalDays){
+                if ($index < $totalDays) {
                     $array[$a][$b] = $fullDiet[$index];
                     $array[$a][$b]['day'] = $days[$b];
                 }
             }
         }
-        return $array;
+
+
     }
+
 //TODO: init everything
-    // DONT LOOK THIS WAY
-    public function calculateWeekDietStats($dietWeek){
+// DONT LOOK THIS WAY
+    public function calculateWeekDietStats($dietWeek)
+    {
         $array = [];
 
         $eatingTimes = 0;
-        for($a=0;$a<=count($dietWeek);$a++) { // 7days
-            if($a<count($dietWeek)){
+        for ($a = 0; $a <= count($dietWeek); $a++) { // 7days
+            if ($a < count($dietWeek)) {
                 $dietDay = $dietWeek[$a];
-            }else{
-                $dietDay = $dietWeek[$a-1];
+            } else {
+                $dietDay = $dietWeek[$a - 1];
             }
 
             for ($i = 0; $i < count($dietDay); $i++) {//6 eatings
@@ -209,7 +236,7 @@ class DietController extends Controller
                         $array['eVerte'][$i] = round(($array['eVerte'][$i] / $eatingTimes), 2);
                         $array['cholesterolis'][$i] = round(($array['cholesterolis'][$i] / $eatingTimes), 2);
                     } else {
-                        if(!isset($array[$a]['angliavandeniai'])){
+                        if (!isset($array[$a]['angliavandeniai'])) {
                             $array[$a]['angliavandeniai'] = 0;
                             $array[$a]['baltymai'] = 0;
                             $array[$a]['riebalai'] = 0;
@@ -222,7 +249,7 @@ class DietController extends Controller
                             $array['visoEVertes'] = 0;
                             $array['visoCholesterolio'] = 0;
                         }
-                        if(!isset($array['angliavandeniai'][$i])){
+                        if (!isset($array['angliavandeniai'][$i])) {
                             $array['angliavandeniai'][$i] = 0;
                             $array['baltymai'][$i] = 0;
                             $array['riebalai'][$i] = 0;
@@ -261,7 +288,7 @@ class DietController extends Controller
         $array['visoRiebalu'] = 0;
         $array['visoEVertes'] = 0;
         $array['visoCholesterolio'] = 0;
-        for($i=0;$i<count($array['angliavandeniai']);$i++){
+        for ($i = 0; $i < count($array['angliavandeniai']); $i++) {
             $array['visoAngliavandeniu'] += $array['angliavandeniai'][$i];
             $array['visoBaltymu'] += $array['baltymai'][$i];
             $array['visoRiebalu'] += $array['riebalai'][$i];
