@@ -27,7 +27,7 @@ class DietController extends Controller
         $diets = Diet::with('eatings.products')->where('user_id', $id)->with('dayStats')->get();
 
         echo '<pre>';
-        print_r($diets->toArray());
+        print_r($diets->toArray()[0]);
         echo '</pre>';
         /*$diets = Diet::with('eating')->where('user_id', $id)->get();
         //var_dump(count($diets));
@@ -61,10 +61,10 @@ class DietController extends Controller
         //var_dump($eatings);
 
 
-        $fullDiet = $eatings;
+        $fullDiet = $eatings;*/
         //var_dump($pivotArray);
         //var_dump($fullDiet[0][0][0]);
-        return view('diets',['id'=>$id,'fullDiet'=>$fullDiet,'pivot'=>$pivotArray]);*/
+        return view('diets',['id'=>$id,'diets'=>$diets->toArray()]);
     }
 
     // TODO: sql injection protection
