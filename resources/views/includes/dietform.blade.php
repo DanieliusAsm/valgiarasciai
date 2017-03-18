@@ -43,16 +43,10 @@
     <button type="submit" class="btn btn-primary center-block" ng-click="updateDietArray()">Kurti</button>
 </div>
 
-
-<@ initialized @>
 <ul ng-show="initialized" class="nav nav-tabs">
     <li ng-repeat="tab in getNumberToArray(diet.total_days) track by $index" ng-class="$first ? 'active' :''"><a data-toggle="tab" data-target="#<@($index)@>" ng-bind="($index+1)"></a></li>
 </ul>
 <div ng-show="initialized" class="tab-content">
-    <pre> <@ diet @> </pre>
-
-    days lul
-    <@ diet.total_days @>
     <div class="tab-pane" ng-repeat="dieta in getNumberToArray(diet.total_days) track by $index" id="<@($index)@>" ng-class="$first ? 'tab-pane active' :'tab-pane'">
         <div class="row" ng-repeat="eating in getEatingsInDay($index)">
             <div class="col-md-12">
@@ -69,7 +63,7 @@
                         <th class="text-center">Baltymai</th>
                         <th class="text-center">Riebalai</th>
                         <th class="text-center">Angliavadeniai</th>
-                        <th class="text-center">Energetinė vertė</th>
+                        <th class="text-center">Energinė vertė</th>
                         <th ng-if="diet.with_cholesterol" class="text-center">Cholesterolis</th>
                     </tr>
                     </thead>
@@ -140,7 +134,7 @@
                     <th class="text-center">Baltymai</th>
                     <th class="text-center">Riebalai</th>
                     <th class="text-center">Angliavadeniai</th>
-                    <th class="text-center">Energetinė vertė</th>
+                    <th class="text-center">Energinė vertė</th>
                     <th ng-if="diet.with_cholesterol" class="text-center">Cholesterolis</th>
                 </tr>
             </thead>

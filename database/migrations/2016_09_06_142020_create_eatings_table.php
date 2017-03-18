@@ -24,7 +24,8 @@ class CreateEatingsTable extends Migration
             $table->double("carbs");
             $table->double("cholesterol");
             $table->double("energy_value");
-
+            $table->smallInteger("day"); // to be used to sort by.
+            $table->boolean("enabled"); // to be used editing add/remove eatings
         });
     }
 

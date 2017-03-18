@@ -35,6 +35,8 @@
 		<!-- Angular.js -->
 		<script src="{{ asset('js/angular.min.js') }}"></script>
 		<script src="{{asset('js/ui-bootstrap-tpls-2.5.0.min.js')}}"></script>
+        <script src="{{asset('js/loading-bar.min.js')}}"></script>
+        <link rel='stylesheet' href='{{asset('css/loading-bar.min.css')}}' type='text/css' media='all' />
 		<!-- Import Angular.js modules -->
 		<script src="{{ asset('js/angular/module.js') }}"></script>
 

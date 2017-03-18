@@ -32,7 +32,7 @@
                                                 <th class="text-center">Baltymai</th>
                                                 <th class="text-center">Riebalai</th>
                                                 <th class="text-center">Angliavadeniai</th>
-                                                <th class="text-center">Energetinė vertė</th>
+                                                <th class="text-center">Energinė vertė</th>
                                                 @if($diets[$a]['with_cholesterol'])<th class="text-center">Cholesterolis</th>@endif
                                             </tr>
                                             </thead>
@@ -132,12 +132,12 @@
                                 <form id="form3" style="display:inline;" action="{{route('exportDiet',['dietType'=>'energyDiet'])}}" method="post">
                                     <input type="hidden" name="diet" value="{{json_encode($diets[$a],true)}}"/>
                                     <i class="glyphicon glyphicon-list-alt"></i>
-                                    <a href="#" onclick="document.getElementById('form3').submit()">Energetinis</a>
+                                    <a href="#" onclick="document.getElementById('form3').submit()">Energinis</a>
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
                                 <div class="pull-right">
                                     <i class="glyphicon glyphicon-edit" aria-hidden="true"></i>
-                                    <a href="{{route("editDiet",['dietId'=>$diets[$a]['id']])}}">Redaguoti</a>
+                                    <a href="{{route("editDiet",['id'=>$id,'dietId'=>$diets[$a]['id']])}}">Redaguoti</a>
                                 </div>
                             </div>
                     </div>

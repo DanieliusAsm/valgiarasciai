@@ -1,25 +1,23 @@
 diet.controller('DietController', function ($scope, $http, $window) { // $httpParamSerializerJQLike
     //TODO learn to form array
-    $scope.eatingInfo = [{type: "Pusryčiai", time: "8:00", enabled: "true"}, {
-        type: "Priešpiečiai",
-        time: "11:00",
-        enabled: "true"
-    },
-        {type: "Pietūs", time: "13:00", enabled: "true"}, {type: "Pavakariai", time: "16:00", enabled: "true"},
-        {type: "Vakarienė", time: "18:00", enabled: "true"}, {type: "Naktipiečiai", time: "21:00", enabled: "true"}];
+    $scope.eatingInfo = [{type: "Pusryčiai", time: "8:00", enabled: true},
+        {type: "Priešpiečiai", time: "11:00", enabled: true},
+        {type: "Pietūs", time: "13:00", enabled: true}, {type: "Pavakariai", time: "16:00", enabled: true},
+        {type: "Vakarienė", time: "18:00", enabled: true}, {type: "Naktipiečiai", time: "21:00", enabled: true}];
     $scope.diet = {};
     $scope.lastDays = 0;
     $scope.initialized = false;
 
     // TODO redirect only when response is code 200 otherwise display error.
     $scope.sendDiet = function (saveLink, redirect) {
+
         var data = [$scope.diet, $scope.eatingInfo];
         $http({
             method: 'POST',
             url: saveLink,
             data: data //$httpParamSerializerJQLike($scope.diet)
         }).then(function successCallback(response) {
-            //success
+            console.log(response.data);
         }, function errorCallback(response) {
             //error
         });
@@ -52,7 +50,6 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
     //will initialize or update the current array depending if its empty or not.
     $scope.initializeDietArray = function () {
         var baseDays = $scope.lastDays;
-        $scope.diet.total_days = $scope.diet.total_days;
         var enabledEatingsArray = $scope.getEatingsPerDay();
         $scope.diet.total_eating = enabledEatingsArray.length;
         $scope.diet.with_cholesterol = 0;
@@ -207,7 +204,9 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
             }
         }
         var day_stats = $scope.diet.day_stats;
-        day_stats[$dayIndex] = {};
+        if(!day_stats[$dayIndex]){
+            day_stats[$dayIndex] = {};
+        }
         day_stats[$dayIndex].day = $dayIndex + 1;
         day_stats[$dayIndex].protein = Number(sumB.toFixed(2));
         day_stats[$dayIndex].fat = Number(sumR.toFixed(2));
@@ -264,6 +263,7 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
         var product = $scope.diet.eatings[index].products[$productIndex];
         if (product != undefined) {
             product.product_name = $item.product_name;
+            product.product_type = $item.product_type;
             product.protein = $item.protein;
             product.fat = $item.fat;
             product.carbs = $item.carbs;

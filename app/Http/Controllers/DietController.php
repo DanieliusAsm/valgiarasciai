@@ -15,6 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class DietController extends Controller
 {
+    // TODO get rid of this trash
     public function getProducts($id)
     {
         $products = Product::all();
@@ -29,58 +30,47 @@ class DietController extends Controller
         echo '<pre>';
         print_r($diets->toArray()[0]);
         echo '</pre>';
-        /*$diets = Diet::with('eating')->where('user_id', $id)->get();
-        //var_dump(count($diets));
-        $pivotArray = array();
-        $eatings = array();
-        // loop through diets. Usually only 1 diet.
-        for($b=0;$b<count($diets);$b++){
-            $diet = $diets[$b];
-            $eating = $diet->eating;
-           // var_dump($eating->toArray());
-            $pivotArray[$b] = array('diet_id'=>$diet['id'],'eating_ids'=>array(), 'with_cholesterol'=>$diet['with_cholesterol']);
-            // loop through all the eatings and save them in the array
-            for($i=0;$i<count($eating);$i++){
-                $pivot = $eating[$i]['pivot'];
-                $pivotArray[$b]['eating_ids'][$i] = $pivot['eating_id'];
-            }
-            $pivotArray[$b]['eating_ids'] = array_unique($pivotArray[$b]['eating_ids']);
-            //var_dump($eating); 
-            $eatingDiet = Eating::with('product')->whereIn('id', $pivotArray[$b]['eating_ids'])->get()->toArray();
-            for($i=0;$i<$diet->total_days;$i++) {
-                for($c=0;$c<$diet->total_eating;$c++){
-                    //var_dump($diet->total_eating);
-                    $eatings[$b][$i][$c] = $eatingDiet[$c+$i*$diet->total_days];
-                }
-            }
-            //var_dump($eatings[0][0]);
-            foreach($eatingDiet as $eating){
-                //var_dump($eating->toArray());
-            }
-        }
-        //var_dump($eatings);
 
-
-        $fullDiet = $eatings;*/
-        //var_dump($pivotArray);
-        //var_dump($fullDiet[0][0][0]);
         return view('diets',['id'=>$id,'diets'=>$diets->toArray()]);
     }
 
     // TODO: sql injection protection
-    public function saveDiet(Request $request, $id)
+    public function saveDiet(Request $request, $userId)
     {
         $array = $request->json()->all();
         if ($array == null) {
             return;
         }
-        $dieta = $array[0];
+        $dietJson = $array[0];
         $eating_types = $array[1];
 
-        $diet = new Diet();
-        $diet->user_id = $id;
-        $diet->total_days = $dieta['total_days'];
-        $diet->total_eating = $dieta['total_eating'];
+        $this->saveFullDiet($dietJson, $userId, null);
+        return response("Diet saved!",200);
+    }
+
+    public function editDiet(Request $request, $userId, $dietId){
+        $dietJson = $request->json()->all();
+
+        $this->saveFullDiet($dietJson[0], null, $dietId);
+
+        return response("edited diet saved!",200);
+    }
+
+    // save a full diet depending if it already exists or not.
+    // when editing a diet one can always add in more products/eatings/days
+    public function saveFullDiet($dietJson, $userId, $dietId){
+        if(isset($userId)){
+            $diet = new Diet();
+            $diet->user_id = $userId;
+        }else if(isset($dietId)){
+            $diet = Diet::find($dietId)->first();
+            if(!isset($diet)){return response("Internal server error1",500);}
+        }else{
+            return response("Internal server error2",500);
+        }
+
+        $diet->total_days = $dietJson['total_days'];
+        $diet->total_eating = $dietJson['total_eating'];
         $diet->notes = "";
         $diet->created = Carbon::now();
         if (isset($diet['with_cholesterol'])) {
@@ -88,15 +78,21 @@ class DietController extends Controller
         } else {
             $diet->with_cholesterol = false;
         }
-        $diet->protein = $dieta['protein'];
-        $diet->fat = $dieta['fat'];
-        $diet->carbs = $dieta['carbs'];
-        $diet->cholesterol = $dieta['cholesterol'];
-        $diet->energy_value = $dieta['energy_value'];
+        $diet->protein = $dietJson['protein'];
+        $diet->fat = $dietJson['fat'];
+        $diet->carbs = $dietJson['carbs'];
+        $diet->cholesterol = $dietJson['cholesterol'];
+        $diet->energy_value = $dietJson['energy_value'];
         $diet->save();
 
-        foreach ($dieta['eatings'] as $eat) {
-            $eating = new Eating();
+        foreach ($dietJson['eatings'] as $eat) {
+            if(isset($userId)){
+                $eating = new Eating();
+                $eating->diet_id = $diet->id;
+            }else if(isset($dietId) && isset($eat['id'])){
+                $eating = Eating::where('id',$eat['id'])->first();
+            }
+            
             $eating->eating_type = $eat['eating_type'];
             $eating->eating_time = $eat['eating_time'];
             $eating->recommended_rate = 0;
@@ -105,36 +101,42 @@ class DietController extends Controller
             $eating->carbs = $eat['carbs'];
             $eating->cholesterol = $eat['cholesterol'];
             $eating->energy_value = $eat['energy_value'];
-            $diet->eatings()->save($eating);
-
-
+            $eating->save();
+            
             //return $array;
+            $eating->products()->detach();
             foreach ($eat['products'] as $product) {
                 if(isset($product['id'])){
-                    $eating->products()->attach($product['id'], [
+                    $arguments = [
                         'quantity' => $product['pivot']['quantity'],
                         'protein' => $product['pivot']['protein'],
                         'fat' => $product['pivot']['fat'],
                         'carbs' => $product['pivot']['carbs'],
                         'cholesterol' => $product['pivot']['cholesterol'],
                         'energy_value' => $product['pivot']['energy_value']
-                    ]);
+                    ];
+                    $eating->products()->attach($product['id'], $arguments);
                 }
             }
         }
 
-        foreach ($dieta['day_stats'] as $dayStat) {
-            $stat = new DietDayStat();
+        foreach ($dietJson['day_stats'] as $dayStat) {
+            if(isset($userId)){
+                $stat = new DietDayStat();
+                $stat->diet_id = $diet->id;
+            }else if(isset($dietId) && isset($dayStat['id'])){
+                $stat = DietDayStat::find($dayStat['id'])->first();
+            }
+
             $stat->day = $dayStat['day'];
             $stat->protein = $dayStat['protein'];
             $stat->fat = $dayStat['fat'];
             $stat->carbs = $dayStat['carbs'];
             $stat->cholesterol = $dayStat['cholesterol'];
             $stat->energy_value = $dayStat['energy_value'];
-            $diet->dayStats()->save($stat);
+            $stat->save();
         }
     }
-
 // Problem: users can download each other`s clients data.
     public function exportDiet(Request $request, $dietType)
     {
@@ -214,6 +216,6 @@ class DietController extends Controller
     public function getDietById($dietId){
         $diet = Diet::with('eatings.products')->where('id', $dietId)->with('dayStats')->first();
 
-        return $diet->toJson();
+        return response()->json($diet->toArray());
     }
 }

@@ -94,15 +94,15 @@ Route::group(['middleware' => ['web']], function () {
 			return View::make('recipe', ['id'=>$id]);
 		});
 		// DIET
-		Route::get('/diets/{id}',[
+		Route::get('/user/{id}/diets',[
 				'as'=>'diets',
 				'uses'=>'DietController@getUserDiets'
 		]);
-		Route::get('/diets/{id}/new',[
+		Route::get('/user/{id}/diet/new',[
 				'uses'=>'DietController@getProducts',
 				'as'=>'newDiet'
 		]);
-		Route::post('/diets/{id}/new',[
+		Route::post('/user/{id}/diet/new',[
 			'uses'=>'DietController@saveDiet',
 			'as'=>'saveDiet'
 		]);
@@ -110,9 +110,13 @@ Route::group(['middleware' => ['web']], function () {
 			'uses'=>'DietController@exportDiet',
 			'as'=>'exportDiet'
 		]);
-        Route::get('/diet/{dietId}/edit',[
-            function($dietId){return View::make('adddiet',['dietId'=>$dietId]);},
+        Route::get('user/{id}/diet/{dietId}/edit',[
+            function($id,$dietId){return View::make('adddiet',['id'=>$id,'dietId'=>$dietId]);},
             'as'=>'editDiet'
+        ]);
+        Route::post('user/{id}/diet/{dietId}/edit',[
+            'uses'=>'DietController@editDiet',
+            'as'=>'saveEditedDiet'
         ]);
         Route::get('diet/{dietId}/get',[
             'uses'=>'DietController@getDietById',
