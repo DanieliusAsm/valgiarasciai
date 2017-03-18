@@ -85,6 +85,10 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/products/{id}/edit', 'ProductController@getProduct');
 		Route::post('/products/{id}/edit', 'ProductController@editProduct');
 		Route::get('/products/{id}/delete', 'ProductController@deleteProduct');
+        Route::get('/products/{name}',[
+            'uses'=>'ProductController@getProductsByName',
+            'as'=>'getProductsByName',
+        ]);
 		Route::post('/products/{id}/addrecipe', 'ProductController@addRecipe');
 		Route::get('/products/{id}/addrecipe', function($id){
 			return View::make('recipe', ['id'=>$id]);
@@ -106,9 +110,13 @@ Route::group(['middleware' => ['web']], function () {
 			'uses'=>'DietController@exportDiet',
 			'as'=>'exportDiet'
 		]);
-        Route::get('/diet/{id}/edit',[
-            'uses'=>'DietController@something',
+        Route::get('/diet/{dietId}/edit',[
+            function($dietId){return View::make('adddiet',['dietId'=>$dietId]);},
             'as'=>'editDiet'
+        ]);
+        Route::get('diet/{dietId}/get',[
+            'uses'=>'DietController@getDietById',
+            'as'=>'getDietById'
         ]);
 		Route::get('/calculator', [
 			function() {return View::make('calculator');},

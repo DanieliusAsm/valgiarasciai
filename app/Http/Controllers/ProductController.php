@@ -87,4 +87,10 @@ class ProductController extends Controller
 
         return redirect("/products");
      }
+
+    public function getProductsByName($name){
+        $products = Product::where('product_name','LIKE',"%$name%")->take(10)->get();
+
+        return $products->toJson();
+    }
 }

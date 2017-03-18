@@ -11,6 +11,7 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
     $scope.lastDays = 0;
     $scope.initialized = false;
 
+    // TODO redirect only when response is code 200 otherwise display error.
     $scope.sendDiet = function (saveLink, redirect) {
         var data = [$scope.diet, $scope.eatingInfo];
         $http({
@@ -23,7 +24,7 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
             //error
         });
         //$window.location = redirect;
-    }
+    };
 
     $scope.getNumberToArray = function (n) {
         if (n != null && n > 0) {
@@ -31,27 +32,27 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
         } else {
             return new Array(0);
         }
-    }
+    };
 
     $scope.updateDietArray = function () {
-        if ($scope.days != null && $scope.days != $scope.lastDays) {
-            var lengthOfDays = $scope.days - $scope.lastDays;
+        if ($scope.diet.total_days != null && $scope.diet.total_days != $scope.lastDays) {
+            var lengthOfDays = $scope.diet.total_days - $scope.lastDays;
             // do we add days/initialize or remove ?
             if ($scope.lastDays == 0) {
                 $scope.initializeDietArray();
             } else if ($scope.lastDays > 0) {
                 //$scope.updateDietArray(lenghtOfDays);
             } else {
-                $scope.diet = $scope.diet.slice(0, days);
+                $scope.diet = $scope.diet.slice(0, $scope.diet.total_days);
             }
-            $scope.lastDays = $scope.days;
+            $scope.lastDays = $scope.diet.total_days;
             $scope.initialized = true;
         }
-    }
+    };
     //will initialize or update the current array depending if its empty or not.
     $scope.initializeDietArray = function () {
         var baseDays = $scope.lastDays;
-        $scope.diet.total_days = $scope.days;
+        $scope.diet.total_days = $scope.diet.total_days;
         var enabledEatingsArray = $scope.getEatingsPerDay();
         $scope.diet.total_eating = enabledEatingsArray.length;
         $scope.diet.with_cholesterol = 0;
@@ -81,11 +82,39 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
                 $scope.diet.eatings[eatingsIndex].products.push(array[0]);
             }
         }
-    }
+    };
 
+    $scope.getEditableDiet = function($link){
+        $http.get($link).then(function successCallback(response){
+            console.log(response.data);
+            $scope.initializeEditableDiet(response.data);
+        }, function errorCallback(response){
+            console.log(response.statusText);
+        });
+    };
+
+    $scope.initializeEditableDiet = function($diet){
+        console.log("cucked");
+        $scope.initialized = true;
+        $scope.diet = $diet;
+        $scope.day = [];
+        for(var i=0;i<$scope.diet.total_days;i++){
+            $scope.day[i] = {};
+            $scope.day[i].eating = [];
+            for(var a=0;a<$scope.diet.total_eating;a++){
+                $scope.day[i].eating[a] = {};
+                $scope.day[i].eating[a].selectedProducts = [];
+                var eatingIndex = a+i*$scope.diet.total_eating;
+                for(var b=0;b<$scope.diet.eatings[eatingIndex].products.length;b++){
+                    $scope.day[i].eating[a].selectedProducts[b] = $scope.diet.eatings[eatingIndex].products[b];
+                }
+            }
+        }
+    };
+    
     $scope.updateDieutArray = function (lenghtOfDays) {
         var baseDays = $scope.lastDays;
-        $scope.diet.total_days = $scope.days;
+        $scope.diet.total_days = $scope.diet.total_days;
 
         // i shouldnt be 0 then changing days will work
         for (var i = 0; i < length; i++) {
@@ -110,9 +139,8 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
                 //diet[0].eating_types[$index].type = eatingType; diet[0].eating_types[$index].time=eatingTimes[$index]
             }
         }
-    }
+    };
     // later on you can remove all for example "pusryciai"
-
 
     //todo errors when undefined
     $scope.calculateRowValues = function (row) {
@@ -155,7 +183,6 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
             $eating.energy_value = Number(sumE.toFixed(2));
         }
     };
-
     //sums up stats for one eating and for
     // a whole day.
     $scope.calculateTotalValues = function ($dayIndex) {
@@ -207,7 +234,7 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
         $scope.diet.carbs = Number(sumA.toFixed(2));
         $scope.diet.cholesterol = Number(sumCh.toFixed(2));
         $scope.diet.energy_value = Number(sumE.toFixed(2));
-    }
+    };
 
     $scope.getEatingsPerDay = function () {
         var localEatingInfo = [];
@@ -219,10 +246,12 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
             }
         }
         return localEatingInfo;
-    }
-
+    };
     //slice first inclusive last not
     $scope.getEatingsInDay = function ($day) {
+        if(!$scope.diet || !$scope.diet.eatings){
+            return null;
+        }
         $day += 1;
         var start = ($day - 1) * Number($scope.diet.total_eating);
         var end = $day * Number($scope.diet.total_eating);
@@ -251,8 +280,16 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
             return $dayIndex * Number($scope.diet.total_eating) + $eatingIndex;
         }
         return 0;
-    }
+    };
 
+    $scope.getProducts = function($link){
+        return $http.get($link).then(function (response) {
+            return response.data;
+        }, function errorCallback(response){
+            console.log(response.statusText);
+        });
+    };
+    
 
     $scope.calculate = function () {
         var kmi = Number($scope.mass) / (Math.pow(Number($scope.height), 2) / 10000);
@@ -290,5 +327,5 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
         $scope.calcData.pma = pma.toFixed(2);
         $scope.calcData.idealusSvoris = idealusSvoris;
         $scope.calcData.idealusPMA = idealusPMA.toFixed(2);
-    }
+    };
 });

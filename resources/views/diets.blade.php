@@ -137,7 +137,7 @@
                                 </form>
                                 <div class="pull-right">
                                     <i class="glyphicon glyphicon-edit" aria-hidden="true"></i>
-                                    <a href="{{route("editDiet",['id'=>$id])}}">Redaguoti</a>
+                                    <a href="{{route("editDiet",['dietId'=>$diets[$a]['id']])}}">Redaguoti</a>
                                 </div>
                             </div>
                     </div>

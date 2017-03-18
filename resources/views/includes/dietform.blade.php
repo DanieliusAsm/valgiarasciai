@@ -2,7 +2,7 @@
 <div class="col-md-12">
     <div class="form-group">
         <label for="days">Dienos</label>
-        <input class="form-control" type="number" id="days" ng-model="days" ng-required="true" min="1" max="20">
+        <input class="form-control" type="number" ng-model="diet.total_days" ng-required="true" min="1" max="20">
     </div>
 </div>
 <div class="col-md-6">
@@ -44,12 +44,15 @@
 </div>
 
 
-
+<@ initialized @>
 <ul ng-show="initialized" class="nav nav-tabs">
     <li ng-repeat="tab in getNumberToArray(diet.total_days) track by $index" ng-class="$first ? 'active' :''"><a data-toggle="tab" data-target="#<@($index)@>" ng-bind="($index+1)"></a></li>
 </ul>
 <div ng-show="initialized" class="tab-content">
-    <@ diet @>
+    <pre> <@ diet @> </pre>
+
+    days lul
+    <@ diet.total_days @>
     <div class="tab-pane" ng-repeat="dieta in getNumberToArray(diet.total_days) track by $index" id="<@($index)@>" ng-class="$first ? 'tab-pane active' :'tab-pane'">
         <div class="row" ng-repeat="eating in getEatingsInDay($index)">
             <div class="col-md-12">
@@ -74,9 +77,9 @@
                     <tr ng-repeat="row in eating.products track by $index">
                         <td><input ng-if="$first" class="form-control" type="text" ng-model="eating.eating_time" name="time[]"></td>
                         <td>
-                            <input class="form-control" type="text" ng-model="day[$parent.$parent.$index].eating[$parent.$index].products[$index]"
-                                   uib-typeahead="product as product.product_name for product in products | filter:$viewValue | limitTo:10"
-                                   typeahead-on-select="onProductSelected($item,$parent.$parent.$index,$parent.$index,$index)" name="product_name[]">
+                            <input class="form-control" type="text" ng-model="day[$parent.$parent.$index].eating[$parent.$index].selectedProducts[$index]"
+                                   uib-typeahead="product as product.product_name for product in getProducts('{{url('/products')}}/'+$viewValue)"
+                                   typeahead-on-select="onProductSelected($item,$parent.$parent.$index,$parent.$index,$index)">
                         </td>
                         <td>
                             <input class="form-control" ng-model="row.pivot.quantity" type="number" placeholder="100" min="0"/>
