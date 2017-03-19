@@ -15,8 +15,8 @@
                         </label><br>
                         @foreach($productoTipas as $type)
                             <label>
-                                <input type="radio" name="toggle" value="{{$type->tipas}}"
-                                       ng-model="product_type">{{$type->tipas}}
+                                <input type="radio" name="toggle" value="{{$type->product_type}}"
+                                       ng-model="product_type">{{$type->product_type}}
                             </label><br>
                         @endforeach
                     </div>
@@ -51,12 +51,12 @@
 
                     <tr ng-repeat="product in products | orderBy:id:true | filter:search | filter:product_type">
                         <td ng-bind="$index+1"></td>
-                        <td ng-bind="product.pavadinimas"></td>
-                        <td ng-bind="product.baltymai"></td>
-                        <td ng-bind="product.riebalai"></td>
-                        <td ng-bind="product.angliavandeniai"></td>
-                        <td ng-bind="product.cholesterolis"></td>
-                        <td ng-bind="product.eVerte"></td>
+                        <td ng-bind="product.product_name"></td>
+                        <td ng-bind="product.protein"></td>
+                        <td ng-bind="product.fat"></td>
+                        <td ng-bind="product.carbs"></td>
+                        <td ng-bind="product.cholesterol"></td>
+                        <td ng-bind="product.energy_value"></td>
 
                         <td>
                             <div class="text-center">

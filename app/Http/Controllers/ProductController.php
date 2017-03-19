@@ -34,6 +34,7 @@ class ProductController extends Controller
     {
         $products = Product::with('Recipe')->get();
         //echo $products;
+        
 
         $productoTipas =  Product::select('product_type')->distinct()->get();
 

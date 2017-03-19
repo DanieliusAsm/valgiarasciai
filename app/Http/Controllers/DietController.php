@@ -27,9 +27,9 @@ class DietController extends Controller
     {
         $diets = Diet::with('eatings.products')->where('user_id', $id)->with('dayStats')->get();
 
-        echo '<pre>';
-        print_r($diets->toArray()[0]);
-        echo '</pre>';
+        //echo '<pre>';
+        //print_r($diets->toArray()[0]);
+        //echo '</pre>';
 
         return view('diets',['id'=>$id,'diets'=>$diets->toArray()]);
     }

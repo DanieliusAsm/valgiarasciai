@@ -43,6 +43,7 @@
     <button type="submit" class="btn btn-primary center-block" ng-click="updateDietArray()">Kurti</button>
 </div>
 
+
 <ul ng-show="initialized" class="nav nav-tabs">
     <li ng-repeat="tab in getNumberToArray(diet.total_days) track by $index" ng-class="$first ? 'active' :''"><a data-toggle="tab" data-target="#<@($index)@>" ng-bind="($index+1)"></a></li>
 </ul>
@@ -51,7 +52,6 @@
         <div class="row" ng-repeat="eating in getEatingsInDay($index)">
             <div class="col-md-12">
                 <h4 ng-bind="eating.eating_type"></h4>
-                <@ eating @>
                 <table class="table table-bordered table-hover" id="diet-table">
                     <col class="col-sm-1">
                     <col class="col-sm-3">
@@ -126,7 +126,6 @@
             <!--<p ng-if="$first" ng-bind="getProteinSum(0)"></p>-->
         </div>
         <h4>Bendra maistinė ir energinė vertė</h4>
-        <@ diet.day_stats @>
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
