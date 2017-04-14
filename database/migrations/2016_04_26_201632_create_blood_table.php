@@ -15,13 +15,13 @@ class CreateBloodTable extends Migration
         Schema::create("blood_data", function(Blueprint $table){
             $table->increments("id");
             $table->integer("user_id");
-            $table->integer("blood_pressure");
-            $table->integer("pulse");
-            $table->integer("cholesterol");
-            $table->integer("mtl");
-            $table->integer("dtl");
-            $table->integer("triglycerides");
-            $table->integer("glucose");
+            $table->double("blood_pressure");
+            $table->double("pulse");
+            $table->double("cholesterol");
+            $table->double("mtl");
+            $table->double("dtl");
+            $table->double("triglycerides");
+            $table->double("glucose");
             $table->date('created');
         });
     }

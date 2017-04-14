@@ -42,7 +42,7 @@ class UserController extends Controller {
     public function getUser($id) {
         $user = User::with("base")->with("blood")->with("body")->get()->find($id);
 
-        return view('edituser', ['user'=>$user,'id'=>$id]);
+        return view('client', ['user'=>$user,'id'=>$id]);
     }
 
     public function editUser($id, RegisterRequest $request) {
@@ -57,7 +57,7 @@ class UserController extends Controller {
         $user->diet = $request->input("diet");
         $user->notes = $request->input("notes");
 
-        $item = $request->get("base","");
+        $item = $request->get("height","");
         for($i=0;$i<count($item);$i++){
             $user->base[$i]->height = $request->get("height","")[$i];
             $user->base[$i]->weight = $request->get("weight","")[$i];
@@ -70,7 +70,7 @@ class UserController extends Controller {
             $user->body[$i]->biological_age = $request->get("biological_age","")[$i];
             $user->body[$i]->body_fluid = $request->get("body_fluid","")[$i];
             $user->body[$i]->abdominal_fat = $request->get("abdominal_fat","")[$i];
-            $user->body[$i]->weight = $request->get("weight","")[$i];
+            $user->body[$i]->weight = $request->get("body_weight","")[$i];
             $user->body[$i]->fat_expression = $request->get("fat_expression","")[$i];
             $user->body[$i]->muscle_mass = $request->get("muscle_mass","")[$i];
             $user->body[$i]->bone_mass = $request->get("bone_mass","")[$i];
@@ -89,7 +89,9 @@ class UserController extends Controller {
             $user->blood[$i]->glucose = $request->get('glucose','')[$i];
         }
         $user->save();
-        return redirect('/user');
+
+        var_dump($user->toArray());
+        //return redirect('/user');
     }
 
     public function deleteUser($id) {
@@ -111,7 +113,8 @@ class UserController extends Controller {
     }
     public function addBase($id, Request $request)
     {
-        if($request->has("height") || $request->has("wrist") || $request->has("waist")){
+
+        if($request->has("height") || $request->has("wrist") || $request->has("waist") || $request->has("weight")){
             $base = new Base();
             $base->user_id = $id;
             $base->height = $request->input("height");
@@ -130,7 +133,7 @@ class UserController extends Controller {
             $body->biological_age =$request->input("biological_age");
             $body->body_fluid = $request->input("body_fluid");
             $body->abdominal_fat = $request->input("abdominal_fat");
-            $body->weight = $request->input("weight");
+            $body->weight = $request->input("body_weight");
             $body->fat_expression = $request->input("fat_expression");
             $body->muscle_mass = $request->input("muscle_mass");
             $body->bone_mass = $request->input("bone_mass");

@@ -60,18 +60,28 @@ Route::group(['middleware' => ['web']], function () {
 				'uses'=>'UserController@getUsers',
 		]);
 		Route::get('user/new',[
-				function() {
-					return View::make('register');}
-		]);
-		Route::post('user/new', 'UserController@createUser');
-		Route::get('user/{id}/edit', 'UserController@getUser');
-		Route::post('/user/{id}/edit', 'UserController@editUser');
-		Route::get('user/{id}/data',[function($id){
-			return View::make('register',['id'=>$id]);
-		}]);
+            function() {return View::make('client');},
+            'as'=>'createUser'
+        ]);
+		Route::post('user/new', [
+            'uses'=>'UserController@createUser',
+            'as'=>'saveUser'
+        ]); 
+		Route::get('user/{id}/edit', [
+            'uses'=>'UserController@getUser',
+            'as'=>'editUser'
+        ]);
+		Route::post('/user/{id}/edit', [
+            'uses'=>'UserController@editUser',
+            'as'=>'saveEditedUser'
+        ]);
+		Route::get('user/{id}/data',[
+            function($id){return View::make('client',['id'=>$id]);},
+            'as'=>'addUserData'
+        ]);
 		Route::post('user/{id}/data', [
 				'uses' => 'UserController@addUserData',
-				'as' => 'addUserData'
+				'as' => 'saveUserData'
 		]);
 		Route::get('/user/{id}/delete', 'UserController@deleteUser');
 

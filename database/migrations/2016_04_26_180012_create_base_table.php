@@ -15,10 +15,10 @@ class CreateBaseTable extends Migration
         Schema::create('base_data', function(Blueprint $table){
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('height');
-            $table->integer('weight');
-            $table->integer('wrist');
-            $table->integer('waist');
+            $table->double('height');
+            $table->double('weight');
+            $table->double('wrist');
+            $table->double('waist');
             $table->date('created');
         });
     }

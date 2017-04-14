@@ -10,18 +10,17 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
 
     // TODO redirect only when response is code 200 otherwise display error.
     $scope.sendDiet = function (saveLink, redirect) {
-
         var data = [$scope.diet, $scope.eatingInfo];
         $http({
             method: 'POST',
             url: saveLink,
             data: data //$httpParamSerializerJQLike($scope.diet)
         }).then(function successCallback(response) {
-            console.log(response.data);
+            $window.location = redirect;
         }, function errorCallback(response) {
-            //error
+            console.error(response.statusText);
         });
-        //$window.location = redirect;
+        //
     };
 
     $scope.getNumberToArray = function (n) {
@@ -91,7 +90,6 @@ diet.controller('DietController', function ($scope, $http, $window) { // $httpPa
     };
 
     $scope.initializeEditableDiet = function($diet){
-        console.log("cucked");
         $scope.initialized = true;
         $scope.diet = $diet;
         $scope.day = [];
