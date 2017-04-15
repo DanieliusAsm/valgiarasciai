@@ -57,41 +57,47 @@ class UserController extends Controller {
         $user->diet = $request->input("diet");
         $user->notes = $request->input("notes");
 
-        $item = $request->get("height","");
-        for($i=0;$i<count($item);$i++){
-            $user->base[$i]->height = $request->get("height","")[$i];
-            $user->base[$i]->weight = $request->get("weight","")[$i];
-            $user->base[$i]->wrist = $request->get("wrist","")[$i];
-            $user->base[$i]->waist = $request->get("waist","")[$i];
+        $lenght = count($user->base);
+        for($i=0;$i<$lenght;$i++){
+            $base = $user->base[$i];
+            $base->height = $request->get("height","")[$i];
+            $base->weight = $request->get("weight","")[$i];
+            $base->wrist = $request->get("wrist","")[$i];
+            $base->waist = $request->get("waist","")[$i];
+            $base->save();
         }
 
-        $item = $request->get("biological_age","");
-        for($i=0;$i<count($item);$i++) {
-            $user->body[$i]->biological_age = $request->get("biological_age","")[$i];
-            $user->body[$i]->body_fluid = $request->get("body_fluid","")[$i];
-            $user->body[$i]->abdominal_fat = $request->get("abdominal_fat","")[$i];
-            $user->body[$i]->weight = $request->get("body_weight","")[$i];
-            $user->body[$i]->fat_expression = $request->get("fat_expression","")[$i];
-            $user->body[$i]->muscle_mass = $request->get("muscle_mass","")[$i];
-            $user->body[$i]->bone_mass = $request->get("bone_mass","")[$i];
-            $user->body[$i]->kmi = $request->get("kmi","")[$i];
-            $user->body[$i]->calorie_intake = $request->get("calorie_intake","")[$i];
+        $lenght = count($user->body);
+        for($i=0;$i<$lenght;$i++) {
+            $body = $user->body[$i];
+            $body->biological_age = $request->get("biological_age","")[$i];
+            $body->body_fluid = $request->get("body_fluid","")[$i];
+            $body->abdominal_fat = $request->get("abdominal_fat","")[$i];
+            $body->weight = $request->get("body_weight","")[$i];
+            $body->fat_expression = $request->get("fat_expression","")[$i];
+            $body->muscle_mass = $request->get("muscle_mass","")[$i];
+            $body->bone_mass = $request->get("bone_mass","")[$i];
+            $body->kmi = $request->get("kmi","")[$i];
+            $body->calorie_intake = $request->get("calorie_intake","")[$i];
+            $body->save();
         }
 
-        $item = $request->get("blood_pressure","");
-        for($i=0;$i<count($item);$i++) {
-            $user->blood[$i]->blood_pressure = $request->get('blood_pressure','')[$i];
-            $user->blood[$i]->pulse = $request->get('pulse','')[$i];
-            $user->blood[$i]->cholesterol = $request->get('cholesterol','')[$i];
-            $user->blood[$i]->mtl = $request->get('mtl','')[$i];
-            $user->blood[$i]->dtl = $request->get('dtl','')[$i];
-            $user->blood[$i]->triglycerides = $request->get('triglycerides','')[$i];
-            $user->blood[$i]->glucose = $request->get('glucose','')[$i];
+        $lenght = count($user->blood);
+        for($i=0;$i<$lenght;$i++) {
+            $blood = $user->blood[$i];
+            $blood->blood_pressure = $request->get('blood_pressure','')[$i];
+            $blood->pulse = $request->get('pulse','')[$i];
+            $blood->cholesterol = $request->get('cholesterol','')[$i];
+            $blood->mtl = $request->get('mtl','')[$i];
+            $blood->dtl = $request->get('dtl','')[$i];
+            $blood->triglycerides = $request->get('triglycerides','')[$i];
+            $blood->glucose = $request->get('glucose','')[$i];
+            $blood->save();
         }
         $user->save();
 
-        var_dump($user->toArray());
-        //return redirect('/user');
+        //var_dump($user->toArray());
+        return redirect('/user');
     }
 
     public function deleteUser($id) {
